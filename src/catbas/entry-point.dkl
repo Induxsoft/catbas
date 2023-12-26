@@ -4,14 +4,24 @@ module "Controller configs"
 {
 	#include "functions.dkh"
 	#include "serialize.dkh"
-	#include "config.dk"
+	#include "crudl/crudl.dk"
+	#include "dbr.dkh"
 
 	if @@(@http_context,"$session/user/ids") == "" {
 		@http_context<"response/headers/location"> : "/"
 		return
 	}
 
-	@base_path="cxp"
+	if not(field.exist(@@(@http_context,"&session"),"resource")) { @http_context<"session/resource*">:record.create() }
+	if not(field.exist(@@(@http_context,"&session/resource"),"properties")) { @http_context<"session/resource/properties*">:record.create() }
+	if not(field.exist(@@(@http_context,"&session/resource/properties"),"web_meta_tags")) { @http_context<"session/resource/properties/web_meta_tags*">:record.create() }
+	if not(field.exist(@@(@http_context,"&session/resource/properties/web_meta_tags"),"web_page")){@http_context<"session/resource/properties/web_meta_tags/web_page*">:record.create()}
+	if not(field.exist(@@(@http_context,"&session/resource/properties"),"web_page")){@http_context<"session/resource/properties/web_page*">:record.create()}
+
+	@http_context<"session/resource/properties/web_page/end_head">:'<script src="/$/catbas/js/jquery-3.6.0.min.js"></script>
+	<script src="/$/catbas/js/definitive.api.js"></script>'
+
+	@base_path="catbas"
 	@path_root="" // Establezca una ruta de ser necesario
 	
 	// Enmascaramiento de enrutamiento (Ejemplos)
@@ -28,16 +38,31 @@ module "Controller configs"
     //    //Si es la ruta indicada esto es @true pero no se modifica _entities_type
     // }
 
-	// do rise_error(0,to.json(@http_context))
-
 	//No modifique a menos que sepa lo que está haciendo
 	do crudl.routes.pattern("/_program/")
-	do crudl.routes.entity("/documentos/","cxp_docs")
-	do crudl.routes.entity("/proveedores/","cxp_provs")
-	do crudl.routes.entity("/gastos/","ut_gasto")
-	do crudl.routes.entity("/bancos/","cxp_banco")
-	do crudl.routes.entity("/cuentas/","cxp_chequera")
-	do crudl.routes.entity("/movcuenta/","cxp_movcuenta")
+	do crudl.routes.entity("/agente/","agente")
+	do crudl.routes.entity("/ut_aduana/","ut_aduana")
+	do crudl.routes.entity("/almacen/","almacen")
+	do crudl.routes.entity("/banco/","banco")
+	do crudl.routes.entity("/caja/","caja")
+	do crudl.routes.entity("/cajero/","cajero")
+	do crudl.routes.entity("/categoria/","categoria")
+	do crudl.routes.entity("/cconsumo/","cconsumo")
+	do crudl.routes.entity("/cfgimpuesto/","cfgimpuesto")
+	do crudl.routes.entity("/ciudad/","ciudad")
+	do crudl.routes.entity("/cliente/","cliente")
+	do crudl.routes.entity("/contacto/","contacto")
+	do crudl.routes.entity("/ctipospolizas/","ctipospolizas")
+	do crudl.routes.entity("/departamento/","departamento")
+	do crudl.routes.entity("/divisa/","divisa")
+	do crudl.routes.entity("/edoprov/","edoprov")
+	do crudl.routes.entity("/linea/","linea")
+	do crudl.routes.entity("/marca/","marca")
+	do crudl.routes.entity("/pais/","pais")
+	do crudl.routes.entity("/porteador/","porteador")
+	do crudl.routes.entity("/repartidor/","repartidor")
+	do crudl.routes.entity("/tarjetacredito/","tarjetacredito")
+	do crudl.routes.entity("/zona/","zona")
 	
 	@dbmvc_path="crudl/"
 	

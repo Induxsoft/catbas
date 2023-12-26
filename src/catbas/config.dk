@@ -1,0 +1,7 @@
+#include "dkli.dkh"
+
+#!
+module "config.dk"
+{
+	@path_common="catbas/_common/list.dk"	
+}

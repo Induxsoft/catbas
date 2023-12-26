@@ -9,7 +9,7 @@ module "form_agente.dk"
     #include "serialize.dkh"
     #include "dbr.dkh"
     #include "uielements.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
 
     // do rise_error(99,to.json(@crud_context))
     do @context.begin(@crud_context)

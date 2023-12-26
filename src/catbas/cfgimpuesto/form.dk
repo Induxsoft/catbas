@@ -6,7 +6,7 @@ module "form_cfgimpuesto.dk"
     #include "functions.dkh"
     #include "uielements.dkl"
     #include "serialize.dkh"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     do @context.begin(@crud_context)
     // do rise_error(99,to.json(@("&.")))
 ref lista=list.create()

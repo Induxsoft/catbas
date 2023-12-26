@@ -6,7 +6,7 @@ module "list.dk"
     #include "functions.dkh"
     #include "uielements.dkl"
     #include "uielements.dbtable.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     #include "serialize.dkh"
     // do rise_error(99,to.json(@http_context))
     @p=@@(@http_context,"request/get/p")

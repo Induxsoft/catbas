@@ -7,7 +7,7 @@ module "list_view_contacto.dk"
 	#include "serialize.dkh"
     #include "dbr.dkh"
     #include "uielements.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     do @context.begin(@crud_context)
 
 	ref @http_context=@("&http")

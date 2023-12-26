@@ -4,9 +4,10 @@
 module "list.dk"
 {
     #include "functions.dkh"
+    #include "serialize.dkh"
     #include "uielements.dkl"
     #include "uielements.dbtable.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
 
     new @table_definition
     {
@@ -53,6 +54,7 @@ module "list.dk"
     #$
     div(class="m-0 justify-content-center" )
 	{
+        // p{"#<to.json(@@(@crud_context,'&http'))>"}
     	#!
     	#include "agente.dk"
     	

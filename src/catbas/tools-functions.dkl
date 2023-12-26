@@ -78,7 +78,7 @@ module "tools.dkl"
 		new addres
 		{
 			@"link":ifstr(@namews=="","workspace",@namews)//"workspace"
-			@"target":"https://ws.induxsoft.net/"+@ws+"?token="+@@(@http_context,"$session/user/ids")
+			@"target":"https://ws."../config.dk".net/"+@ws+"?token="+@@(@http_context,"$session/user/ids")
 			@"type":"workspace"
 		}
 		new addres_menu

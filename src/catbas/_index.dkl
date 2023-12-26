@@ -6,9 +6,8 @@ program
     #include "functions.dkh"
     #include "serialize.dkh"
     #include "webcl.dkh"
-    #include "config.dkl"
+    #include "config.dk"
     #include "tools-functions.dkl"
-
 
     #$
     div(class="container-fluid")

@@ -7,7 +7,7 @@ module "list.dk"
     #include "serialize.dkh"
     #include "dbr.dkh"
     #include "uielements.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     ref @http_context=@("&http")
 
     do @context.begin(@crud_context)

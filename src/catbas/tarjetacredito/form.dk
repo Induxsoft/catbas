@@ -5,7 +5,7 @@ module "form.dk"
 {
     #include "functions.dkh"
     #include "dbr.dkh"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     do @context.begin(@crud_context)
     #$
     div(class="d-flex justify-content-center mt-5" id="#<@url_root_entity>")

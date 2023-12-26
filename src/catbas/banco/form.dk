@@ -7,7 +7,7 @@ module "form_view_caja.dk"
 	#include "serialize.dkh"
     #include "dbr.dkh"
     #include "uielements.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     do @context.begin(@crud_context)
 
     new def_contacto

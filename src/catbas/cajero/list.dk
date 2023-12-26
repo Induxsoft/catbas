@@ -4,7 +4,7 @@
 module "list_view_cajero.dk"
 {
 	#include "functions.dkh"
-	#include "../../../config.dkl"
+	#include "../config.dk"
 
 	do @context.begin(@crud_context)
 

@@ -7,7 +7,7 @@ module "list.dk"
     #include "uielements.dkl"
     #include "uielements.dbtable.dkl"
     #include "serialize.dkh"
-    #include "../../../config.dkl"
+    #include "../config.dk"
 
     do @context.begin(@crud_context)
     // ref row:@item(@("&."),0)

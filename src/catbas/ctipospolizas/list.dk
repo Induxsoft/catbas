@@ -5,7 +5,7 @@ module "list_view_banco"
 {
     #include "functions.dkh"
     #include "serialize.dkh"
-    #include "../../../config.dkl"
+    #include "../config.dk"
 
     do @context.begin(@crud_context)
     ref @http_context = @("&http")

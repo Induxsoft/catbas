@@ -4,7 +4,7 @@ module "list.dk"{
     #include "functions.dkh"
     #include "uielements.dkl"
     #include "uielements.dbtable.dkl"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     new @table_definition{
         @"datatable*":@@(@crud_context,"&."){
             member @"columns"{

@@ -4,7 +4,7 @@
 module "form.dk"
 {
     #include "functions.dkh"
-    #include "../../../config.dkl"
+    #include "../config.dk"
     do @context.begin(@crud_context)
     #$
     div(class="d-flex justify-content-center")
