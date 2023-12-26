@@ -18,6 +18,12 @@ model "erp.catbas"
         @"uf_iuser" int
 
     }
+    /* uod.ut_sat_ctipopoliza */
+    entity "ut_sat_ctipopoliza" : "TableModel"
+    {
+        @"uf_id" int 
+        @"uf_const" string(100) 
+    }
     /* uod.almacen */
     entity "almacen" : "TableModel"
     {

@@ -1,0 +1,4 @@
+﻿"Sys_PK","Sys_TimeStamp","Sys_GUID","Sys_DTCreated","Sys_User","Sys_LastUser","Sys_Exported","Sys_DTExported","Sys_Info","Sys_RecVer","Sys_Lock","Sys_Deleted","uf_id","uf_Const"
+"1","2017-05-13 12:23:44","9EE4A8CA0ABB4F33A1A8C5B8C7C8C3DE","2017-05-13 12:23:44",\N,\N,\N,\N,\N,\N,\N,\N,"1","Ingreso"
+"2","2017-05-13 12:23:44","C9A7639E8A494948A22D35B418D5B290","2017-05-13 12:23:44",\N,\N,\N,\N,\N,\N,\N,\N,"2","Egreso"
+"3","2017-05-13 12:23:44","36A002E3ED25491789B238630884D96B","2017-05-13 12:23:44",\N,\N,\N,\N,\N,\N,\N,\N,"3","Diario"

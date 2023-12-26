@@ -8,7 +8,8 @@ module "list.dk"
     #include "uielements.dbtable.dkl"
     #include "../config.dk"
     #include "serialize.dkh"
-    // do rise_error(99,to.json(@http_context))
+    
+    if not(isset("@http_context")){ref @http_context=@@(@crud_context,"&http")}
     @p=@@(@http_context,"request/get/p")
     new @table_definition
     {

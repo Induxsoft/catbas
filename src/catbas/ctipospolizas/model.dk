@@ -5,12 +5,12 @@ module "banco.dk"
 {
     @list_query="select ID as sys_pk,Const,uf_sat_TipoPoliza from #<@table_name>"
     @keyfield="id"
-	@read_query="select ID as sys_pk,ifnull(sys_recver,0),Const,uf_sat_TipoPoliza from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
+	@read_query="select ID as sys_pk,Const,uf_sat_TipoPoliza from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 	@table_name="ctipospolizas"
 
 	poliza.create::&db,&params,&data
 	{
-		id=dbr.num(db,"select max(id)+1 from ctipospolizas limit 1",@null)
+		id=dbr.num(db,"select ifnull(max(id),0)+1 from ctipospolizas limit 1",@null)
 		new d
 		{
 			@"id":id
