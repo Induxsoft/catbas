@@ -5,6 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="a"
+    @title="Categorías"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")

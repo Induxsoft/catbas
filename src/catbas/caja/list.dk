@@ -7,6 +7,9 @@ module "list_view_caja.dk"
 	#include "serialize.dkh"
 	#include "../config.dk"
 
+	@gender="a"
+    @title="Cajas"
+
 	do @context.begin(@crud_context)
 
 	ref @http_context=@("&http")
@@ -41,12 +44,9 @@ module "list_view_caja.dk"
     #$
     div(class="m-0 justify-content-center" )
 	{
-		
     	#!
     	#include "caja.dkl"
     	include @path_common
-		
-    	
     }
 	do @context.end()
 }

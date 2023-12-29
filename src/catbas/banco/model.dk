@@ -3,6 +3,8 @@
 
 module "banco.dk"
 {
+	#include "../config.dk"
+
     @list_query="select b.sys_pk, b.sys_recver, b.nombre, concat(c.nombre,' ',c.apellidos) as contacto from banco b 
     left join contacto c on b.contacto = c.sys_pk;"
 
@@ -32,7 +34,18 @@ module "banco.dk"
 		do entity.update(db,params,data)
 	}
 
+	function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, nombre,contacto 
+            FROM banco 
+            WHERE IF(IFNULL(@s,'')='', true, (nombre LIKE CONCAT('%',@s,'%') OR contacto LIKE CONCAT('%',@s,'%')))
+            ORDER BY nombre
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
 	point @read to banco.read
 	point @create to banco.create
 	point @update to banco.update
+	point @list to list
 }

@@ -8,15 +8,18 @@ module "form_view_caja.dk"
     #include "dbr.dkh"
     #include "uielements.dkl"
     #include "../config.dk"
-	do @context.begin(@crud_context)
+    #include "../_lib/icons.dk"
 
+	do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
 
     new def_cconsumo
     {
         @"datatable*":dbr.list(@("&database"),"select sys_pk, codigo, descripcion from cconsumo order by descripcion;",@null)
         member "attributes"
         {
-            @"class":"form-control"
+            @"class":"induxsoft-form-select"
             @"name":"centroconsumo"
             @"required":"true"
         }
@@ -26,52 +29,76 @@ module "form_view_caja.dk"
         @"selected":@('./centroconsumo')
     }
 
-	##
-    div(class="m-0 row justify-content-center" )
+    #$ div(class="container p-0")
     {
-        #!
-        #include "caja.dkl"
-        #$
-        div(class="w-75 mt-4")
+        #! #include "caja.dkl"
+        
+        #$ form(action="." method="POST" id="frm-caja")
         {
-            div(class="card"){
-                div(class="card-body"){
-            div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
-            form(action="." method="POST" id="frm-caja")
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
-                label("style"="font-weight:bold"){"Código:"}
-                input(type="text" name="codigo" class="form-control" value="#<@('./codigo')>" required="true" maxlength="5")
-                label("style"="font-weight:bold"){"Descripción:"}
-                input(type="text" name="descripcion" class="form-control" value="#<@('./descripcion')>" required="true" maxlength="50")
-                label("style"="font-weight:bold"){"Codigo de cuenta:"}
-                input(type="text" name="codcuenta" class="form-control" value="#<@('./codcuenta')>"  maxlength="50")
+                div(class="col-4 d-flex align-items-center p-0")
+                {
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Caja"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="submit" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
+                }
+            }
+            div(id="work_area" class="container-section")
+            {
+                div(class="row")
+                {
+                    div(class="col-12 col-sm-2")
+                    {
+                        small(class="fw-bold"){"Código:"}
+                        input(type="text" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" required="true" maxlength="5")
+                    }
+                    div(class="col-12 col-sm-10")
+                    {
+                        small(class="fw-bold"){"Descripción:"}
+                        input(type="text" name="descripcion" class="induxsoft-form-control" value="#<@('./descripcion')>" required="true" maxlength="50")
+                    }
+                    div(class="col-12 col-sm-6")
+                    {
+                        small{"Codigo de cuenta:"}
+                        input(type="text" name="codcuenta" class="induxsoft-form-control" value="#<@('./codcuenta')>"  maxlength="50")
+                    }
+                    div(class="col-12 col-sm-6")
+                    {
+                        small{"Centro de consumo:"}
+                        #! do uie.dbSelect(def_cconsumo)
+                        #$ br{}
+                    }
+                }
+                
                 input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
-                label{"Centro de consumo:"}
-                ##
-                do uie.dbSelect(def_cconsumo)
-                ##br{}
+
                 legend{"Efectivo"}
                 div(class="mb-3 row")       
                 {
                     div(class="col-sm-6")
                     {
-                        label{"Límite de efectivo:"}
-                        input(type="number" name="uf_limefectivo" class="form-control" value="#<@('#./uf_limefectivo')>")
+                        small{"Límite de efectivo:"}
+                        input(type="number" name="uf_limefectivo" class="induxsoft-form-control" value="#<@('#./uf_limefectivo')>")
                     }
                     div(class="col-sm-6")
                     {
-                        label{"Ventas adicionales permitidas:"}
-                        input(type="number" name="uf_lime_vntadic" class="form-control" value="#<@('#./uf_lime_vntadic')>")
+                        small{"Ventas adicionales permitidas:"}
+                        input(type="number" name="uf_lime_vntadic" class="induxsoft-form-control" value="#<@('#./uf_lime_vntadic')>")
                     }
                     div(class="col-sm-6")
                     {
-                        label{"Límite para mostrar aviso:"}
-                        input(type="number" name="uf_lime_aviso" class="form-control" value="#<@('#./uf_lime_aviso')>")
+                        small{"Límite para mostrar aviso:"}
+                        input(type="number" name="uf_lime_aviso" class="induxsoft-form-control" value="#<@('#./uf_lime_aviso')>")
                     }
                     div(class="col-sm-6")
                     {
-                        label{"Mensaje de alerta:"}
-                        input(type="text" name="uf_lime_alerta" class="form-control" value="#<@('#./uf_lime_alerta')>")
+                        small{"Mensaje de alerta:"}
+                        input(type="text" name="uf_lime_alerta" class="induxsoft-form-control" value="#<@('#./uf_lime_alerta')>")
                     }
                     
                 }
@@ -83,71 +110,66 @@ module "form_view_caja.dk"
                     //     div(class="col-sm-6")
                     //     {
                     //         // input(type="checkbox" name="uf_corte_req" value="#<@('./uf_corte_req')>")
-                    //         // label(class="form-label"){"Corte requerido"}
+                    //         // small(class="form-small"){"Corte requerido"}
                     //     } 
                     // } 
-                    div(class="col-sm-6")
+                    div(class="col-6 col-lg-4")
                     {
-                        label{"Hora corte 1:"}
-                        input(type="time" name="uf_horacorte1" value="#<@('./hora1')>")
+                        small{"Hora corte 1:"}
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte1" value="#<@('./hora1')>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-6 col-lg-4")
                     {
-                        label{"Hora corte 2:"}
-                        input(type="time" name="uf_horacorte2"  value="#<@('./hora2')>")
+                        small{"Hora corte 2:"}
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte2"  value="#<@('./hora2')>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-6 col-lg-4")
                     {
-                        label{"Hora corte 3:"}
-                        input(type="time" name="uf_horacorte3" value="#<@('./hora3')>")
+                        small{"Hora corte 3:"}
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte3" value="#<@('./hora3')>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-6 col-lg-4")
                     {
-                        label{"Hora corte 4:"}
-                        input(type="time" name="uf_horacorte4"  value="#<@('./hora4')>")
+                        small{"Hora corte 4:"}
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte4"  value="#<@('./hora4')>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-6 col-lg-4")
                     {
-                        label{"Hora corte 5:"}
-                        input(type="time" name="uf_horacorte5"  value="#<@('./hora5')>")
+                        small{"Hora corte 5:"}
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte5"  value="#<@('./hora5')>")
                     }
                     div(class="mb-3 row")       
                     {
                         div(class="col-sm-6")
                         {
-                            label{"Ventas adicionales permitidas:"}
-                            input(type="number" name="uf_cortereq_vntadic" class="form-control" value="#<@('#./uf_cortereq_vntadic')>")
+                            small{"Ventas adicionales permitidas:"}
+                            input(type="number" name="uf_cortereq_vntadic" class="induxsoft-form-control" value="#<@('#./uf_cortereq_vntadic')>")
                         }
                         div(class="col-sm-6")
                         {
-                            label{"Límite de Tickets liberados:"}
-                            input(type="number" name="uf_lim_vntliber" class="form-control" value="#<@('#./uf_lim_vntliber')>")
+                            small{"Límite de Tickets liberados:"}
+                            input(type="number" name="uf_lim_vntliber" class="induxsoft-form-control" value="#<@('#./uf_lim_vntliber')>")
                         }
                         
                     }
                 }
-                legend{"Notas"}
+                small{"Notas"}
                 div(class="mb-3 row")       
                 {
                     div(class="col-sm-6")
                     {
-                        textarea(name="notas" class="form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
+                        textarea(name="notas" class="induxsoft-form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
                     }
                 }
-                div(class="text-center pt-4"){
-                    button(class="btn btn-primary m-1"){"Guardar"}
-                    a(href="../" class="btn btn-danger m-1"){"Cancelar"}
-                }
             }
-            
-        }
-        
-        }
+            div(id="status_bar" class="container-section")
+            {
+                $""
+            }
         }
     }
-	
-     ##
-	do @context.end()
+
+	#! do @context.end()
 }
 
 

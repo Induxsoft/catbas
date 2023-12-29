@@ -8,7 +8,11 @@ module "form_view_caja.dk"
     #include "dbr.dkh"
     #include "uielements.dkl"
     #include "../config.dk"
+    #include "../_lib/icons.dk"
+
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
 
     new def_contacto
     {
@@ -27,38 +31,38 @@ module "form_view_caja.dk"
         @"selected":@('./contacto')
     }
 
-    #$
-    div(id="dvi")
+    #$ div(class="container p-0")
     {
-        #!
-        #include "banco.dkl"
-        #$
+        #! #include "banco.dkl"
 
-        // div(class="alert alert-danger"){$"#<@('error/message')>"}
-        div(class="row justify-content-center")
+        #$ form(action="." method="POST" id="formContact" onsubmit="return validate()")
         {
-            div(class="w-75 card col-lg-6")
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
-                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
-                form(action="." method="POST" id="formContact" onsubmit="return validate()")
+                div(class="col-4 d-flex align-items-center p-0")
                 {
-                    label("style"="font-weight:bold"){"Nombre:"}
-                    input(type="text" name="nombre" class="form-control" value="#<@('./nombre')>" required="true" maxlength="50")
-                    label{"Contacto:"}
-                    #!
-                    do uie.dbSelect(def_contacto)        
-                    #$
-                    label(class="mt-2" "for"="website"){"WebSite:"}
-                    input(type="text" name="website" id="website" class="form-control" value="#<@('./website')>" maxlength="150")
-                    label{"Notas:"}
-                    textarea(name="notas" class="form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
-                    input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
-                    button(type="submit" id="btnSave" class="btn btn-primary m-1"){"Guardar"}
-                    a(href="../" class="btn btn-danger m-1"){"Cancelar"}
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Banco"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="submit" id="btnSave" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
                 }
             }
+            small(class="fw-bold"){"Nombre:"}
+            input(type="text" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" required="true" maxlength="50")
+            small{"Contacto:"}
+            #!
+            do uie.dbSelect(def_contacto)        
+            #$
+            small(class="mt-2" "for"="website"){"WebSite:"}
+            input(type="text" name="website" id="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
+            small{"Notas:"}
+            textarea(name="notas" class="induxsoft-form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
+            input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
+            
         }
-        
     }
 
     #!

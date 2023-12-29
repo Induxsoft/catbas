@@ -3,7 +3,8 @@
 
 module "caja.dk"
 {
-@list_query="select c.Sys_PK, c.sys_guid, c.sys_dtcreated, c.sys_timestamp, c.sys_recver,c.sys_deleted, c.sys_lock, c.codigo, c.descripcion,c.codcuenta,mo.descripcion AS descon from caja c 
+	#include "../config.dk"
+	@list_query="select c.Sys_PK, c.sys_guid, c.sys_dtcreated, c.sys_timestamp, c.sys_recver,c.sys_deleted, c.sys_lock, c.codigo, c.descripcion,c.codcuenta,mo.descripcion AS descon from caja c 
 	LEFT JOIN cconsumo mo ON c.centroconsumo=mo.Sys_PK where ifnull(c.sys_deleted,0)=0 ; "
 
 
@@ -58,7 +59,19 @@ module "caja.dk"
 		}
 		do entity.update(db,params,data)
 	}
+	function list(&db, &params)
+    {
+        query="SELECT c.Sys_PK, c.sys_guid, c.sys_dtcreated, c.sys_timestamp, c.sys_recver,c.sys_deleted, c.sys_lock, c.codigo, c.descripcion,c.codcuenta,mo.descripcion AS descon 
+			FROM caja c 
+				LEFT JOIN cconsumo mo ON c.centroconsumo=mo.Sys_PK
+            WHERE ifnull(c.sys_deleted,0)=0
+				AND IF(IFNULL(@s,'')='', true, (c.codigo LIKE CONCAT('%',@s,'%') OR c.descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY c.codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
 	point @read to caja.read
 	point @create to caja.create
 	point @update to caja.update
+	point @list to list
 }
