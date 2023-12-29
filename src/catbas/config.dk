@@ -4,7 +4,7 @@
 module "config.dk"
 {
 	@title=""
+	@gender="o"
 	@path_common="catbas/_common/list.dk"
 	@default_max_rows=250
-	@gender="o"
 }
