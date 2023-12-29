@@ -10,150 +10,155 @@ module "form_agente.dk"
     #include "dbr.dkh"
     #include "uielements.dkl"
     #include "../config.dk"
+    #include "../_lib/icons.dk"
 
     // do rise_error(99,to.json(@crud_context))
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
 
     new def_pais
     {
         @"datatable*":dbr.list(@("&database"),"select sys_pk, codigotel, nombre from pais order by nombre;",@null)
         member "attributes"
         {
-            @"class":"form-control pais"
-             @"style":"!important;border-color:#357aff"
+            @"class":"induxsoft-form-control pais"
+            @"style":"!important;border-color:#357aff"
         }
         @"value_field":"sys_pk"
         @"text_field":"nombre"
     }
 
-	##
-    div(class = "d-flex justify-content-center"  style="background-color:")
+	
+    #$ div(class="container p-0")
 	{
-        #!
-        #include "agente.dk"
-        #$
-		div(class= "w-75 mt-4")
-		{
-            div(class="card" )
+        #! #include "agente.dk"
+
+        #$ form(action="." method="POST")
+        {
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
+            {
+                div(class="col-4 d-flex align-items-center p-0")
+                {
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Agente"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="button" onclick="validate()" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
+                }
+            }
+            div(id="work_area" class="container-section")
             {
                 p{$"#<@('error/message')>"}
-
-                div(class= "card-body")
-                {	
-                    form(action="." method="POST")
+                div(class="mb-3 row")       
+                {
+                    div(class="col-sm-6")
                     {
-                        div(class="mb-3 row")       
-                        {
-                            div(class="col-sm-6")
-                            { 
-                                label("style"="font-weight:bold"){"Código:"}
-                                input(type="text" id="codigo" name="codigo" class="form-control"style="border-color:#357aff" value="#<@('./codigo')>" maxlength="10" )
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label("style"="font-weight:bold"){"Nombre:"}
-                                input(type="text" id="nombre" name="nombre"style="border-color:#357aff" class="form-control" value="#<@('./nombre')>" maxlength="50")
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label("style"="font-weight:bold"){"Comisión(%):"}
-                                input(type="number" id="pcomision" name="pcomision"style="border-color:#357aff" step="any" class="form-control" value="#<@('./pcomision')>")
-                            }
-                            fieldset(class="form-control mt-2")
-                            {
-                                legend{"Domicilio"}
-                                div(class="card")
-                                {
-                                    
-                                    div(class="card-body")
-                                    {
-                                        div(class="mb-3 row")       
-                                        {
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"País"}
-                                                ##
-                                                    do uie.dbSelect(def_pais)
-                                                ##
-                                            }
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Estado"}
-                                                select(class="form-control"style="border-color:#357aff" id="estado"){$""}
-                                            }
-                                            
-                                        }
-                                        div(class="mb-3 row")       
-                                        {
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Ciudad"}
-                                                // input(type="text" class="form-control" name="iciudad" value="#<@('./domicilio/iciudad')>")
-                                                select(class="form-control"style="border-color:#357aff" id="ciudad"){$""}
-                                            }
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Colonia"}
-                                                input(type="text" class="form-control"style="border-color:#357aff" id="colonia" value="#<@('./domicilio/colonia')>")
-                                            } 
-                                        }
-                                        div(class="mb-3")       
-                                        {
-                                            label(class="form-label"){"Dirección"}
-                                            input(type="text" id="direccion"style="border-color:#357aff" class="form-control"  value="#<@('./domicilio/direccion')>")
-                                        }
-                                        div(class="mb-3 row")       
-                                        {      
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Código postal"}
-                                                input(type="text" class="form-control"style="border-color:#357aff" id="codpos"  value="#<@('./domicilio/codpos')>")
-                                            } 
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Teléfono"}
-                                                input(type="text" class="form-control"style="border-color:#357aff" id="telefono" value="#<@('./domicilio/telefonos')>")
-                                            }
-                                        }
-                                
-                                
-                                    }                                   
-                                }
-                                input(type="hidden" class="form-control"style="border-color:#357aff" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
-                                input(type="hidden" class="form-control"style="border-color:#357aff" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label{"Código de Nomina:"}
-                                input(type="text" id="codnomina" name="codnomina"style="border-color:#357aff" class="form-control" value="#<@('./codnomina')>" maxlength="50")
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label{"Télefono:"}
-                                input(type="text" id="telefono1" name="telefono1"style="border-color:#357aff" class="form-control" value="#<@('./telefono')>" maxlength="150")
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label{"Email:"}
-                                input(type="text" id="email" name="email"style="border-color:#357aff" class="form-control" value="#<@('./email')>" maxlength="50")
-                            }
-                            div(class="col-sm-6")
-                            {
-                                label{"Notas:"}
-                                input(type="text" id="notas" name="notas"style="border-color:#357aff" class="form-control" value="#<@('./notas')>")
-                            }
-                        }
-                        input(type="hidden" class="form-control"style="border-color:#357aff" id="sys_recver" name="sys_recver" value="#<@('#./sys_recver')>")
-			            input(type="hidden" class="form-control"style="border-color:#357aff" id="sys_pk" name="sys_pk" value="#<field.dstr(@('&./'),'sys_pk',0)>")
+                        small(class="fw-bold"){"Código:"}
+                        input(type="text" id="codigo" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" maxlength="10" )
                     }
-
-                                            
-                        div(class="text-center pt-4")
+                    div(class="col-sm-6")
+                    {
+                        small(class="fw-bold"){"Nombre:"}
+                        input(type="text" id="nombre" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" maxlength="50")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small(class="fw-bold"){"Comisión(%):"}
+                        input(type="number" id="pcomision" name="pcomision" step="any" class="induxsoft-form-control" value="#<@('./pcomision')>")
+                    }
+                    fieldset(class="form-control mt-2")
+                    {
+                        legend{"Domicilio"}
+                        div(class="card")
                         {
-                            button(onclick="validate()" class="btn btn-primary m-2"){"Guardar"}
-                            a(class="btn btn-danger m-1" href="../" ){"Cancelar"}
+                            
+                            div(class="card-body")
+                            {
+                                div(class="mb-3 row")       
+                                {
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"País"}
+                                        ##
+                                            do uie.dbSelect(def_pais)
+                                        ##
+                                    }
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"Estado"}
+                                        select(class="induxsoft-form-control" id="estado"){$""}
+                                    }
+                                    
+                                }
+                                div(class="mb-3 row")       
+                                {
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"Ciudad"}
+                                        // input(type="text" class="form-control" name="iciudad" value="#<@('./domicilio/iciudad')>")
+                                        select(class="induxsoft-form-control" id="ciudad"){$""}
+                                    }
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"Colonia"}
+                                        input(type="text" class="induxsoft-form-control" id="colonia" value="#<@('./domicilio/colonia')>")
+                                    } 
+                                }
+                                div(class="mb-3")       
+                                {
+                                    small{"Dirección"}
+                                    input(type="text" id="direccion" class="induxsoft-form-control"  value="#<@('./domicilio/direccion')>")
+                                }
+                                div(class="mb-3 row")       
+                                {      
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"Código postal"}
+                                        input(type="text" class="induxsoft-form-control" id="codpos"  value="#<@('./domicilio/codpos')>")
+                                    } 
+                                    div(class="col-sm-6")
+                                    {
+                                        small{"Teléfono"}
+                                        input(type="text" class="induxsoft-form-control" id="telefono" value="#<@('./domicilio/telefonos')>")
+                                    }
+                                }
+                        
+                        
+                            }                                   
                         }
+                        input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
+                        input(type="hidden" class="form-control" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Código de Nomina:"}
+                        input(type="text" id="codnomina" name="codnomina" class="induxsoft-form-control" value="#<@('./codnomina')>" maxlength="50")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Télefono:"}
+                        input(type="text" id="telefono1" name="telefono1" class="induxsoft-form-control" value="#<@('./telefono')>" maxlength="150")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Email:"}
+                        input(type="text" id="email" name="email" class="induxsoft-form-control" value="#<@('./email')>" maxlength="50")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Notas:"}
+                        input(type="text" id="notas" name="notas" class="induxsoft-form-control" value="#<@('./notas')>")
+                    }
                 }
+                input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('#./sys_recver')>")
+                input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<field.dstr(@('&./'),'sys_pk',0)>")
+            }
+            div(id="status_bar" class="container-section")
+            {
+                $""
             }
         }
 

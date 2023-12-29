@@ -3,7 +3,7 @@
 
 module "agente.dk"
 {
-    
+    #include "../config.dk"
     @read_query = "select sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
     codigo,codnomina,pcomision,email,nombre,telefono,notas,domicilio1
     from agente where #<@keyfield>=@_entity_id limit 1;"
@@ -84,8 +84,20 @@ module "agente.dk"
 
 		return r
 	}
+
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,nombre,codnomina,telefono 
+            FROM agente 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
     point @read to agente.read
     point @create to agente.create
     point @update to agente.update
     point @delete to agente.delete
+    point @list to list
 }

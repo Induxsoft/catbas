@@ -9,6 +9,9 @@ module "list.dk"
     #include "uielements.dbtable.dkl"
     #include "../config.dk"
 
+    @gender="o"
+    @title="Agentes"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -52,12 +55,10 @@ module "list.dk"
     }
 
     #$
-    div(class="m-0 justify-content-center" )
+    div
 	{
-        // p{"#<to.json(@@(@crud_context,'&http'))>"}
     	#!
     	#include "agente.dk"
-    	
         include @path_common
     }
     do @context.end()
