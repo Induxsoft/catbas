@@ -6,6 +6,9 @@ module "list_view_almacen.dk"
 	#include "functions.dkh"
 	#include "serialize.dkh"
 	#include "../config.dk"
+
+	@gender="o"
+    @title="Almacenes"
 	
 	do @context.begin(@crud_context)
 
@@ -43,16 +46,13 @@ module "list_view_almacen.dk"
         	}
         }
     }
-    #$
-    div(class="m-0 justify-content-center" )
+
+    #$ 
+	div
 	{
-		div(class="")
-		{
-			#!
-			#include "almacen.dkl"
-    		include @path_common
-		}
-		
+		#! 
+		#include "almacen.dkl"
+		include @path_common
 	}
    
 	do @context.end()

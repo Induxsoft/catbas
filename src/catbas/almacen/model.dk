@@ -3,6 +3,7 @@
 
 module "almacen.dk"
 {
+	#include "../config.dk"
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
         codigo,codcuenta,fax,website,
@@ -93,6 +94,15 @@ module "almacen.dk"
 
 		return r
 	}
+	function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,descripcion,codcuenta 
+            FROM almacen 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
 	/*almacen.blank::&db,&params
 	{
 
@@ -105,4 +115,5 @@ module "almacen.dk"
     point @delete to almacen.delete
     // ref @delete=@null
     point @update to almacen.update
+	point @list to list
 }
