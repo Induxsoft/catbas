@@ -3,7 +3,19 @@
 
 module "ut_aduana.dk"
 {
-    @list_query="select #<@sys_fields>, uf_codigo,uf_nombre,uf_ciudad,uf_notas from ut_aduana"
+    #include "../config.dk"
+
     @read_query="select #<@sys_fields>, uf_codigo,uf_nombre,uf_ciudad,uf_notas from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
-    
+
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, uf_codigo,uf_nombre,uf_ciudad,uf_notas 
+            FROM ut_aduana 
+            WHERE IF(IFNULL(@s,'')='', true, (uf_codigo LIKE CONCAT('%',@s,'%') OR uf_nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY uf_codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
+    point @list to list
 }

@@ -5,8 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
-
+    
+    @gender="a"
     @title="Aduanas"
+    
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -42,7 +44,6 @@ module "list.dk"
     	#!
         #include "ut_aduana.dkl"
     	include @path_common
-        
     }
 
     #!

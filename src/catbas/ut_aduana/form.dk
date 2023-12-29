@@ -8,6 +8,8 @@ module "form.dk"
     #include "../_lib/icons.dk"
 
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
     
     #$ div(class="container p-0")
     {
@@ -17,12 +19,13 @@ module "form.dk"
             {
                 div(class="col-4 d-flex align-items-center p-0")
                 {
-                    h5(class="tex-no-break m-0"){$"Registrar Aduana"}
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Aduana"}
                 }
                 div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
                 {
-                    button(type="submit" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
-                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="submit" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Guardar"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Salir"){$"#<@ICON_X_LG>"}
                 }
             }
             div(id="work_area" class="container-section")
