@@ -5,6 +5,8 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @title="Aduanas"
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")

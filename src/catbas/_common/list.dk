@@ -8,6 +8,7 @@ module "list.dk"
     #include "uielements.dkl"
     #include "uielements.dbtable.dkl"
     #include "serialize.dkh"
+    #include "../_lib/icons.dk"
 
     cell_link_func::&params, &row, &cell
     {
@@ -26,10 +27,13 @@ module "list.dk"
         if @@(cell,"cell_type")!="data" &&  @@(cell,"cell_type")!="unknow" { return }
         if @@(cell,"column")=="_actions"
         {
-            cell<"text">:ftext('<a id="btnEditar" href="./#<@@(row,"sys_pk")>/">Editar</a> |<a onclick="deleteEntity(#<@@(row,"sys_pk")>)" href="#" id="btnEliminar">Eliminar</a>')
-            
+            cell<"text">:ftext('
+                <div class="d-flex gap-2 justify-content-center">
+                    <a class="btn btn-sm btn-light" id="btnEditar" href="./#<@@(row,"sys_pk")>/">Editar</a>
+                    <a class="btn btn-sm btn-light" onclick="deleteEntity(#<@@(row,"sys_pk")>)" href="#" id="btnEliminar">Eliminar</a>
+                </div>
+            ')
         }
-        
     }
 
     point cell_link to cell_link_func
@@ -42,28 +46,44 @@ module "list.dk"
             @"class":"table table-hover"
         }
     }
-    
 
-    ##
-    div(class="container-fluid" id="div-first")
+    #$
+    div(class="container p-0" id="div-first")
     {
-
-        a(class="btn btn-light shadow-sm p-2 mb-2" style="background-color:#357aff1" href="./_new/" id="btnAgregar"){i(class="fa fa-plus" style="color:#dc3545"){""}$"Agregar"}
-        div(style="overflow-y:auto;height:80%")
+        div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
         {
-                 ##
-                do uie.dbtable(@table_definition)
+            div(class="col-4 d-flex align-items-center p-0")
+            {
+                h5(class="tex-no-break m-0"){$"#<ifstr(isset('@title'), @title, '')>"}
+            }
+            div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2")
+            {
+                a(class="btn btn-sm border-secondary induxsoft-corners btn-main-action" href="./_new/" id="btnAgregar"){i(class="fa fa-plus" style="color:#dc3545"){""}$"Agregar"}
+            }
+        }
+        div
+        {
+            div(class="d-flex mb-2")
+            {
+                input(class="induxsoft-form-control flex-grow-1" type="text" url="#" placeholder="Buscar")
+                button(class="btn btn-sm btn-primary induxsoft-corners d-flex gap-2 align-items-center"){
+                    $"Buscar"
+                    $"#<@ICON_SEARCH>"
+                }
+            }
+            div(style="overflow-y:auto;height:80%")
+            {
+                #! do uie.dbtable(@table_definition)
                 if @count(@@(@table_definition,"&array_data"))<=0
                 {
-                    #$
-                    div(class="text-center")
+                    #$ div(class="text-center")
                     {
-                        h4(style="margin-top:10%"){"Ningún dato encontrado."}
+                        h6(style="background-color: #F5F5F5; padding: 10rem 0;"){"No se encontró ningún resultado, use el cuadro de búsqueda."}
                     }
                 }
-                ##
+            }
         }
-        #$
+
         style{
             $'
             @media only screen and (max-width: 500px) and (min-width: 341px)
@@ -75,5 +95,4 @@ module "list.dk"
             '
         }
     }
-    ##
 }
