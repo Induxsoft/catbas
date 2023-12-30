@@ -74,9 +74,12 @@ module "list.dk"
                     $"#<@ICON_SEARCH>"
                 }
             }
-            div(style="overflow-y:auto;height:80%")
+            div
             {
-                #! do uie.dbtable(@table_definition)
+                div(style="overflow-y:auto;max-height: 75vh;" class="mb-2")
+                {
+                    #! do uie.dbtable(@table_definition)
+                }
                 lenght = @count(@@(@table_definition,"&array_data"))
                 if lenght <= 0
                 {

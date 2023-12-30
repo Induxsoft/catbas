@@ -7,6 +7,10 @@ module "list_view_banco"
     #include "serialize.dkh"
     #include "../config.dk"
 
+    @gender="o"
+    @title="Tipos de pólizas"
+    order_by="descripción"
+
     do @context.begin(@crud_context)
     ref @http_context = @("&http")
 

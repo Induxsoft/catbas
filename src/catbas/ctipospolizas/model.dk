@@ -3,7 +3,8 @@
 
 module "banco.dk"
 {
-    @list_query="select ID as sys_pk,Const,uf_sat_TipoPoliza from #<@table_name>"
+	#include "../config.dk"
+
     @keyfield="id"
 	@read_query="select ID as sys_pk,Const,uf_sat_TipoPoliza from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 	@table_name="ctipospolizas"
@@ -66,7 +67,18 @@ module "banco.dk"
 		}
 	}
 
+	function list(&db, &params)
+    {
+        query="SELECT id as sys_pk,const,IFNULL(uf_sat_TipoPoliza,'') uf_sat_TipoPoliza
+			FROM ctipospolizas
+            WHERE IF(IFNULL(@s,'')='', true, (Const LIKE CONCAT('%',@s,'%') OR id LIKE CONCAT('%',@s,'%')))
+            ORDER BY Const
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
 	point @create to poliza.create
 	point @update to poliza.update
 	point @delete to poliza.delete
+	point @list to list
 }

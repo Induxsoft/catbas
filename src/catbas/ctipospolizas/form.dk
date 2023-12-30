@@ -8,7 +8,11 @@ module "form_view_caja.dk"
     #include "dbr.dkh"
     #include "uielements.dkl"
     #include "../config.dk"
+    #include "../_lib/icons.dk"
+
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
 
     new def_uf_sat
     {
@@ -16,7 +20,7 @@ module "form_view_caja.dk"
         @"id":"uf_sat_TipoPoliza"
         member "attributes"
         {
-            @"class":"form-select"
+            @"class":"induxsoft-form-select"
             @"name":"uf_sat_TipoPoliza"
             // @"required":"true"
         }
@@ -26,61 +30,57 @@ module "form_view_caja.dk"
         @"first_value":"@"
         @"selected":@('#./uf_sat_TipoPoliza')
     }
-    // do rise_error(99,to.json(@("&.")))
+
     @editable=@false
     if field.exist(@("&."),"sys_pk") && @("#./sys_pk")<3{
         @editable=@true
         def_uf_sat<"attributes/disabled">:@true
     }
 
-    #$
-    div(id="dvi")
+    #$ div(class="container p-0")
     {
-        #!
-        #include "poliza.dkl"
-        #$
-
-        div(class="m-0 row justify-content-center ")
+        #! #include "poliza.dkl"
+        #$ form(action="." method="POST" id="formContact" )
         {
-            div(class="card p-3" id="dv-w" style="width:50%")
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
-                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
-                div(class="card-body")
+                div(class="col-4 d-flex align-items-center p-0")
                 {
-                    form(action="." method="POST" id="formContact" )
-                    {
-                        label("style"="font-weight:bold"){"Nombre:"}
-                        input(type="text" name="descripcion" "#<ifstr(@editable,'disabled','')>"="true" class="form-control" value="#<@('./Const')>" required="true" maxlength="50")
-
-                        label(class="mt-2" "for"="uf_sat_TipoPoliza"){"uf_sat_TipoPoliza:"}
-                        #!
-                            do uie.dbSelect(def_uf_sat)
-                        #$
-                        
-                        //input(type="number" name="uf_sat_TipoPoliza" min="0" "#<ifstr(@editable,'disabled','')>"="true" id="uf_sat_TipoPoliza" class="form-control" value="#<@('#./uf_sat_TipoPoliza')>" maxlength="150")
-                        
-                        input(type="hidden" name="sys_recver" value="#<@('#./sys_recver')>")
-                        input(type="hidden" name="id" value="#<@('#./sys_pk')>")
-                        button(type="submit" id="btnSave" "#<ifstr(@editable,'disabled','')>"="true" class="btn btn-primary m-1"){"Guardar"}
-                        a(href="../" class="btn btn-danger m-1"){"Cancelar"}
-                    }
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Tipo de Póliza"}
                 }
-                
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="submit" id="btnSave" "#<ifstr(@editable,'disabled','')>"="true" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
+                }
             }
-            #$
-            style{
-                $'
-                @media only screen and (max-width: 500px) and (min-width: 100px)
-                {
-                    #dv-w{
-                        margin-top:30 !important;
-                        width:80% !important;
-                    }
-                }
-                '
+            div(id="work_area" class="container-section")
+            {
+                p{$"#<@('error/message')>"}
+
+                small(class="fw-bold"){"Nombre:"}
+                input(type="text" name="descripcion" "#<ifstr(@editable,'disabled','')>"="true" class="induxsoft-form-control" value="#<@('./Const')>" required="true" maxlength="50")
+
+                small(class="mt-2" "for"="uf_sat_TipoPoliza"){"uf_sat_TipoPoliza:"}
+                #! do uie.dbSelect(def_uf_sat)
+                
+                //input(type="number" name="uf_sat_TipoPoliza" min="0" "#<ifstr(@editable,'disabled','')>"="true" id="uf_sat_TipoPoliza" class="form-control" value="#<@('#./uf_sat_TipoPoliza')>" maxlength="150")
+                
+                #$ input(type="hidden" name="sys_recver" value="#<@('#./sys_recver')>")
+                input(type="hidden" name="id" value="#<@('#./sys_pk')>")
             }
         }
-        
+
+        style{$' 
+            @media only screen and (max-width: 500px) and (min-width: 100px)
+            {
+                #dv-w{
+                    margin-top:30 !important;
+                    width:80% !important;
+                }
+            }'
+        }
     }
 
     #!

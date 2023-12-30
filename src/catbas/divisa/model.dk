@@ -3,7 +3,7 @@
 
 module "divisa.dk"
 {
-    @list_query="select #<@sys_fields>, codigo,descripcion,tcambio from divisa"
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,tcambio from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
     
     divisa.create::&db,&params,data
@@ -22,7 +22,17 @@ module "divisa.dk"
         }
         do entity.update(db,params,data)
     }
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,descripcion,tcambio 
+            FROM divisa
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
     // point @read to caja.read
     point @create to divisa.create
     point @update to divisa.update
+    point @list to list
 }

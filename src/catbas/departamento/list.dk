@@ -5,6 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="o"
+    @title="Departamentos"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -21,7 +25,6 @@ module "list.dk"
             member @"_actions"
             {
                 @"caption":"Acciones"
-                
             }
         }
     }
