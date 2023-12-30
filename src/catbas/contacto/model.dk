@@ -1,12 +1,8 @@
 #include "dkli.dkh"
 #!
-module "contacto.dk"{
-    
-    @list_query="select c.sys_pk, c.sys_guid, c.sys_recver, c.sys_timestamp,c.notas, c.sys_dtcreated, c.sys_deleted, 
-    c.Tratamiento,c.Nombre,c.Apellidos,c.Empresa,c.Puesto,c.Tel1,c.eMail1,c.WebSite,concat(d.direccion,', ',d.colonia,', ',cd.nombre) as domicilio
-    from contacto c 
-    inner join domicilio d on c.domicilio1 = d.sys_pk
-    inner join ciudad cd on d.iciudad = cd.sys_pk;"
+module "contacto.dk"
+{
+    #include "../config.dk"
 
     @read_query = "select sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
     tratamiento,nombre,apellidos,empresa,puesto,tel1,email1,website,domicilio1
@@ -111,8 +107,22 @@ module "contacto.dk"{
         do rise_error(88,to.json(params))
     }
 
+    function list(&db, &params)
+    {
+        query="SELECT c.sys_pk, c.sys_guid, c.sys_recver, c.sys_timestamp,c.notas, c.sys_dtcreated, c.sys_deleted, 
+                c.Tratamiento,c.Nombre,c.Apellidos,c.Empresa,c.Puesto,c.Tel1,c.eMail1,c.WebSite,concat(IFNULL(d.direccion,''),', ',IFNULL(d.colonia,''),', ',IFNULL(cd.nombre,'')) as domicilio
+                from contacto c
+                left join domicilio d on c.domicilio1 = d.sys_pk
+                left join ciudad cd on d.iciudad = cd.sys_pk
+            WHERE IF(IFNULL(@s,'')='', true, (c.Nombre LIKE CONCAT('%',@s,'%') OR c.Empresa LIKE CONCAT('%',@s,'%') OR c.Puesto LIKE CONCAT('%',@s,'%')))
+            ORDER BY c.Nombre
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
     point @read to contacto.read
     point @create to contacto.create
     point @update to contacto.update
     // point @blank to contacto.blank
+    point @list to list
 }

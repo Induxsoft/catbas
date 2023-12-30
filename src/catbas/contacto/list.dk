@@ -6,8 +6,12 @@ module "list_view_contacto.dk"
 	#include "functions.dkh"
 	#include "serialize.dkh"
     #include "../config.dk"
-    do @context.begin(@crud_context)
 
+	@gender="o"
+    @title="Contactos"
+	order_by="nombre"
+
+    do @context.begin(@crud_context)
 	ref @http_context=@("&http")
 	
 	new @table_definition
@@ -77,12 +81,12 @@ module "list_view_contacto.dk"
         	}
         }
     }
+
     #$
     div{
     	#!
 		#include "contacto.dkl"
         include @path_common
-    	
     }
 	do @context.end()
 }
