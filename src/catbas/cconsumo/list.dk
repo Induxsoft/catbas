@@ -5,6 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="o"
+    @title="Centros de consumo"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -26,11 +30,9 @@ module "list.dk"
         }
     }
 
-    #$
-    div(class="m-0 justify-content-center" )
+    #$ div
 	{
-    	#!
-    	#include "consumo.dk"
+    	#!#include "consumo.dk"
     	include @path_common
     }
     do @context.end()

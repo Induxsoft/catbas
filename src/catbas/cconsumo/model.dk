@@ -3,8 +3,7 @@
 
 module "cconsumo.dk"
 {
-	@list_query="select sys_pk, sys_recver, codigo, descripcion from cconsumo order by codigo;"
-
+	#include "../config.dk"
 	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado from cconsumo where #<@keyfield>=@_entity_id limit 1;"
 	
 	cconsumo.read::&db,&params
@@ -55,8 +54,19 @@ module "cconsumo.dk"
     	}
 		
 	}
+
+	function list(&db, &params)
+    {
+        query="SELECT sys_pk, sys_recver, codigo, descripcion
+            FROM cconsumo 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
 	
 	point @read to cconsumo.read
 	point @create to cconsumo.create 
 	point @update to cconsumo.update
+	point @list to list
 }

@@ -5,6 +5,11 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="o"
+    @title="Impuestos"
+    order_by="nombre"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -75,6 +80,7 @@ module "list.dk"
             }
         }
     }
+
     #$
     div
     {
@@ -82,6 +88,4 @@ module "list.dk"
         #include "cfgimpuesto.dk"
         include @path_common
     }
-    
-    
 }

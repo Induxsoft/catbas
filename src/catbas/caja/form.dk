@@ -50,6 +50,8 @@ module "form_view_caja.dk"
             }
             div(id="work_area" class="container-section")
             {
+                p{$"#<@('error/message')>"}
+
                 div(class="row")
                 {
                     div(class="col-12 col-sm-2")
@@ -83,24 +85,23 @@ module "form_view_caja.dk"
                     div(class="col-sm-6")
                     {
                         small{"Límite de efectivo:"}
-                        input(type="number" name="uf_limefectivo" class="induxsoft-form-control" value="#<@('#./uf_limefectivo')>")
+                        input(type="number" name="uf_limefectivo" class="induxsoft-form-control valide-length" value="#<@('#./uf_limefectivo')>" step="0.0000001" max="999999999.9999999")
                     }
                     div(class="col-sm-6")
                     {
                         small{"Ventas adicionales permitidas:"}
-                        input(type="number" name="uf_lime_vntadic" class="induxsoft-form-control" value="#<@('#./uf_lime_vntadic')>")
+                        input(type="number" name="uf_lime_vntadic" class="induxsoft-form-control valide-length" value="#<@('#./uf_lime_vntadic')>" max="99999999999")
                     }
                     div(class="col-sm-6")
                     {
                         small{"Límite para mostrar aviso:"}
-                        input(type="number" name="uf_lime_aviso" class="induxsoft-form-control" value="#<@('#./uf_lime_aviso')>")
+                        input(type="number" name="uf_lime_aviso" class="induxsoft-form-control valide-length" value="#<@('#./uf_lime_aviso')>" step="0.0000001" max="999999999.9999999")
                     }
                     div(class="col-sm-6")
                     {
                         small{"Mensaje de alerta:"}
-                        input(type="text" name="uf_lime_alerta" class="induxsoft-form-control" value="#<@('#./uf_lime_alerta')>")
+                        input(type="text" name="uf_lime_alerta" class="induxsoft-form-control" value="#<@('$./uf_lime_alerta')>" maxlength="500")
                     }
-                    
                 }
                 legend{"Cortes"}
                 div(class="mb-3 row")       
