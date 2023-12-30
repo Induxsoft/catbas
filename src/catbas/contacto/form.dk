@@ -92,41 +92,118 @@ module "form.dk"
                     p{$"#<@('error/message')>"}
                     div(class="tab-pane fade show active pt-3" id="general" role="tabpanel" "aria-labelledby"="general-tab")
                     {
-                        small{"Tratamiento:"}
-                        input(type="text" name="tratamiento" class="induxsoft-form-control" value="#<@('./tratamiento')>" maxlength="5")
-                        small(class="fw-bold"){"Nombre:"}
-                        input(type="text" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" required="true" maxlength="50")
-                        small(class="fw-bold"){"Apellidos:"}
-                        input(type="text" name="apellidos" class="induxsoft-form-control" value="#<@('./apellidos')>" required="true" maxlength="50")
-                        small{"Empresa:"}
-                        input(type="text" name="empresa" class="induxsoft-form-control" value="#<@('./empresa')>" maxlength="50")
-                        small{"Puesto:"}
-                        input(type="text" name="puesto" class="induxsoft-form-control" value="#<@('./puesto')>" maxlength="30")
-                        small{"Teléfono:"}
-                        input(type="text" name="tel1" class="induxsoft-form-control" value="#<@('./tel1')>" maxlength="50")
-                        small{"Correo electrónico:"}
-                        input(type="text" name="email1" class="induxsoft-form-control" value="#<@('./email1')>" maxlength="50")
-                        small{"Sitio Web:"}
-                        input(type="text" name="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
                         input(type="hidden" class="form-control" name="sys_pk" value="#<@('./sys_pk')>")
                         input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
+
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-2")
+                            {
+                                small{"Tratamiento:"}
+                                input(type="text" name="tratamiento" class="induxsoft-form-control" value="#<@('./tratamiento')>" maxlength="5")
+                            }
+                            div(class="col-sm-10")
+                            {
+                                small(class="fw-bold"){"Nombre:"}
+                                input(type="text" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" required="true" maxlength="50")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="fw-bold"){"Apellidos:"}
+                                input(type="text" name="apellidos" class="induxsoft-form-control" value="#<@('./apellidos')>" required="true" maxlength="50")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Empresa:"}
+                                input(type="text" name="empresa" class="induxsoft-form-control" value="#<@('./empresa')>" maxlength="50")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Puesto:"}
+                                input(type="text" name="puesto" class="induxsoft-form-control" value="#<@('./puesto')>" maxlength="30")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Teléfono:"}
+                                input(type="text" name="tel1" class="induxsoft-form-control" value="#<@('./tel1')>" maxlength="50")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Correo electrónico:"}
+                                input(type="text" name="email1" class="induxsoft-form-control" value="#<@('./email1')>" maxlength="50")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Sitio Web:"}
+                                input(type="text" name="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
+                            }
+                        }
                     }
                     div(class="tab-pane fade pt-3" id="address" role="tabpanel" "aria-labelledby"="address-tab")
                     {
-                        small{"País:"}
-                        #! do uie.dbSelect(def_pais)
-                        #$ small{"Estado:"}
-                        #! do uie.dbSelect(def_estado)
-                        #$ small{"Ciudad:"}
-                        #! do uie.dbSelect(def_ciudad)
-                        #$ small{"Dirección:"}
-                        input(type="text" name="domicilio_direccion" class="induxsoft-form-control" value="#<@('./domicilio/direccion')>" maxlength="1024")
-                        small{"Colonia:"}
-                        input(type="text" name="domicilio_colonia" class="induxsoft-form-control" value="#<@('./domicilio/colonia')>" maxlength="150")
-                        small{"Código Postal:"}
-                        input(type="text" name="domicilio_codpos" class="induxsoft-form-control" value="#<@('./domicilio/codpos')>" maxlength="10")
-                        small{"Tel:"}
-                        input(type="text" name="domicilio_telefonos" class="induxsoft-form-control" value="#<@('./domicilio/telefonos')>" maxlength="150")
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"País:"}
+                                ##
+                                do uie.dbSelect(def_pais)
+                                ##
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Estado:"}
+                                ##
+                                do uie.dbSelect(def_estado)
+                                ##
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Ciudad:"}
+                                ##
+                                do uie.dbSelect(def_ciudad)
+                                ##
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Colonia:"}
+                                input(type="text" name="domicilio_colonia" class="induxsoft-form-control" value="#<@('./domicilio/colonia')>" maxlength="150")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-12")
+                            {
+                                small{"Dirección:"}
+                                input(type="text" name="domicilio_direccion" class="induxsoft-form-control" value="#<@('./domicilio/direccion')>" maxlength="1024")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-2")
+                            {
+                                small{"Código Postal:"}
+                                input(type="text" name="domicilio_codpos" class="induxsoft-form-control" value="#<@('./domicilio/codpos')>" maxlength="10")
+                            }
+                            div(class="col-sm-10")
+                            {
+                                small{"Tel:"}
+                                input(type="text" name="domicilio_telefonos" class="induxsoft-form-control" value="#<@('./domicilio/telefonos')>" maxlength="150")
+                            }
+                        }
+
                         input(type="hidden" name="domicilio_sys_recver" value="#<@('./domicilio/sys_recver')>")
                         input(type="hidden" name="domicilio_sys_pk" value="#<@('./domicilio/sys_pk')>")
                     }

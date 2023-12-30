@@ -5,6 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="o"
+    @title="Repartidores"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -26,7 +30,7 @@ module "list.dk"
     }
 
     #$
-    div(class="m-0 justify-content-center" )
+    div
 	{
     	#!
     	#include "repartidor.dk"

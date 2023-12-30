@@ -9,9 +9,11 @@ module "list.dk"
     #include "serialize.dkh"
     #include "../config.dk"
 
+    @gender="o"
+    @title="Paises"
+
     do @context.begin(@crud_context)
-    // ref row:@item(@("&."),0)
-    // do rise_error(99,@@(row,"sys_pk"))    
+
     new @table_definition
     {
         @"datatable*":@("&.")
@@ -36,35 +38,21 @@ module "list.dk"
                 
             }
         }
-         member @"rows_attributes"
+        member @"rows_attributes"
         {
-           member @"detail"
-           {
-              @"onclick":"SelectRow(#<@@(row,'sys_pk')>,event,'#<@@(row,'nombre')>')" //Ejemplo
-              @"class":"tr_hover"
-           }
+            member @"detail"
+            {
+                @"onclick":"SelectRow(#<@@(row,'sys_pk')>,event,'#<@@(row,'nombre')>')" //Ejemplo
+                @"class":"tr_hover"
+            }
         }
-
-
     }
 
-    
-
-
-    
-
-    ##
-    div(class="m-0 justify-content-center" id="")
+    #$ div(class="m-0 justify-content-center" id="")
     {
-        ##
-        #include "pais.dk"
-        include @path_common
-        //do uie.dbtable(@table_definition)
-        ##
-        #$
-        
+        #! #include "pais.dk"
+        include @path_common   
     }
-    ##
+
     do @context.end()
-    
 }

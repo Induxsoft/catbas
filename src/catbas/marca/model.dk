@@ -3,9 +3,18 @@
 
 module "marca.dk"
 {
-    @list_query="select #<@sys_fields>, codigo,descripcion from marca order by descripcion asc"
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
-    // do rise_error(0,ftext(@read_query))
 
-    // ref @delete=@null
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,descripcion 
+            FROM marca 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
+    point @list to list
 }

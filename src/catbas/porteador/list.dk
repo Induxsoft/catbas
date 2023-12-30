@@ -5,6 +5,10 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "../config.dk"
+
+    @gender="o"
+    @title="Porteadores"
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -27,7 +31,7 @@ module "list.dk"
     }
 
     #$
-    div(class="m-0 row justify-content-center" )
+    div
 	{
     	#!
     	#include "porteador.dk"

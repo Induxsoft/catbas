@@ -144,12 +144,12 @@ module "form_view_caja.dk"
                         div(class="col-sm-6")
                         {
                             small{"Ventas adicionales permitidas:"}
-                            input(type="number" name="uf_cortereq_vntadic" class="induxsoft-form-control" value="#<@('#./uf_cortereq_vntadic')>")
+                            input(type="number" name="uf_cortereq_vntadic" class="induxsoft-form-control" value="#<@('#./uf_cortereq_vntadic')>" step="1" max="99999999999")
                         }
                         div(class="col-sm-6")
                         {
                             small{"Límite de Tickets liberados:"}
-                            input(type="number" name="uf_lim_vntliber" class="induxsoft-form-control" value="#<@('#./uf_lim_vntliber')>")
+                            input(type="number" name="uf_lim_vntliber" class="induxsoft-form-control" value="#<@('#./uf_lim_vntliber')>" step="1" max="99999999999")
                         }
                         
                     }

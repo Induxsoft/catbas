@@ -8,272 +8,289 @@ module "form.dk"
     #include "dbr.dkh"
     #include "uielements.dkl"
     #include "../config.dk"
+    #include "../_lib/icons.dk"
+
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
+    @url_root_entity = "/!/catbas/repartidor/"
 
     new def_pais
     {
         @"datatable*":dbr.list(@("&database"),"select sys_pk, codigotel, nombre from pais order by nombre;",@null)
         member "attributes"
         {
-            @"class":"form-control pais"
+            @"class":"induxsoft-form-select pais"
         }
         @"value_field":"sys_pk"
         @"text_field":"nombre"
     }
 
 
-    ##
-    div(class = "d-flex justify-content-center")
-		{
-            #!
-            #include "repartidor.dk"
-            #$
-			div(class= "w-50 mt-4" id="dv-w")
-			{
-                 
-                div(class="card")
-                {
-                    div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
-                    
-                    div(class= "card-body")
-                    {	
-                        form(action="." method="POST")
-                        {
-                            div(class="mb-3 row")       
-                            {
-                                div(class="col-sm-6")
-                                {
-                                    label("style"="font-weight:bold"){"Código:"}
-                                    input(type="text" class="form-control" id="codigo" name="codigo" value="#<@('./codigo')>" maxlength="5")
-                                }
-                                div(class="col-sm-6")
-                                {
-                                    label("style"="font-weight:bold"){"Nombre:"}
-                                    input(type="text" class="form-control" id="nombre" name="nombre" value="#<@('./nombre')>" maxlength="50")
-                                }          
-                            }
-                            fieldset(class="form-control")
-                            {
-                                legend{"Domicilio"}
-                                div(class="card")
-                                {
-                                    div(class="card-header"){"Dirección"}
-                                    div(class="card-body")
-                                    {
-                                        div(class="mb-3 row")       
-                                        {
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"País"}
-                                                ##
-                                                    do uie.dbSelect(def_pais)
-                                                ##
-                                            }
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Estado"}
-                                                select(class="form-control" id="estado"){$""}
-                                            }
-                                            
-                                        }
-                                        div(class="mb-3 row")       
-                                        {
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Ciudad"}
-                                                // input(type="text" class="form-control" name="iciudad" value="#<@('./domicilio/iciudad')>")
-                                                select(class="form-control" id="ciudad"){$""}
-                                            }
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Colonia"}
-                                                input(type="text" class="form-control" id="colonia" value="#<@('./domicilio/colonia')>")
-                                            } 
-                                        }
-                                        div(class="mb-3")       
-                                        {
-                                            label(class="form-label"){"Dirección"}
-                                            input(type="text" id="direccion" class="form-control"  value="#<@('./domicilio/direccion')>")
-                                        }
-                                        div(class="mb-3 row")       
-                                        {      
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Código postal"}
-                                                input(type="text" class="form-control" id="codpos" value="#<@('./domicilio/codpos')>")
-                                            } 
-                                            div(class="col-sm-6")
-                                            {
-                                                label(class="form-label"){"Teléfono"}
-                                                input(type="text" class="form-control" id="telefono" value="#<@('./domicilio/telefonos')>")
-                                            }
-                                        }
-                                
-                    
-                                    }                                   
-                                }
-                                input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
-                                input(type="hidden" class="form-control" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
-
-                            }
-                            div(class="mb-3 row")       
-                            {
-                                div(class="col-sm-6")
-                                {
-                                    label(class="form-label"){"Email:"}
-                                    input(type="email" class="form-control" id="email" name="email" value="#<@('./email')>" maxlength="50")
-                                }
-                                div(class="col-sm-6")
-                                {
-                                    label(class="form-label"){"Código de nómina:"}
-                                    input(type="text" class="form-control" id="codnomina" name="codnomina" value="#<@('./codnomina')>" maxlength="50")
-                                }    
-                                div(class="col-sm-6")
-                                {
-                                    label(class="form-label"){"Notas:"}
-                                    input(type="text" class="form-control" id="notas" name="notas" value="#<@('./notas')>")
-                                }        
-                            }
-                            input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('./sys_recver')>")
-				            input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<field.dstr(@('&./'),'sys_pk',0)>")
-                        }                      
-                            div(class="text-center pt-4")
-                            {
-                                button(onclick="validate()" class="btn btn-primary m-1"){"Guardar"}
-                                a(class="btn btn-danger m-1" href="../" ){"Cancelar"}
-                            } 
-                    }
-                }
-            }
-            #$
-            style{
-                $'
-                @media only screen and (max-width: 500px) and (min-width: 100px)
-                {
-                    #dv-w{
-                        margin-top:30 !important;
-                        width:80% !important;
-                    }
-                }
-                '
-            }
-            #$
-            script
+    #$ div(class="container p-0")
+    {
+        #! #include "repartidor.dk"
+        
+        #$ form(action="." method="POST")
+        {
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
-                $"
-
-                var selectPais = document.getElementsByClassName('pais')[0];
-                var selectEstado = document.getElementById('estado');
-                var selectCiudad = document.getElementById('ciudad');
-
-                
-                $(selectPais).change( ()=>{
-                    $('#estado').empty();
-                    $('#ciudad').empty();
-                    listarEstados(e=>{
-                        $('#estado').change();
-                    });
-                });
-
-
-                $(selectEstado).change( ()=>{
-                    $('#ciudad').empty();
-                    listarCiudades(e=>{
-                        //console.log('kisya');
-                    });
-                })
-                
-                
-
-                //************* LISTA LOS ESTADOS Y MUNICIPIOS AL EDITAR PRESELECCIONA EL EDO/CIUDAD DEL REGISTRO CORRESPONDIENTE **************
-                
-                
-
-                function listarEstados(a)
+                div(class="col-4 d-flex align-items-center p-0")
                 {
-                    var paisSeleccionado = $(selectPais).val();
-                    var urlPaisSeleccionado = '#<@url_root>edoprov/?pais='+paisSeleccionado
-                    $.ajax({
-                            type: 'GET',
-                            dataType: 'json',
-                            accepts: 'application/json',
-                            url: urlPaisSeleccionado,
-                            
-                            success: function(data) {
-                                const temp3 = data;
-                                $.each(temp3, function(sys_pk, nombre) {
-                                    $('#estado').append('<option value=' + nombre.sys_pk + '>' + nombre.nombre + '</option>');
-                                });
-                                a();
-                            },
-                            error: function(error){
-                                console.log(error);
-                            }        
-                        });
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Repartidor"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="button" onclick="validate()" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
+                }
+            }
+            div(id="work_area" class="container-section")
+            {
+                p{$"#<@('error/message')>"}
+
+                // NAV TABS
+                ul(class="nav nav-tabs mt-3" id="myTab" role="tablist")
+                {
+                    li(class="nav-item" role="presentation") {
+                        button(class="nav-link active" id="general-tab" "data-bs-toggle"="tab" "data-bs-target"="#general" type="button" role="tab" "aria-controls"="general" "aria-selected"="true"){$"General"}
+                    }
+                    li(class="nav-item" role="presentation") {
+                        button(class="nav-link" id="address-tab" "data-bs-toggle"="tab" "data-bs-target"="#address" type="button" role="tab" "aria-controls"="address" "aria-selected"="false"){$"Domicilio"}
+                    }
                 }
 
-                function listarCiudades(b)
+                // PANEL TABS
+                div(class="tab-content" id="tabContent")
                 {
-                    var estadoSeleccionado = $(selectEstado).val();
-                    var urlEstadoSeleccionado = '#<@url_root>ciudad/?edo='+estadoSeleccionado
+                    p{$"#<@('error/message')>"}
 
-                    $.ajax({
-                    type: 'GET',
-                     dataType: 'json',
-                     accepts: 'application/json',
-                     url: urlEstadoSeleccionado,
-                    
+                    div(class="tab-pane fade show active pt-3" id="general" role="tabpanel" "aria-labelledby"="general-tab")
+                    {
+                        input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('./sys_recver')>")
+                        input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<field.dstr(@('&./'),'sys_pk',0)>")
+                        div(class="mb-3 row")       
+                        {
+                            div(class="col-sm-2")
+                            {
+                                small(class="fw-bold"){"Código:"}
+                                input(type="text" class="induxsoft-form-control" id="codigo" name="codigo" value="#<@('./codigo')>" maxlength="5")
+                            }
+                            div(class="col-sm-10")
+                            {
+                                small(class="fw-bold"){"Nombre:"}
+                                input(type="text" class="induxsoft-form-control" id="nombre" name="nombre" value="#<@('./nombre')>" maxlength="50")
+                            }          
+                        }
+                        div(class="mb-3 row")       
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Email:"}
+                                input(type="email" class="induxsoft-form-control" id="email" name="email" value="#<@('./email')>" maxlength="50")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Código de nómina:"}
+                                input(type="text" class="induxsoft-form-control" id="codnomina" name="codnomina" value="#<@('./codnomina')>" maxlength="50")
+                            }    
+                                   
+                        }
+                        div(class="mb-3 row")
+                        {
+                            div(class="col-12")
+                            {
+                                small(class="form-label"){"Notas:"}
+                                input(type="text" class="induxsoft-form-control" id="notas" name="notas" value="#<@('./notas')>" maxlength="4096")
+                            }
+                        }
+                    }
+                    div(class="tab-pane fade pt-3" id="address" role="tabpanel" "aria-labelledby"="address-tab")
+                    {
+                        input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
+                        input(type="hidden" class="form-control" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
+                        div(class="mb-3 row")       
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"País"}
+                                ##
+                                do uie.dbSelect(def_pais)
+                                ##
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Estado"}
+                                select(class="induxsoft-form-control" id="estado"){$""}
+                            }
+                            
+                        }
+                        div(class="mb-3 row")       
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Ciudad"}
+                                // input(type="text" class="induxsoft-form-control" name="iciudad" value="#<@('./domicilio/iciudad')>")
+                                select(class="induxsoft-form-select" id="ciudad"){$""}
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Colonia"}
+                                input(type="text" class="induxsoft-form-control" id="colonia" value="#<@('./domicilio/colonia')>" maxlength="150")
+                            } 
+                        }
+                        div(class="mb-3")       
+                        {
+                            small(class="form-label"){"Dirección"}
+                            input(type="text" id="direccion" class="induxsoft-form-control"  value="#<@('./domicilio/direccion')>" maxlength="1024")
+                        }
+                        div(class="mb-3 row")       
+                        {      
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Código postal"}
+                                input(type="text" class="induxsoft-form-control" id="codpos" value="#<@('./domicilio/codpos')>" maxlength="10")
+                            } 
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Teléfono"}
+                                input(type="text" class="induxsoft-form-control" id="telefono" value="#<@('./domicilio/telefonos')>" maxlength="150")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        #$
+        style{
+            $'
+            @media only screen and (max-width: 500px) and (min-width: 100px)
+            {
+                #dv-w{
+                    margin-top:30 !important;
+                    width:80% !important;
+                }
+            }
+            '
+        }
+        #$
+        script
+        {
+            $"
+
+            var selectPais = document.getElementsByClassName('pais')[0];
+            var selectEstado = document.getElementById('estado');
+            var selectCiudad = document.getElementById('ciudad');
+
+            
+            $(selectPais).change( ()=>{
+                $('#estado').empty();
+                $('#ciudad').empty();
+                listarEstados(e=>{
+                    $('#estado').change();
+                });
+            });
+
+
+            $(selectEstado).change( ()=>{
+                $('#ciudad').empty();
+                listarCiudades(e=>{
+                    //console.log('kisya');
+                });
+            })
+            
+            
+
+            //************* LISTA LOS ESTADOS Y MUNICIPIOS AL EDITAR PRESELECCIONA EL EDO/CIUDAD DEL REGISTRO CORRESPONDIENTE **************
+            
+            
+
+            function listarEstados(a)
+            {
+                var paisSeleccionado = $(selectPais).val();
+                var urlPaisSeleccionado = '#<@url_root>edoprov/?pais='+paisSeleccionado
+                $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        accepts: 'application/json',
+                        url: urlPaisSeleccionado,
+                        
                         success: function(data) {
-                            const temp4 = data;
-                            $.each(temp4, function(sys_pk, nombre) {
-                                $('#ciudad').append('<option value=' + nombre.sys_pk + '>' + nombre.nombre + '</option>');
+                            const temp3 = data;
+                            $.each(temp3, function(sys_pk, nombre) {
+                                $('#estado').append('<option value=' + nombre.sys_pk + '>' + nombre.nombre + '</option>');
                             });
-                            b();
+                            a();
                         },
                         error: function(error){
                             console.log(error);
-                        }
+                        }        
                     });
-                }
-
-
-                
-               $( document ).ready(function() {
-                if('#<@('./domicilio/iciudad')>' =='')
-                {
-                    console.log('no hay domicilio');
-                    $(selectPais).val('1');
-                    listarEstados(e=>{
-                        $(selectEstado).val('7');
-                        listarCiudades(e=>{
-                            $(selectCiudad).val('396');
-                        });
-                    });
-                }
-                else
-                {
-                    $(selectPais).val('#<@('./estado/IPais')>');
-                    listarEstados(e=>{
-                        $(selectEstado).val('#<@('./estado/sys_pk')>');
-                        listarCiudades(e=>{
-                            $(selectCiudad).val('#<@('./domicilio/iciudad')>');
-                        });
-                    });
-                }
-                    
-
-
-
-                });
-
-
-             
-
-      
-                "
             }
-        
+
+            function listarCiudades(b)
+            {
+                var estadoSeleccionado = $(selectEstado).val();
+                var urlEstadoSeleccionado = '#<@url_root>ciudad/?edo='+estadoSeleccionado
+
+                $.ajax({
+                type: 'GET',
+                    dataType: 'json',
+                    accepts: 'application/json',
+                    url: urlEstadoSeleccionado,
+                
+                    success: function(data) {
+                        const temp4 = data;
+                        $.each(temp4, function(sys_pk, nombre) {
+                            $('#ciudad').append('<option value=' + nombre.sys_pk + '>' + nombre.nombre + '</option>');
+                        });
+                        b();
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            }
+
+
+            
+            $( document ).ready(function() {
+            if('#<@('./domicilio/iciudad')>' =='')
+            {
+                console.log('no hay domicilio');
+                $(selectPais).val('1');
+                listarEstados(e=>{
+                    $(selectEstado).val('7');
+                    listarCiudades(e=>{
+                        $(selectCiudad).val('396');
+                    });
+                });
+            }
+            else
+            {
+                $(selectPais).val('#<@('./estado/IPais')>');
+                listarEstados(e=>{
+                    $(selectEstado).val('#<@('./estado/sys_pk')>');
+                    listarCiudades(e=>{
+                        $(selectCiudad).val('#<@('./domicilio/iciudad')>');
+                    });
+                });
+            }
+                
+
+
+
+            });
+
+
+            
+
+    
+            "
         }
-        ##
-        do @context.end()
+    
+    }
+    #! do @context.end()
 }

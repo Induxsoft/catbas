@@ -51,30 +51,30 @@ module "list_view_contacto.dk"
         	{
         		@"caption":"eMail"
         	}
-            member @"tel2"
-        	{
-        		@"caption":"Tel2"
-        	}
-            member @"tel3"
-        	{
-        		@"caption":"Tel3"
-        	}
-            member @"email2"
-        	{
-        		@"caption":"eMail2"
-        	}
-            member @"email3"
-        	{
-        		@"caption":"eMail3"
-        	}
-            member @"email4"
-        	{
-        		@"caption":"eMail4"
-        	}
-            member @"notas"
-        	{
-        		@"caption":"Notas"
-        	}
+            // member @"tel2"
+        	// {
+        	// 	@"caption":"Tel2"
+        	// }
+            // member @"tel3"
+        	// {
+        	// 	@"caption":"Tel3"
+        	// }
+            // member @"email2"
+        	// {
+        	// 	@"caption":"eMail2"
+        	// }
+            // member @"email3"
+        	// {
+        	// 	@"caption":"eMail3"
+        	// }
+            // member @"email4"
+        	// {
+        	// 	@"caption":"eMail4"
+        	// }
+            // member @"notas"
+        	// {
+        	// 	@"caption":"Notas"
+        	// }
         	member @"_actions"
         	{
         		@"caption":"Acción"

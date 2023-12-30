@@ -2,6 +2,8 @@
 #!
 module "repartidor.dk"
 {
+    #include "../config.dk"
+
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
         codigo, codnomina, email, nombre, telefono,notas, domicilio1
@@ -63,8 +65,19 @@ module "repartidor.dk"
         do dbr.delete(db,"domicilio","sys_pk=@domicilio1",repartidor)
     }
 
+    function list(&db, &params)
+    {
+        query="SELECT * 
+            FROM repartidor 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
     point @read to repartidor.read
     point @create to repartidor.create
     point @update to repartidor.update
 	point @delete to repartidor.delete
+    point @list to list
 }

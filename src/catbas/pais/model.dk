@@ -3,9 +3,18 @@
 
 module "pais.dk"
 {
-    @list_query="select #<@sys_fields>, codigo,codigotel,nombre from pais order by sys_pk"
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,codigotel,nombre from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
-    // do rise_error(0,ftext(@read_query))
 
-    // ref @delete=@null
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,codigotel,nombre 
+            FROM pais
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
+    point @list to list
 }

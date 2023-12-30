@@ -3,8 +3,17 @@
 
 module "porteador.dk"
 {
-    @list_query="select #<@sys_fields>,codigo, descripcion,notas from porteador order by descripcion;"
-
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,notas, iproveedor from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
-   
+
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>,codigo, descripcion,notas 
+            FROM porteador
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+    point @list to list
 }

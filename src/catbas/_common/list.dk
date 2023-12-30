@@ -64,7 +64,7 @@ module "list.dk"
                 a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir"){$"#<@ICON_X_LG>"}
             }
         }
-        div
+        div(class="pt-2")
         {
             form(action="./" method="GET" id="form_search" class="d-flex mb-2 no-print")
             {
