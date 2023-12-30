@@ -23,7 +23,11 @@ module "list.dk"
             @"style":"position: sticky !important;top:0 !important;background-color:#fff;"
             @"class":"h6"
         }
-        if @@(cell,"element")=="th"{cell<"attributes*">:headers}
+        if @@(cell,"element")=="th"
+        {
+            cell<"attributes*">:headers
+            if @@(cell,"column")=="_actions" { headers<"class">:"h6 text-center no-print" }
+        }
         if @@(cell,"cell_type")!="data" &&  @@(cell,"cell_type")!="unknow" { return }
         if @@(cell,"column")=="_actions"
         {

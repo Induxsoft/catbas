@@ -3,7 +3,7 @@
 
 module "tarjetacredito.dk"
 {
-    @list_query="select #<@sys_fields>, codigo,descripcion,uf_PorComision from tarjetacredito"
+	#include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,uf_PorComision from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 	// @auto_cod="select (if(count(*)>=1,CONCAT('A',LPAD(Cast(MAX(SUBSTR(codigo,4,4))+1 as char),'4','0')),'A0001'))
 	// as codigo from tarjetacredito where codigo like 'A%';"
@@ -40,7 +40,17 @@ module "tarjetacredito.dk"
 		}
 		do entity.update(db,params,data)
 	}
+	function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, codigo,descripcion,uf_PorComision 
+			FROM tarjetacredito
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
 	// point @read to caja.read
 	point @create to tarjeta.create
 	point @update to tarjeta.update
+	point @list to list
 }

@@ -53,7 +53,7 @@ module "form.dk"
                         div(class="col-sm-6")       
                         {                           
                             small(class="fw-bold"){"Tipo de cambio:"}
-                            input(type="number" class="induxsoft-form-control" name="tcambio" value="#<@('#./tcambio')>" max="9999999999")
+                            input(type="number" class="induxsoft-form-control" name="tcambio" value="#<@('#./tcambio')>" step="0.00000001" max="9999999999.99999999")
                         }
                     }
                 }

@@ -8,6 +8,9 @@ module "list.dk"
     #include "uielements.dbtable.dkl"
     #include "../config.dk"
     #include "serialize.dkh"
+
+    @gender="o"
+    @title="Estados"
     
     if not(isset("@http_context")){ref @http_context=@@(@crud_context,"&http")}
     @p=@@(@http_context,"request/get/p")
@@ -79,14 +82,12 @@ module "list.dk"
     ##
     div(class="m-0 justify-content-center" )
     {
-
-        // a(href="./_new/" id="btnAgregar"){$"Agregar"}
-        ##
-        // do uie.dbtable(@table_definition)
-        include @path_common
-        ##
-        #$
+        #! include @path_common
         #include "edoprov.dk"
+        #$ script{$'document.addEventListener("DOMContentLoaded", () => {
+            const btn_go_back = document.querySelector("#btn_go_back");
+            if (btn_go_back) btn_go_back.setAttribute("href","#<@LIST_PAIS>");
+        });'}
     }
     ##
 }

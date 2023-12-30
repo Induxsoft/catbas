@@ -32,10 +32,10 @@ module "form_view_caja.dk"
     }
 
     @editable=@false
-    if field.exist(@("&."),"sys_pk") && @("#./sys_pk")<3{
-        @editable=@true
-        def_uf_sat<"attributes/disabled">:@true
-    }
+    // if field.exist(@("&."),"sys_pk") && @("#./sys_pk")<3{
+    //     @editable=@true
+    //     def_uf_sat<"attributes/disabled">:@true
+    // }
 
     #$ div(class="container p-0")
     {

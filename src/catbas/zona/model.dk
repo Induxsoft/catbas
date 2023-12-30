@@ -3,6 +3,18 @@
 
 module "zona.dk"
 {
-    @list_query="select #<@sys_fields>, nombre,notas from zona"
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, nombre,notas from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
+
+    function list(&db, &params)
+    {
+        query="SELECT #<@sys_fields>, nombre,notas 
+            FROM zona
+            WHERE IF(IFNULL(@s,'')='', true, (nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY nombre
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
+    point @list to list
 }

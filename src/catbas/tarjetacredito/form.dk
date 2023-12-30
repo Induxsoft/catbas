@@ -6,44 +6,56 @@ module "form.dk"
     #include "functions.dkh"
     #include "dbr.dkh"
     #include "../config.dk"
+    #include "../_lib/icons.dk"
+
     do @context.begin(@crud_context)
-    #$
-    div(class="d-flex justify-content-center mt-5" id="#<@url_root_entity>")
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
+
+    #$ div(class="container p-0")
     {
-        div(class="card" style="width:50%" id="dv-w")
+        form(action="." method="POST")
         {
-            div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
-            div(class="card-body")
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
-                form(action="." method="POST")
+                div(class="col-4 d-flex align-items-center p-0")
                 {
-                    label("style"="font-weight:bold"){"Código:"} 
-                    input(type="text" class="form-control" name="codigo" value="#<@('./codigo')>" required="true" maxlength="5")
-                    //input(type="text" class="form-control" name="codigo" value="#<field.dstr(data,'codigo','')>" required="true" maxlength="5")
-                    label("style"="font-weight:bold"){"Descripción:"}
-                    input(type="text" class="form-control" name="descripcion" value="#<@('./descripcion')>" required="true" maxlength="25")
-                    label{"Porcentaje de Comisión:"}
-                    input(type="number" class="form-control" name="uf_PorComision" value="#<@('#./uf_PorComision')>")
-                    input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
-                    button(class="btn btn-primary m-1"){"Guardar"}
-                    a(href="../" class="btn btn-danger m-1"){"Cancelar"}
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Tarjeta de Crédito"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="submit" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
                 }
             }
-            
-        }
-        #$
-            style{
-                $'
-                @media only screen and (max-width: 500px) and (min-width: 100px)
+            div(id="work_area" class="container-section")
+            {
+                p{$"#<@('error/message')>"}
+                input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
+
+                div(class="row mb-2")
                 {
-                    #dv-w{
-                        margin-top:30 !important;
-                        width:80% !important;
+                    div(class="col-sm-2")
+                    {
+                        small(class="fw-bold"){"Código:"} 
+                        input(type="text" class="induxsoft-form-control" name="codigo" value="#<@('./codigo')>" required="true" maxlength="5")
+                    }
+                    div(class="col-sm-8")
+                    {
+                        small(class="fw-bold"){"Descripción:"}
+                        input(type="text" class="induxsoft-form-control" name="descripcion" value="#<@('./descripcion')>" required="true" maxlength="25")
+                    }
+                    div(class="col-sm-2")
+                    {
+                        small{"Porcentaje de Comisión:"}
+                        input(type="number" class="induxsoft-form-control" name="uf_PorComision" value="#<@('#./uf_PorComision')>" max="9999999999")
                     }
                 }
-                '
+                //input(type="text" class="induxsoft-form-control" name="codigo" value="#<field.dstr(data,'codigo','')>" required="true" maxlength="5")
+                
             }
-        
+        }
     }
     #!
     do @context.end()
