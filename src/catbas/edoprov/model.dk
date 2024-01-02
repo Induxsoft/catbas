@@ -3,9 +3,20 @@
 
 module "edoprov.dk"
 {
-    @list_query="select edoprov.sys_pk,edoprov.sys_recver, edoprov.codigo,edoprov.nombre,pais.nombre pais from edoprov inner join pais on ipais=pais.sys_pk
-     where ipais=@pais or isnull(@pais) order by codigo;"
-     
+    #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,nombre,ipais from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
     
+    function list(&db, &params)
+    {
+        query="SELECT edoprov.sys_pk,edoprov.sys_recver, edoprov.codigo,edoprov.nombre,pais.nombre pais 
+            FROM edoprov 
+                INNER JOIN pais ON ipais=pais.sys_pk 
+            WHERE IF(IFNULL(@s,'')='', true, (edoprov.codigo LIKE CONCAT('%',@s,'%') OR edoprov.nombre LIKE CONCAT('%',@s,'%')))
+                AND (ipais=@pais OR ISNULL(@pais))
+            ORDER BY edoprov.codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+
+    point @list to list
 }

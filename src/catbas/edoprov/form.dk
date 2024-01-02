@@ -6,15 +6,21 @@ module "form.dk"
     #include "functions.dkh"
     #include "dbr.dkh"
     #include "uielements.dkl"
+    #include "../config.dk"
+    #include "../_lib/icons.dk"
 
     do @context.begin(@crud_context)
+    entity_id = @("$parameters/_entity_id")
+    isNew = (entity_id == "_new")
+    if not(isset("@http_context")){ref @http_context=@@(@crud_context,"&http")}
+    p=@@(@http_context,"$request/get/p")
 
     new def_pais
     {
         @"datatable*":dbr.list(@("&database"),"select sys_pk, nombre from pais order by nombre;",@null)
         member "attributes"
         {
-            @"class":"form-control"
+            @"class":"induxsoft-form-select"
             @"name":"ipais"
         }
 
@@ -23,66 +29,55 @@ module "form.dk"
         @"selected":@('./ipais')
     }
 
-    ##
-    div(class = "d-flex justify-content-center")
-		{
-			div(class= "w-50 mt-4" id="dv-w")
-			{
-                div(class="card")
-                {
-                    div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
+    if isNew && trim(p) != "" { def_pais<"selected">: p }
 
-                    div(class= "card-body")
-                    {	
-                        form(action="#" method="POST")
-                        {
-                            div(class="mb-3 row")       
-                            {
-                                div(class="col-sm-6")
-                                {
-                                    label("style"="font-weight:bold"){"Código:"}
-                                    input(type="text" class="form-control" name="codigo" value="#<@('./codigo')>" required="true" maxlength="8")
-                                }
-                                div(class="col-sm-6")
-                                {
-                                    label("style"="font-weight:bold"){"Nombre:"}
-                                    input(type="text" class="form-control" name="nombre" value="#<@('./nombre')>" required="true" maxlength="50")
-                                }
-                                        
-                            }
-                           
-                            div(class="mb-3")
-                            {
-                                label(class="form-label"){"País:"}
-                                ##
-                                    do uie.dbSelect(def_pais)
-                                ##
-                            }
-                           
-                            input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
-                            div(class="text-center pt-4")
-                            {
-                                button(type="submit" class="btn btn-primary m-1"){"Guardar"}
-                                a(class="btn btn-danger m-1" href="../" ){"Cancelar"}
-                            }
-                            
-                        }
-                    }
+    #$ div(class="container p-0")
+    {
+        form(action="#" method="POST")
+        {
+            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
+            {
+                div(class="col-4 d-flex align-items-center p-0")
+                {
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Estado"}
+                }
+                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                {
+                    #! url_back = ifstr(trim(p)=="", "../", "../?pais="+p)
+                    #$ a(href="#" onclick="window.location.reload();" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                    button(type="button" onclick="validate()" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
+                    a(href="#<url_back>" id="btn_form_back" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
                 }
             }
-            #$
-            style{
-                $'
-                @media only screen and (max-width: 500px) and (min-width: 100px)
+            div(id="work_area" class="container-section")
+            {
+                p{$"#<@('error/message')>"}
+                input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
+                input(type="hidden" id="sys_pk" value="#<@('./sys_pk')>")
+
+                div(class="mb-2 row")       
                 {
-                    #dv-w{
-                        margin-top:30 !important;
-                        width:80% !important;
+                    div(class="col-sm-2")
+                    {
+                        small(class="fw-bold"){"Código:"}
+                        input(type="text" class="induxsoft-form-control" name="codigo" value="#<@('./codigo')>" required="true" maxlength="8")
+                    }
+                    div(class="col-sm-10")
+                    {
+                        small(class="fw-bold"){"Nombre:"}
+                        input(type="text" class="induxsoft-form-control" name="nombre" value="#<@('./nombre')>" required="true" maxlength="50")
                     }
                 }
-                '
+                
+                div(class="mb-3")
+                {
+                    small(class="form-label"){"País:"}
+                    #! do uie.dbSelect(def_pais)
+                }
             }
         }
-        ##
-        do @context.end()
+        #include "edoprov.dk"
+    }
+
+    do @context.end()
 }

@@ -33,7 +33,7 @@ module "list.dk"
         {
             cell<"text">:ftext('
                 <div class="d-flex gap-2 justify-content-center no-print">
-                    <a class="btn btn-sm btn-light" id="btnEditar" href="./#<@@(row,"sys_pk")>/">Editar</a>
+                    <a class="btn btn-sm btn-light btn-row-edit" id="btnEditar" href="./#<@@(row,"sys_pk")>/">Editar</a>
                     <a class="btn btn-sm btn-light" onclick="deleteEntity(#<@@(row,"sys_pk")>)" href="#" id="btnEliminar">Eliminar</a>
                 </div>
             ')
@@ -62,10 +62,10 @@ module "list.dk"
             }
             div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2")
             {
-                a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
+                a(href="#" onclick="window.location.reload();" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
                 a(href="./_new/" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Agregar" id="btnAgregar"){$"Agregar"}
                 button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Imprimir" onclick="window.print()"){$"#<@ICON_PRINTER>"}
-                a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir"){$"#<@ICON_X_LG>"}
+                a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir" id="btn_go_back"){$"#<@ICON_X_LG>"}
             }
         }
         div(class="pt-2")
@@ -77,6 +77,8 @@ module "list.dk"
                     $"Buscar"
                     $"#<@ICON_SEARCH>"
                 }
+                input(type="hidden" id="input_search_hidden")
+                input(type="hidden" id="input_search_hidden2")
             }
             div
             {

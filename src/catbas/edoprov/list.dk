@@ -13,7 +13,8 @@ module "list.dk"
     @title="Estados"
     
     if not(isset("@http_context")){ref @http_context=@@(@crud_context,"&http")}
-    @p=@@(@http_context,"request/get/p")
+    @p=@@(@http_context,"$request/get/pais")
+
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
@@ -41,7 +42,7 @@ module "list.dk"
         {
            member @"detail"
            {
-              @"onclick":"SelectRow(#<@@(row,'sys_pk')>,event,'#<@@(row,'nombre')>','#<@p>')" //Ejemplo
+              @"onclick":"SelectRow(#<@@(row,'sys_pk')>,event,'#<@@(row,'nombre')>',#<@p>)" //Ejemplo
               @"class":"tr_hover"
            }
         }
@@ -84,10 +85,6 @@ module "list.dk"
     {
         #! include @path_common
         #include "edoprov.dk"
-        #$ script{$'document.addEventListener("DOMContentLoaded", () => {
-            const btn_go_back = document.querySelector("#btn_go_back");
-            if (btn_go_back) btn_go_back.setAttribute("href","#<@LIST_PAIS>");
-        });'}
     }
     ##
 }
