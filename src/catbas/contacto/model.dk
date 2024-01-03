@@ -110,7 +110,7 @@ module "contacto.dk"
     function list(&db, &params)
     {
         query="SELECT c.sys_pk, c.sys_guid, c.sys_recver, c.sys_timestamp,c.notas, c.sys_dtcreated, c.sys_deleted, 
-                c.Tratamiento,c.Nombre,c.Apellidos,c.Empresa,c.Puesto,c.Tel1,c.eMail1,c.WebSite,concat(IFNULL(d.direccion,''),', ',IFNULL(d.colonia,''),', ',IFNULL(cd.nombre,'')) as domicilio
+                c.Tratamiento,CONCAT(c.Nombre,' ',c.Apellidos) nombre,c.Empresa,c.Puesto,c.Tel1,c.eMail1,c.WebSite,concat(IFNULL(d.direccion,''),', ',IFNULL(d.colonia,''),', ',IFNULL(cd.nombre,'')) as domicilio
                 from contacto c
                 left join domicilio d on c.domicilio1 = d.sys_pk
                 left join ciudad cd on d.iciudad = cd.sys_pk

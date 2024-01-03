@@ -32,7 +32,7 @@ module "form_view_alamacen.dk"
 	{
 		#! #include "almacen.dkl"
 		
-        #$ form(action="." method="POST")
+        #$ div(action="." method="POST")
         {
             div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
             {
@@ -50,61 +50,131 @@ module "form_view_alamacen.dk"
             div(id="work_area" class="container-section")
             {
                 p{$"#<@('error/message')>"}
-                small(class="fw-bold"){"Código:"}
-                input(type="text" class="induxsoft-form-control" id="codigo" name="codigo"  value="#<@('./codigo')>" maxlength="10")
-                small(class="fw-bold"){"Descripción:"}
-                input(type="text" class="induxsoft-form-control" id="descripcion" name="descripcion" placeholder="Nombre del almacén" value="#<@('./descripcion')>" maxlength="50")
-                small{"Telefonos:"}
-                input(type="text" id="telefonos" class="induxsoft-form-control" name="telefonos" value="#<@('./telefonos')>" maxlength="150")
-                small{"Email:"}
-                input(type="text" id="email" class="induxsoft-form-control" name="email" value="#<@('./email')>" maxlength="50")
-                small{"Fax:"}
-                input(type="text" id="fax" class="induxsoft-form-control" value="#<@('./fax')>" maxlength="150")
-                small{"WebSite:"}
-                input(type="text" id="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
-                small{"Código de cuenta:"}
-                input(type="text" id="codcuenta" name="codcuenta" class="induxsoft-form-control" value="#<@('./codcuenta')>" maxlength="50")
-                input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('./sys_recver')>")
-                input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<@('./sys_pk')>")
+
+                // NAV TABS
+                ul(class="nav nav-tabs mt-3" id="myTab" role="tablist")
+                {
+                    li(class="nav-item" role="presentation") {
+                        button(class="nav-link active" id="general-tab" "data-bs-toggle"="tab" "data-bs-target"="#general" type="button" role="tab" "aria-controls"="general" "aria-selected"="true"){$"General"}
+                    }
+                    li(class="nav-item" role="presentation") {
+                        button(class="nav-link" id="address-tab" "data-bs-toggle"="tab" "data-bs-target"="#address" type="button" role="tab" "aria-controls"="address" "aria-selected"="false"){$"Domicilio"}
+                    }
+                }
+
+                // PANEL TABS
+                div(class="tab-content" id="tabContent")
+                {
+                    div(class="tab-pane fade show active pt-3" id="general" role="tabpanel" "aria-labelledby"="general-tab")
+                    {
+                        input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('./sys_recver')>")
+                        input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<@('./sys_pk')>")
+
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-2")
+                            {
+                                small(class="fw-bold"){"Código:"}
+                                input(type="text" class="induxsoft-form-control" id="codigo" name="codigo"  value="#<@('./codigo')>" maxlength="10")
+                            }
+                            div(class="col-sm-10")
+                            {
+                                small(class="fw-bold"){"Descripción:"}
+                                input(type="text" class="induxsoft-form-control" id="descripcion" name="descripcion" placeholder="Nombre del almacén" value="#<@('./descripcion')>" maxlength="50")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Telefonos:"}
+                                input(type="text" id="telefonos" class="induxsoft-form-control" name="telefonos" value="#<@('./telefonos')>" maxlength="150")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Email:"}
+                                input(type="text" id="email" class="induxsoft-form-control" name="email" value="#<@('./email')>" maxlength="50")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Fax:"}
+                                input(type="text" id="fax" class="induxsoft-form-control" value="#<@('./fax')>" maxlength="150")
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"WebSite:"}
+                                input(type="text" id="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small{"Código de cuenta:"}
+                                input(type="text" id="codcuenta" name="codcuenta" class="induxsoft-form-control" value="#<@('./codcuenta')>" maxlength="50")
+                            }
+                        }
+                    }
+
+                    div(class="tab-pane fade pt-3" id="address" role="tabpanel" "aria-labelledby"="address-tab")
+                    {
+                        input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
+
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"País"}
+                                ##
+                                do uie.dbSelect(def_pais)
+                                ##
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Estado"}
+                                select(class="induxsoft-form-select" id="estado"){$""}
+                            }
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-6")
+                            {
+                                small(class="form-label"){"Ciudad"}
+                                select(class="induxsoft-form-select" id="ciudad"){$""}
+                            }
+                            div(class="col-sm-6")
+                            {
+                                small{"Dirección:"}
+                                input(type="text" id="direccion" class="induxsoft-form-control" value="#<@('./domicilio/direccion')>")
+                            }
+                        }                                  
+                        div(class="mb-2")
+                        {
+                            small{"Colonia:"}
+                            input(type="text" id="colonia" class="induxsoft-form-control" value="#<@('./domicilio/colonia')>")
+                        }
+                        div(class="row mb-2")
+                        {
+                            div(class="col-sm-2")
+                            {
+                                small{"Código postal:"}
+                                input(type="number" id="codpos" class="induxsoft-form-control" value="#<@('./domicilio/codpos')>")
+                            }
+                            div(class="col-sm-4")
+                            {
+                                small{"Tel."}
+                                input(type="tel" id="telefono" class="induxsoft-form-control" value="#<@('./domicilio/telefonos')>")
+                            }
+                        }
+                    }
+                }
             }
         }
-        fieldset(class="form-control my-3")
-        {
-            legend{"Domicilio"}
-            div(class="col-sm-6")
-            {
-                small(class="form-label"){"País"}
-                ##
-                do uie.dbSelect(def_pais)
-                ##
-            }
-            div(class="col-sm-6")
-            {
-                small(class="form-label"){"Estado"}
-                select(class="induxsoft-form-select" id="estado"){$""}
-            }
-            div(class="col-sm-6")
-            {
-                small(class="form-label"){"Ciudad"}
-                select(class="induxsoft-form-select" id="ciudad"){$""}
-            }                                   
-            small{"Dirección:"}
-            input(type="text" id="direccion" class="induxsoft-form-control" value="#<@('./domicilio/direccion')>")
-            small{"Colonia:"}
-            input(type="text" id="colonia" class="induxsoft-form-control" value="#<@('./domicilio/colonia')>")
-            small{"Código postal:"}
-            input(type="number" id="codpos" class="induxsoft-form-control" value="#<@('./domicilio/codpos')>")
-            small{"Tel."}
-            input(type="tel" id="telefono" class="induxsoft-form-control" value="#<@('./domicilio/telefonos')>")
-            input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
-            //input(type="hidden" class="form-control" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
-        }
-			
-				
-			
-			
-	
-	    #$script
+
+	    #$ script
         {
             $"
 

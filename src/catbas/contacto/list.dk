@@ -43,10 +43,10 @@ module "list_view_contacto.dk"
         	{
         		@"caption":"Domicilio"
         	}
-            member @"website"
-        	{
-        		@"caption":"WebSite"
-        	}
+            // member @"website"
+        	// {
+        	// 	@"caption":"WebSite"
+        	// }
             member @"email1"
         	{
         		@"caption":"eMail"

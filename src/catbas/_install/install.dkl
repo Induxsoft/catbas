@@ -24,6 +24,7 @@ program
     // Archivos de datos iniciales (Orden de instalación)
     init_files = '
         ut_sat_ctipopoliza.csv,
+        ctipospolizas.csv,
         cclaseproducto.csv,
         ctiposcategorias.csv,
         categoria.csv,

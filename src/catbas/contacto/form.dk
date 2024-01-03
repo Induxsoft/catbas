@@ -89,7 +89,6 @@ module "form.dk"
                 // PANEL TABS
                 div(class="tab-content" id="tabContent")
                 {
-                    p{$"#<@('error/message')>"}
                     div(class="tab-pane fade show active pt-3" id="general" role="tabpanel" "aria-labelledby"="general-tab")
                     {
                         input(type="hidden" class="form-control" name="sys_pk" value="#<@('./sys_pk')>")
@@ -197,7 +196,7 @@ module "form.dk"
                                 small{"Código Postal:"}
                                 input(type="text" name="domicilio_codpos" class="induxsoft-form-control" value="#<@('./domicilio/codpos')>" maxlength="10")
                             }
-                            div(class="col-sm-10")
+                            div(class="col-sm-4")
                             {
                                 small{"Tel:"}
                                 input(type="text" name="domicilio_telefonos" class="induxsoft-form-control" value="#<@('./domicilio/telefonos')>" maxlength="150")
