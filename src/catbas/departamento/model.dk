@@ -5,7 +5,25 @@ module "departamento.dk"
 {
     #include "../config.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,comision1,comision2,comision3,comision4,comision5 from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
-    // do rise_error(0,ftext(@read_query))
+    
+    create::&db,&params,&data
+    {
+        data<"comision1">: @@(data, "#comision1")
+        data<"comision2">: @@(data, "#comision2")
+        data<"comision3">: @@(data, "#comision3")
+        data<"comision4">: @@(data, "#comision4")
+        data<"comision5">: @@(data, "#comision5")
+        do entity.create(db,params,data)
+    }
+    update::&db,&params,&data
+    {
+        if field.exist(data,"comision1") && trim(@@(data,"$comision1")) == "" { data<"comision1">: 0 }
+        if field.exist(data,"comision2") && trim(@@(data,"$comision2")) == "" { data<"comision2">: 0 }
+        if field.exist(data,"comision3") && trim(@@(data,"$comision3")) == "" { data<"comision3">: 0 }
+        if field.exist(data,"comision4") && trim(@@(data,"$comision4")) == "" { data<"comision4">: 0 }
+        if field.exist(data,"comision5") && trim(@@(data,"$comision5")) == "" { data<"comision5">: 0 }
+        do entity.update(db,params,data)
+    }
 
     // ref @delete=@null
     entity.blank::&db,&params
@@ -33,4 +51,6 @@ module "departamento.dk"
     }
 
     point @list to list
+    point @create to create
+    point @update to update
 }

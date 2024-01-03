@@ -43,20 +43,34 @@ module "caja.dk"
 		}
 		return r
 	}
-	caja.create::&db,&params,data
+	caja.create::&db,&params,&data
 	{
 		if @@(data,"CodCuenta")==""
 		{
 			do field.remove(data,"CodCuenta")
 		}
+
+		data<"uf_limefectivo">: @@(data, "#uf_limefectivo")
+		data<"uf_lime_vntadic">: @@(data, "#uf_lime_vntadic")
+		data<"uf_lime_aviso">: @@(data, "#uf_lime_aviso")
+		data<"uf_cortereq_vntadic">: @@(data, "#uf_cortereq_vntadic")
+		data<"uf_lim_vntliber">: @@(data, "#uf_lim_vntliber")
+		
 		do entity.create(db,params,data)
 	}
-	caja.update::&db,&params,data
+	caja.update::&db,&params,&data
 	{
 		if @@(data,"CodCuenta")==""
 		{
 			do field.remove(data,"CodCuenta")
 		}
+
+		if field.exist(data,"uf_limefectivo") && trim(@@(data,"$uf_limefectivo")) == "" { data<"uf_limefectivo">: 0 }
+		if field.exist(data,"uf_lime_vntadic") && trim(@@(data,"$uf_lime_vntadic")) == "" { data<"uf_lime_vntadic">: 0 }
+		if field.exist(data,"uf_lime_aviso") && trim(@@(data,"$uf_lime_aviso")) == "" { data<"uf_lime_aviso">: 0 }
+		if field.exist(data,"uf_cortereq_vntadic") && trim(@@(data,"$uf_cortereq_vntadic")) == "" { data<"uf_cortereq_vntadic">: 0 }
+		if field.exist(data,"uf_lim_vntliber") && trim(@@(data,"$uf_lim_vntliber")) == "" { data<"uf_lim_vntliber">: 0 }
+		
 		do entity.update(db,params,data)
 	}
 	function list(&db, &params)
