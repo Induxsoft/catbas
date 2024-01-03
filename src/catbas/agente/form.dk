@@ -16,6 +16,7 @@ module "form_agente.dk"
     do @context.begin(@crud_context)
     entity_id = @("$parameters/_entity_id")
     isNew = (entity_id == "_new")
+    @url_root_entity = @LIST_AGENTES
 
     new def_pais
     {

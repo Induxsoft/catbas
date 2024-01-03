@@ -9,7 +9,7 @@ module "list_view_banco"
 
     @gender="o"
     @title="Tipos de pólizas"
-    order_by="descripción"
+    order_by="ID"
 
     do @context.begin(@crud_context)
     ref @http_context = @("&http")
@@ -27,6 +27,10 @@ module "list_view_banco"
             member @"Const"
             {
                 @"caption":"Descripción"
+            }
+            member @"sat_tipopoliza"
+            {
+                @"caption":"Tipo"
             }
             member @"_actions"
             {

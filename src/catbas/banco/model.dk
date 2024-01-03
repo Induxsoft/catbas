@@ -36,10 +36,11 @@ module "banco.dk"
 
 	function list(&db, &params)
     {
-        query="SELECT #<@sys_fields>, nombre,contacto 
-            FROM banco 
-            WHERE IF(IFNULL(@s,'')='', true, (nombre LIKE CONCAT('%',@s,'%') OR contacto LIKE CONCAT('%',@s,'%')))
-            ORDER BY nombre
+        query="SELECT b.sys_pk, b.sys_recver, b.nombre, concat(c.nombre,' ',c.apellidos) as contacto
+            FROM banco b
+				LEFT JOIN contacto c ON b.contacto = c.sys_pk
+            WHERE IF(IFNULL(@s,'')='', true, (b.nombre LIKE CONCAT('%',@s,'%') OR c.nombre LIKE CONCAT('%',@s,'%')))
+            ORDER BY b.nombre
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }

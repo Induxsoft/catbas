@@ -49,7 +49,6 @@ module "list.dk"
             member @"_actions"
             {
                 @"caption":"Acciones"
-                
             }
         }
     }

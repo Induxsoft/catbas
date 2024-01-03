@@ -7,4 +7,8 @@ module "config.dk"
 	@gender="o"
 	@path_common="catbas/_common/list.dk"
 	@default_max_rows=250
+
+	@LIST_PAIS = "/!/catbas/pais/"
+	@LIST_ESTADO = "/!/catbas/edoprov/"
+	@LIST_AGENTES = "/!/catbas/agente/"
 }

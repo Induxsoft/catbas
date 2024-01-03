@@ -69,10 +69,11 @@ module "banco.dk"
 
 	function list(&db, &params)
     {
-        query="SELECT id as sys_pk,const,IFNULL(uf_sat_TipoPoliza,'') uf_sat_TipoPoliza
-			FROM ctipospolizas
+        query="SELECT tp.id as sys_pk, tp.const, IFNULL(tp.uf_sat_tipopoliza,'') uf_sat_tipopoliza, IFNULL(stp.uf_const,'') sat_tipopoliza
+			FROM ctipospolizas tp
+				LEFT JOIN ut_sat_ctipopoliza stp ON tp.uf_sat_tipopoliza = stp.sys_pk
             WHERE IF(IFNULL(@s,'')='', true, (Const LIKE CONCAT('%',@s,'%') OR id LIKE CONCAT('%',@s,'%')))
-            ORDER BY Const
+            ORDER BY tp.id
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
