@@ -28,7 +28,6 @@ module "form.dk"
         @"selected":@('./iproveedor')
     }
 
-
     #$ div(class="container p-0")
     {
         form(action="#" method="POST")
@@ -79,14 +78,14 @@ module "form.dk"
                 }
             }
         }
-        #$ style{$'
-            @media only screen and (max-width: 500px) and (min-width: 100px)
-            {
-                #dv-w{
-                    margin-top:30 !important;
-                    width:80% !important;
-                }
-            }'
+        #! if isNew || @("$./iproveedor") == ""
+        {
+            #$ script{$'
+                document.addEventListener("DOMContentLoaded", () => {
+                    const iproveedor = document.querySelector("select[name=iproveedor]");
+                    if (iproveedor) iproveedor.selectedIndex = -1;
+                });
+            '}
         }
     }
     #! do @context.end()
