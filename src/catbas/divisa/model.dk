@@ -4,6 +4,7 @@
 module "divisa.dk"
 {
     #include "../config.dk"
+    #include "../_lib/lib.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,tcambio from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
     
     divisa.create::&db,&params,data
@@ -13,6 +14,11 @@ module "divisa.dk"
             do field.remove(data,"tcambio")
         }
         do entity.create(db,params,data)
+        exception
+		{
+			do cu_error("divisa")
+			do rise_error(last_error_code(), last_error())
+		}
     }
     divisa.update::&db,&params,data
     {
@@ -21,6 +27,11 @@ module "divisa.dk"
             do field.remove(data,"tcambio")
         }
         do entity.update(db,params,data)
+        exception
+		{
+			do cu_error("divisa")
+			do rise_error(last_error_code(), last_error())
+		}
     }
     function list(&db, &params)
     {
@@ -30,6 +41,14 @@ module "divisa.dk"
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+    }
+    function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+            @"descripcion": "La descripción"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
     }
     // point @read to caja.read
     point @create to divisa.create

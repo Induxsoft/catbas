@@ -4,6 +4,8 @@
 module "tarjetacredito.dk"
 {
 	#include "../config.dk"
+	#include "../_lib/lib.dk"
+
     @read_query="select #<@sys_fields>, codigo,descripcion,uf_PorComision from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 	// @auto_cod="select (if(count(*)>=1,CONCAT('A',LPAD(Cast(MAX(SUBSTR(codigo,4,4))+1 as char),'4','0')),'A0001'))
 	// as codigo from tarjetacredito where codigo like 'A%';"
@@ -31,6 +33,11 @@ module "tarjetacredito.dk"
 			do field.remove(data,"uf_PorComision")
 		}
 		do entity.create(db,params,data)
+		exception
+		{
+			do cu_error("tarjeta")
+			do rise_error(last_error_code(), last_error())
+		}
 	}
 	tarjeta.update::&db,&params,data
 	{
@@ -39,6 +46,11 @@ module "tarjetacredito.dk"
 			do field.remove(data,"uf_PorComision")
 		}
 		do entity.update(db,params,data)
+		exception
+		{
+			do cu_error("tarjeta")
+			do rise_error(last_error_code(), last_error())
+		}
 	}
 	function list(&db, &params)
     {
@@ -49,6 +61,15 @@ module "tarjetacredito.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+	function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+			@"descripcion": "La descripción"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
+
 	// point @read to caja.read
 	point @create to tarjeta.create
 	point @update to tarjeta.update

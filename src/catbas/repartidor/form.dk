@@ -48,7 +48,7 @@ module "form.dk"
             }
             div(id="work_area" class="container-section")
             {
-                p{$"#<@('error/message')>"}
+                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
 
                 // NAV TABS
                 ul(class="nav nav-tabs mt-3" id="myTab" role="tablist")

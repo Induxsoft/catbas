@@ -4,6 +4,8 @@
 module "edoprov.dk"
 {
     #include "../config.dk"
+    #include "../_lib/lib.dk"
+
     @read_query="select #<@sys_fields>, codigo,nombre,ipais from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
     
     function list(&db, &params)
@@ -17,6 +19,33 @@ module "edoprov.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+    function create(&db, &params, &data)
+    {
+        do entity.create(db, params, data)
+        exception
+		{
+			do cu_error("estado")
+			do rise_error(last_error_code(), last_error())
+		}
+    }
+    function update(&db, &params, &data)
+    {
+        do entity.update(db, params, data)
+        exception
+		{
+			do cu_error("estado")
+			do rise_error(last_error_code(), last_error())
+		}
+    }
+    function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
 
     point @list to list
+    point @create to create
+    point @update to update
 }

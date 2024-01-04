@@ -4,6 +4,7 @@
 module "categoria.dk"
 {
 	#include "../config.dk"
+	#include "../_lib/lib.dk"
 	@read_query="select #<@sys_fields>,
 	codigo,
 	descripcion,codcuenta,pmensual, tipo,uf_inhabilitado from categoria 
@@ -33,6 +34,24 @@ module "categoria.dk"
 			do field.remove(data,"codcuenta")
 		}
 		do entity.create(db,params,data)
+		exception
+		{
+			do cu_error("categoría")
+			do rise_error(last_error_code(), last_error())
+		}
+	}
+	function categoria.update(&db, &params, &data)
+	{
+		if @@(data,"codcuenta")==""
+		{
+			do field.remove(data,"codcuenta")
+		}
+		do entity.update(db,params,data)
+		exception
+		{
+			do cu_error("categoría")
+			do rise_error(last_error_code(), last_error())
+		}
 	}
 	function list(&db, &params)
     {
@@ -45,8 +64,18 @@ module "categoria.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+	function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+			@"descripcion": "La descripción"
+			@"codcuenta": "El código de cuenta"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
 
 	point @read to categoria.read
 	point @list to list
 	point @create to categoria.create
+	point @update to categoria.update
 }

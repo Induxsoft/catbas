@@ -70,6 +70,7 @@ module "form_cfgimpuesto.dk"
             }
             div(id="work_area" class="container-section")
             {
+                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
                 div(class="row")
                 {
                     div(class="justify-content-center" id="dv-w" style="width:75%")

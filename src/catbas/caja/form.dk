@@ -50,7 +50,7 @@ module "form_view_caja.dk"
             }
             div(id="work_area" class="container-section")
             {
-                p{$"#<@('error/message')>"}
+                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
 
                 div(class="row")
                 {
@@ -117,27 +117,27 @@ module "form_view_caja.dk"
                     div(class="col-6 col-lg-4")
                     {
                         small{"Hora corte 1:"}
-                        input(type="time" class="induxsoft-form-control" name="uf_horacorte1" value="#<@('./hora1')>")
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte1" value="#<@('./uf_horacorte1')>")
                     }
                     div(class="col-6 col-lg-4")
                     {
                         small{"Hora corte 2:"}
-                        input(type="time" class="induxsoft-form-control" name="uf_horacorte2"  value="#<@('./hora2')>")
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte2"  value="#<@('./uf_horacorte2')>")
                     }
                     div(class="col-6 col-lg-4")
                     {
                         small{"Hora corte 3:"}
-                        input(type="time" class="induxsoft-form-control" name="uf_horacorte3" value="#<@('./hora3')>")
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte3" value="#<@('./uf_horacorte3')>")
                     }
                     div(class="col-6 col-lg-4")
                     {
                         small{"Hora corte 4:"}
-                        input(type="time" class="induxsoft-form-control" name="uf_horacorte4"  value="#<@('./hora4')>")
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte4"  value="#<@('./uf_horacorte4')>")
                     }
                     div(class="col-6 col-lg-4")
                     {
                         small{"Hora corte 5:"}
-                        input(type="time" class="induxsoft-form-control" name="uf_horacorte5"  value="#<@('./hora5')>")
+                        input(type="time" class="induxsoft-form-control" name="uf_horacorte5"  value="#<@('./uf_horacorte5')>")
                     }
                     div(class="mb-3 row")       
                     {

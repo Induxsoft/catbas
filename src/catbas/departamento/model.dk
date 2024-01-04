@@ -4,6 +4,7 @@
 module "departamento.dk"
 {
     #include "../config.dk"
+    #include "../_lib/lib.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,comision1,comision2,comision3,comision4,comision5 from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
     
     create::&db,&params,&data
@@ -14,6 +15,11 @@ module "departamento.dk"
         data<"comision4">: @@(data, "#comision4")
         data<"comision5">: @@(data, "#comision5")
         do entity.create(db,params,data)
+        exception
+		{
+			do cu_error("departamento")
+			do rise_error(last_error_code(), last_error())
+		}
     }
     update::&db,&params,&data
     {
@@ -23,6 +29,11 @@ module "departamento.dk"
         if field.exist(data,"comision4") && trim(@@(data,"$comision4")) == "" { data<"comision4">: 0 }
         if field.exist(data,"comision5") && trim(@@(data,"$comision5")) == "" { data<"comision5">: 0 }
         do entity.update(db,params,data)
+        exception
+		{
+			do cu_error("departamento")
+			do rise_error(last_error_code(), last_error())
+		}
     }
 
     // ref @delete=@null
@@ -48,6 +59,14 @@ module "departamento.dk"
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+    }
+    function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+            @"descripcion": "La descripción"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 
     point @list to list

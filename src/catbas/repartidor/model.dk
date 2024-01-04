@@ -3,6 +3,7 @@
 module "repartidor.dk"
 {
     #include "../config.dk"
+    #include "../_lib/lib.dk"
 
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
@@ -42,6 +43,7 @@ module "repartidor.dk"
     	exception
     	{
     		if dbr.in_transaction(db) {do dbr.rollback(db)}
+            do cu_error("repartidor")
     		do rise_error(500,last_error())
     	}
     }
@@ -55,6 +57,11 @@ module "repartidor.dk"
             do field.remove(data,"domicilio")
     	}
     	return entity.update(db,params,data)
+        exception
+    	{
+            do cu_error("repartidor")
+    		do rise_error(500,last_error())
+    	}
     }
 
 	repartidor.delete::&db,&params
@@ -73,6 +80,15 @@ module "repartidor.dk"
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+    }
+    function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+            @"nombre": "El nombre"
+            @"codnomina": "El código de nómina"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 
     point @read to repartidor.read

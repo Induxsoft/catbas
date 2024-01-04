@@ -4,9 +4,7 @@
 module "banco.dk"
 {
 	#include "../config.dk"
-
-    @list_query="select b.sys_pk, b.sys_recver, b.nombre, concat(c.nombre,' ',c.apellidos) as contacto from banco b 
-    left join contacto c on b.contacto = c.sys_pk;"
+	#include "../_lib/lib.dk"
 
 	@read_query="select #<@sys_fields>, nombre,contacto,website,notas from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 
@@ -23,6 +21,11 @@ module "banco.dk"
 			do field.remove(data,"contacto")
 		}
 		do entity.create(db,params,data)
+		exception
+		{
+			do cu_error("banco")
+			do rise_error(last_error_code(), last_error())
+		}
 	}
 	banco.update::&db,&params,&data
 	{
@@ -32,6 +35,11 @@ module "banco.dk"
 			do field.remove(data,"contacto")
 		}
 		do entity.update(db,params,data)
+		exception
+		{
+			do cu_error("banco")
+			do rise_error(last_error_code(), last_error())
+		}
 	}
 
 	function list(&db, &params)
@@ -43,6 +51,13 @@ module "banco.dk"
             ORDER BY b.nombre
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+    }
+	function cu_error(table)
+    {
+        new fields {
+            @"nombre": "El nombre"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 
 	point @read to banco.read

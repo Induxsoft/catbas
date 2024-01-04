@@ -4,6 +4,7 @@
 module "cconsumo.dk"
 {
 	#include "../config.dk"
+	#include "../_lib/lib.dk"
 	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado from cconsumo where #<@keyfield>=@_entity_id limit 1;"
 	
 	cconsumo.read::&db,&params
@@ -29,6 +30,7 @@ module "cconsumo.dk"
     	exception
     	{
     		if dbr.in_transaction(db) {do dbr.rollback(db)}
+			do cu_error("centro de consumo")
     		do rise_error(500,last_error())
     	}
 		
@@ -50,6 +52,7 @@ module "cconsumo.dk"
     	exception
     	{
     		if dbr.in_transaction(db) {do dbr.rollback(db)}
+			do cu_error("centro de consumo")
     		do rise_error(500,last_error())
     	}
 		
@@ -63,6 +66,14 @@ module "cconsumo.dk"
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+    }
+	function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+			@"descripcion": "La descripción"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 	
 	point @read to cconsumo.read

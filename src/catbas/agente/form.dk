@@ -52,7 +52,7 @@ module "form_agente.dk"
             }
             div(id="work_area" class="container-section")
             {
-                p{$"#<@('error/message')>"}
+                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
                 div(class="mb-3 row")       
                 {
                     div(class="col-sm-6")

@@ -4,6 +4,7 @@
 module "almacen.dk"
 {
 	#include "../config.dk"
+	#include "../_lib/lib.dk"
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
         codigo,codcuenta,fax,website,
@@ -60,6 +61,7 @@ module "almacen.dk"
     	exception
     	{
     		if dbr.in_transaction(db) {do dbr.rollback(db)}
+			do cu_error("almacen")
     		do rise_error(500,last_error())
     	}
     }
@@ -83,6 +85,11 @@ module "almacen.dk"
             do field.remove(data,"domicilio")
     	}
     	return entity.update(db,params,data)
+		exception
+    	{
+			do cu_error("almacen")
+    		do rise_error(500,last_error())
+    	}
     }
 
 	entity.blank::&db,&params
@@ -108,6 +115,16 @@ module "almacen.dk"
 
 	
 	}*/
+
+	function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+			@"descripcion": "La descripción"
+			@"codcuenta": "El código de cuenta"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
 
 	//point @blank to almacen.blank
     point @read to almacen.read

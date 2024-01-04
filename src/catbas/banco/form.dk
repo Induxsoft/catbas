@@ -50,18 +50,22 @@ module "form_view_caja.dk"
                     a(href="../" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_X_LG>"}
                 }
             }
-            small(class="fw-bold"){"Nombre:"}
-            input(type="text" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" required="true" maxlength="50")
-            small{"Contacto:"}
-            #!
-            do uie.dbSelect(def_contacto)        
-            #$
-            small(class="mt-2" "for"="website"){"WebSite:"}
-            input(type="text" name="website" id="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
-            small{"Notas:"}
-            textarea(name="notas" class="induxsoft-form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
-            input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
-            
+            div(id="work_area" class="container-section")
+            {
+                div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
+                input(type="hidden" name="sys_recver" value="#<@('./sys_recver')>")
+
+                small(class="fw-bold"){"Nombre:"}
+                input(type="text" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" required="true" maxlength="50")
+                small{"Contacto:"}
+                #!
+                do uie.dbSelect(def_contacto)        
+                #$
+                small(class="mt-2" "for"="website"){"WebSite:"}
+                input(type="text" name="website" id="website" class="induxsoft-form-control" value="#<@('./website')>" maxlength="150")
+                small{"Notas:"}
+                textarea(name="notas" class="induxsoft-form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
+            }
         }
     }
 

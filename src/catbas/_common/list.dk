@@ -83,7 +83,7 @@ module "list.dk"
             }
             div
             {
-                div(style="overflow-y:auto;max-height: 75vh;" class="mb-2")
+                div(style="overflow-y:auto;max-height: 75vh;" class="mb-2" id="list_table_container")
                 {
                     #! do uie.dbtable(@table_definition)
                 }
