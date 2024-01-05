@@ -69,6 +69,8 @@ module "Controller configs"
 	do crudl.routes.entity("/porteador/",_entities_type)
 	do crudl.routes.entity("/repartidor/",_entities_type)
 	do crudl.routes.entity("/tarjetacredito/",_entities_type)
+	do crudl.routes.entity("/tipocliente/",_entities_type)
+	do crudl.routes.entity("/tipoproveedor/",_entities_type)
 	do crudl.routes.entity("/zona/",_entities_type)
 	
 	@dbmvc_path="crudl/"

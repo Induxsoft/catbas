@@ -15,5 +15,7 @@
 "porteadores.list","Porteadores","/$/catbas/img/icons/porteador.jpg","/!/catbas/porteador/","0","catbas.porteadores","0090"
 "repartidores.list","Repartidores","/$/catbas/img/icons/repartidor.jpg","/!/catbas/repartidor/","0","catbas.repartidores","0090"
 "tarjetacredito.list","Tarjeta de crédito","/$/catbas/img/icons/tarjetas.jpg","/!/catbas/tarjetacredito/","0","catbas.tarjetacredito","0090"
+"tipocliente.list","Tipos de clientes","/$/catbas/img/icons/tipocliente.jpg","/!/catbas/tipocliente/","0","catbas.tipocliente","0090"
+"tipoproveedor.list","Tipos de proveedores","/$/catbas/img/icons/tipoproveedor.jpg","/!/catbas/tipoproveedor/","0","catbas.tipoproveedor","0090"
 "aduanas.list","Aduanas","/$/catbas/img/icons/aduana.jpg","/!/catbas/ut_aduana/","0","catbas.aduanas","0090"
 "zona.list","Zonas","/$/catbas/img/icons/zona.jpg","/!/catbas/zona/","0","catbas.zona","0090"

@@ -6,6 +6,10 @@ module "list_view_tipo_proveedor.dk"
 	#include "functions.dkh"
 	#include "serialize.dkh"
     #include "../config.dk"
+
+	@gender="o"
+    @title="Tipos de proveedores"
+
     do @context.begin(@crud_context)
 
 	ref @http_context=@("&http")

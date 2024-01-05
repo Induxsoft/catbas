@@ -6,6 +6,10 @@ module "list_view_tipo_cliente.dk"
 	#include "functions.dkh"
 	#include "serialize.dkh"
     #include "../config.dk"
+
+	@gender="o"
+    @title="Tipos de cliente"
+
     do @context.begin(@crud_context)
 
 	ref @http_context=@("&http")

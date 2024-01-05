@@ -38,6 +38,8 @@ program
         cfgimpuesto.csv,
         divisa.csv,
         linea.csv,
+        tipocliente.csv,
+        tipoproveedor.csv,
         sys_app_catalog.csv,
         sys_app_category.csv,
         sys_app_shortcut.csv

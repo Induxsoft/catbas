@@ -3,6 +3,52 @@
 
 module "tipo_proveedor.dk"
 {
+    #include "../config.dk"
+    #include "../_lib/lib.dk"
+
     @read_query="select #<@sys_fields>, codigo,descripcion,notas
     from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
+
+    function create(&db,&params,&data)
+    {
+        ref res = entity.create(db, params, data)
+        return res
+        exception
+    	{
+            do cu_error("tipo de proveedor")
+    		do rise_error(last_error_code(),last_error())
+    	}
+    }
+    function update(&db,&params,&data)
+    {
+        ref res = entity.update(db, params, data)
+        return res
+        exception
+    	{
+            do cu_error("tipo de proveedor")
+    		do rise_error(last_error_code(),last_error())
+    	}
+    }
+
+    function list(&db, &params)
+    {
+        query="SELECT sys_pk, codigo, descripcion
+            FROM tipoproveedor 
+            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
+            ORDER BY codigo
+            LIMIT #<@default_max_rows>;"
+        return dbr.list(db, ftext(query), params)
+    }
+    function cu_error(table)
+    {
+        new fields {
+            @"codigo": "El código"
+            @"descripcion": "La descripción"
+        }
+        do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
+
+    point @create to create
+    point @update to update
+    point @list to list
 }
