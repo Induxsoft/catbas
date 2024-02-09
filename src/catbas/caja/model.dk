@@ -92,6 +92,27 @@ module "caja.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+	function caja.delete(&db, &params)
+	{
+		// intentar borrado físico
+        do entity.delete(db, params)
+        
+        exception
+        {
+            // borrado lógico
+            sql = "
+                UPDATE caja SET 
+                    sys_deleted = 1, 
+                    codigo = SUBSTRING(CONCAT('~',sys_pk),1,5), 
+                    descripcion = SUBSTRING(CONCAT('~',sys_pk,descripcion),1,50),
+					codcuenta = SUBSTRING(CONCAT('~',sys_pk,codcuenta),1,50)
+                WHERE sys_pk=@_entity_id;
+            "
+            do dbr.execute(db, sql, params)
+        }
+
+        return @true
+	}
 	function cu_error(table)
     {
         new fields {
@@ -105,4 +126,5 @@ module "caja.dk"
 	point @create to caja.create
 	point @update to caja.update
 	point @list to list
+	point @delete to caja.delete
 }
