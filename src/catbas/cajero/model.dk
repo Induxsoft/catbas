@@ -3,53 +3,52 @@
 
 module "cajero.dk"
 {
-    @read_query="select 
-        sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
-        codigo, codnomina, email, nombre,contrasena,notas, domicilio1
-        from cajero where #<@keyfield>=@_entity_id limit 1;"
-    cajero.read::&db,&params
-    {
-        ref cajero=entity.read(db,params)
-        cajero<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",cajero)
-        cajero<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(cajero,"&domicilio"))
-        cajero<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(cajero,"&ciudad"))
-        cajero<"pais*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver from pais where sys_pk=@IPais",@@(cajero,"&estado"))
-        return  cajero
-    }
+    #include "../config.dk"
+
+    @read_query="
+        select 
+            sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
+            codigo, email, nombre, telefono, contrasena, notas
+        from cajero 
+        where #<@keyfield>=@_entity_id 
+        limit 1;"
+
+    @list_query="
+        SELECT 
+            sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
+            codigo, email, nombre, telefono, contrasena, notas
+        FROM cajero 
+        WHERE IFNULL(sys_deleted,0)=0
+		    AND IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
+        ORDER BY codigo
+        LIMIT #<@default_max_rows>;
+    "
+    
     cajero.create::&db,&params,&data
     {
-        @use_transaction=@false
 		data<"sys_recver">:parse.num(@@(data,"#sys_recver"))
 		data<"sys_pk">:parse.num(@@(data,"#sys_pk"))
-    	do dbr.begin(db)
-    		if not(isnull(@@(data,"&domicilio")))
-	        {
-				data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
-	            ref domicilio=dbr.save(db,"domicilio",@@(data,"&domicilio"))
-	            data<"domicilio1">:@@(domicilio,"sys_pk")
-	            do field.remove(data,"domicilio")
-	        }
-	        if not(isnull(@@(data,"&ciudad"))){do field.remove(data,"ciudad")}
-	        if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
-	        if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
-	        ref res= entity.create(db,params,data)
-    	do dbr.commit(db)
+        if field.exist(data,"contrasena")
+        {
+            data<"contrasena">:toupper(md5e(@@(data,"$contrasena"), "Unicode"))
+        }
+    	ref res= entity.create(db,params,data)
     	return res
     	exception
     	{
-    		if dbr.in_transaction(db) {do dbr.rollback(db)}
     		do rise_error(500,last_error())
     	}
     }
     cajero.update::&db,&params,&data
     {
-        if not(isnull(@@(data,"&domicilio")))
-    	{
-            data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
-    		ref domicilio=dbr.save(db,"domicilio",@@(data,"&domicilio"))
-            data<"domicilio1">:@@(domicilio,"sys_pk")
-            do field.remove(data,"domicilio")
-    	}
+        contra = dbr.str(db, "SELECT contrasena FROM cajero WHERE sys_pk=@_entity_id", params)
+        if contra == @@(data,"$contrasena") { do field.remove(data, "contrasena") }
+        
+        if field.exist(data,"contrasena")
+        {
+            data<"contrasena">:toupper(md5e(@@(data,"$contrasena"), "Unicode"))
+        }
+
     	return entity.update(db,params,data)
     }
     cajero.delete::&db,&params
@@ -59,9 +58,30 @@ module "cajero.dk"
         do dbr.delete(db,@table_name,"sys_pk=@_entity_id",params)
         do dbr.delete(db,"domicilio","sys_pk=@domicilio1",cajero)
     }
-    
-    point @read to cajero.read
+    function cajero.delete(&db, &params)
+    {
+        // intentar borrado físico
+        do entity.delete(db, params)
+
+        exception
+        {
+            // borrado lógico
+            sql = "
+                UPDATE caja SET 
+                    sys_deleted = 1, 
+                    codigo = SUBSTRING(CONCAT('~',sys_pk),1,10), 
+                    nombre = SUBSTRING(CONCAT('~',sys_pk,nombre),1,50),
+                    codnomina = SUBSTRING(CONCAT('~',sys_pk,codnomina),1,50)
+                WHERE sys_pk=@_entity_id;
+            "
+            do dbr.execute(db, sql, params)
+        }
+
+        return @true
+    }
+
     point @create to cajero.create
     point @delete to cajero.delete
     point @update to cajero.update
+    point @delete to cajero.delete
 }

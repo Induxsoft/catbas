@@ -6,12 +6,15 @@ module "list_view_cajero.dk"
 	#include "functions.dkh"
 	#include "../config.dk"
 
-	do @context.begin(@crud_context)
+	@gender="o"
+    @title="Cajeros"
 
+	do @context.begin(@crud_context)
+	ref @http_context=@("&http")
 	
     new @table_definition
     {
-    	@"datatable*":@@(@crud_context,"&.")
+    	@"datatable*":@("&.")
     	member @"columns"
         {
         	member @"codigo"
@@ -22,9 +25,13 @@ module "list_view_cajero.dk"
         	{
         		@"caption":"Nombre"
         	}
-			member @"codnomina"
+			member @"telefono"
 			{
-				@"caption":"Código de Nomina"
+				@"caption":"Teléfono"
+			}
+			member @"email"
+			{
+				@"caption":"Email"
 			}
         	member @"_actions"
         	{
@@ -33,7 +40,7 @@ module "list_view_cajero.dk"
         }
     }
 	#$
-    div(class="m-0 justify-content-center" )
+    div(class="m-0 justify-content-center")
 	{
     	#!
     	#include "cajero.dk"

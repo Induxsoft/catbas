@@ -3,6 +3,7 @@
 "almacen.list","Almacenes","/$/catbas/img/icons/almacen.png","/!/catbas/almacen/","0","catbas.almacen","0090"
 "bancos.list","Bancos","/$/catbas/img/icons/banco.png","/!/catbas/banco/","0","catbas.bancos","0090"
 "cajas.list","Cajas","/$/catbas/img/icons/caja.png","/!/catbas/caja/","0","catbas.cajas","0090"
+"cajeros.list","Cajeros","/$/catbas/img/icons/cajero.png","/!/catbas/cajero/","0","catbas.cajeros","0090"
 "categorias.list","Categorias","/$/catbas/img/icons/categoria.png","/!/catbas/categoria/","0","catbas.categorias","0090"
 "cconsumo.list","Centro de consumo","/$/catbas/img/icons/centro_de_consumo.png","/!/catbas/cconsumo/","0","catbas.cconsumo","0090"
 "cfgimpuestos.list","Configuración de impuestos","/$/catbas/img/icons/impuestos.png","/!/catbas/cfgimpuesto/","0","catbas.cfgimpuestos","0090"
