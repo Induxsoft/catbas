@@ -155,7 +155,7 @@ module "form_agente.dk"
                     }
                 }
                 input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('#./sys_recver')>")
-                input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<field.dstr(@('&./'),'sys_pk',0)>")
+                input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<@('#./sys_pk')>")
             }
             div(id="status_bar" class="container-section")
             {

@@ -64,6 +64,7 @@ module "agente.dk"
             do field.remove(data,"domicilio")
     	}
         if field.exist(data,"pcomision") && trim(@@(data,"$pcomision")) == "" { data<"pcomision">: 0 }
+        do dbr.execute(db, "UPDATE agente SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
     	return entity.update(db,params,data)
         
         exception
