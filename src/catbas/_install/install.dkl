@@ -54,6 +54,7 @@ program "instalador"
 	// Lista de permisos iniciales
     ref permissions_to_import = from.json('[
         "FX1-10-10-000",
+        "FX1-10-10-001",
         "FX1-10-10-002",
         "FX1-10-10-003",
         "FX1-10-10-004",
@@ -62,7 +63,11 @@ program "instalador"
         "FX1-10-11-002",
         "FX1-10-11-003",
         "FX1-10-11-004",
-      
+        "FX1-10-30-000",
+        "FX1-10-30-001",
+        "FX1-10-30-002",
+        "FX1-10-30-003",
+        "FX1-10-30-004",
     ]')
 
     // DECLARACIÓN DE FUNCIONES
