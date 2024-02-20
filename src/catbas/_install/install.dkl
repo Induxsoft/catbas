@@ -52,7 +52,12 @@ program "instalador"
         "tipoproveedor.csv",
     ]')
 	// Lista de permisos iniciales
-    ref permissions_to_import = from.json('[]')
+    ref permissions_to_import = from.json('[
+        "FX1-10-10-000",
+        "FX1-10-10-002",
+        "FX1-10-10-003",
+        "FX1-10-10-004",
+    ]')
 
     // DECLARACIÓN DE FUNCIONES
     ref lib_csv = _import_library("devkron.serialize.csv.dll")

@@ -6,6 +6,8 @@ module "Controller configs"
 	#include "serialize.dkh"
 	#include "crudl/crudl.dk"
 	#include "dbr.dkh"
+	#include "dbr.vars.dkl"
+	#include "dbr.security.dkl"
 
 	if @@(@http_context,"$session/user/ids") == "" {
 		@http_context<"response/headers/location"> : "/"

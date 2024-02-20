@@ -12,7 +12,6 @@ module "agente.dk"
 
    	agente.read::&db,&params
     {
-
         ref agente=entity.read(db,params)
         new d
         {
@@ -28,6 +27,8 @@ module "agente.dk"
 
     agente.create::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_AGENTE)) { do rise_error(500,"No autorizado") }
+
         @use_transaction=@false
 		data<"sys_recver">:parse.num(@@(data,"#sys_recver"))
 		data<"sys_pk">:parse.num(@@(data,"#sys_pk"))
@@ -56,6 +57,8 @@ module "agente.dk"
 
     agente.update::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_AGENTE)) { do rise_error(500,"No autorizado") }
+
         if not(isnull(@@(data,"&domicilio")))
     	{
             data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
@@ -75,7 +78,9 @@ module "agente.dk"
     }
 
     agente.delete::&db,&params
-    {	
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_AGENTE)) { do rise_error(500,"No autorizado") }
+
         @keyfield="sys_pk"
         ref agente=entity.read(db,params)
         new d
@@ -97,6 +102,8 @@ module "agente.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_AGENTE)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,nombre,codnomina,telefono 
             FROM agente 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))

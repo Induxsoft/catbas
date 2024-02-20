@@ -11,4 +11,10 @@ module "config.dk"
 	@LIST_PAIS = "/!/catbas/pais/"
 	@LIST_ESTADO = "/!/catbas/edoprov/"
 	@LIST_AGENTES = "/!/catbas/agente/"
+
+	@CAT_AUT_ACCESS_AGENTE = "FX1-10-10-000"
+	@CAT_AUT_CREATE_AGENTE = "FX1-10-10-002"
+	@CAT_AUT_UPDATE_AGENTE = "FX1-10-10-003"
+	@CAT_AUT_DELETE_AGENTE = "FX1-10-10-004"
+	@CAT_AUT_AGENTE_READONLY = "FX1-10-10-001"
 }
