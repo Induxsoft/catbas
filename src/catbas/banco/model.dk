@@ -10,11 +10,15 @@ module "banco.dk"
 
 	banco.read::&db,&params
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_BANCO_READONLY)) { do rise_error(500,"No autorizado") }
+
 		ref banco=entity.read(db,params)
 		return banco
 	}
 	banco.create::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_BANCO)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"contacto")=="@"
 		{
 			// data<"contacto">:@null
@@ -29,6 +33,8 @@ module "banco.dk"
 	}
 	banco.update::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_BANCO)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"contacto")=="@"
 		{
 			// data<"contacto">:@null
@@ -44,6 +50,8 @@ module "banco.dk"
 
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_BANCO)) { do rise_error(500,"No autorizado") }
+
         query="SELECT b.sys_pk, b.sys_recver, b.nombre, concat(c.nombre,' ',c.apellidos) as contacto
             FROM banco b
 				LEFT JOIN contacto c ON b.contacto = c.sys_pk
@@ -60,8 +68,16 @@ module "banco.dk"
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 
+	function delete(&db,&paramas)
+	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_BANCO)) { do rise_error(500,"No autorizado") }
+
+		return entity.delete(db,params)
+	}
+
 	point @read to banco.read
 	point @create to banco.create
 	point @update to banco.update
 	point @list to list
+	point @delete to delete
 }

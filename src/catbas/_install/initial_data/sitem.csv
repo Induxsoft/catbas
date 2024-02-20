@@ -1,4 +1,4 @@
-itemid,descripcion,itemparent
+itemid,description,itemparent
 "FX1-00-00-000","Operaciones ERP","FX1-00-00-000"
 "FX1-10-00-000","Catálogos","FX1-00-00-000"
 "FX1-10-10-000","Agentes","FX1-10-00-000"
@@ -11,3 +11,8 @@ itemid,descripcion,itemparent
 "FX1-10-11-002","Permitir Agregar Aduanas","FX1-10-11-000"
 "FX1-10-11-003","Permitir Modificar Aduanas","FX1-10-11-000"
 "FX1-10-11-004","Permitir Eliminar Aduanas","FX1-10-11-000"
+"FX1-10-30-000","Bancos","FX1-10-00-000"
+"FX1-10-30-001","Solo lectura","FX1-10-30-000"
+"FX1-10-30-002","Permitir Agregar Banco","FX1-10-30-000"
+"FX1-10-30-003","Permitir Modificar Banco","FX1-10-30-000"
+"FX1-10-30-004","Permitir Eliminar Banco","FX1-10-30-000"
