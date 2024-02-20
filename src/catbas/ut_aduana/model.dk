@@ -10,6 +10,8 @@ module "ut_aduana.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_ADUANAS)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, uf_codigo,uf_nombre,uf_ciudad,uf_notas 
             FROM ut_aduana 
             WHERE IF(IFNULL(@s,'')='', true, (uf_codigo LIKE CONCAT('%',@s,'%') OR uf_nombre LIKE CONCAT('%',@s,'%')))
@@ -19,6 +21,8 @@ module "ut_aduana.dk"
     }
     function create(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+
         do entity.create(db, params, data)
         exception
         {
@@ -28,6 +32,8 @@ module "ut_aduana.dk"
     }
     function update(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+
         do entity.update(db, params, data)
         exception
         {
@@ -44,7 +50,24 @@ module "ut_aduana.dk"
         }
         do valide_duplicate(fields, "aduana", last_error(), last_error_code())
     }
+    delete::&db,&params
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ADUANAS)) { do rise_error(500,"No autorizado") }
 
+       ref entity= entity.delete(db,params)
+       return entity
+    }
+    read::&db,&params
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_ADUANAS_READONLY)) { do rise_error(500,"No autorizado") }
+
+        ref entity= entity.read(db,params)
+       return entity
+    }
+    
+    point @read to read
+    
+    point @delete to delete
     point @list to list
     point @create to create
     point @update to update
