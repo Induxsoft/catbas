@@ -12,6 +12,8 @@ module "agente.dk"
 
    	agente.read::&db,&params
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_AGENTE_READONLY)) { do rise_error(500,"No autorizado") }
+
         ref agente=entity.read(db,params)
         new d
         {
