@@ -9,6 +9,8 @@ module "marca.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_MARCA)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,descripcion 
             FROM marca 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -18,6 +20,8 @@ module "marca.dk"
     }
     function create(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_MARCA)) { do rise_error(500,"No autorizado") }
+
         do entity.create(db, params, data)
         exception
 		{
@@ -27,6 +31,8 @@ module "marca.dk"
     }
     function update(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_MARCA)) { do rise_error(500,"No autorizado") }
+
         do entity.update(db, params, data)
         exception
 		{
@@ -42,8 +48,22 @@ module "marca.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+    function read(&db, &params)
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_MARCA_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+    function delete(&db, &params)
+	{
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_MARCA)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
 
     point @list to list
     point @create to create
     point @update to update
+    point @read to read
+    point @delete to delete
 }

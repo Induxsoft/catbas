@@ -9,6 +9,8 @@ module "departamento.dk"
     
     create::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
         data<"comision1">: @@(data, "#comision1")
         data<"comision2">: @@(data, "#comision2")
         data<"comision3">: @@(data, "#comision3")
@@ -23,6 +25,8 @@ module "departamento.dk"
     }
     update::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
         if field.exist(data,"comision1") && trim(@@(data,"$comision1")) == "" { data<"comision1">: 0 }
         if field.exist(data,"comision2") && trim(@@(data,"$comision2")) == "" { data<"comision2">: 0 }
         if field.exist(data,"comision3") && trim(@@(data,"$comision3")) == "" { data<"comision3">: 0 }
@@ -53,6 +57,8 @@ module "departamento.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,descripcion,comision1,comision2,comision3,comision4,comision5 
             FROM departamento 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -68,8 +74,22 @@ module "departamento.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+    function read(&db, &params)
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_DEPARTAMENTO_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+    function delete(&db, &params)
+	{
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
 
     point @list to list
     point @create to create
     point @update to update
+    point @read to read
+    point @delete to delete
 }

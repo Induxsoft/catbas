@@ -11,6 +11,8 @@ module "banco.dk"
 
 	poliza.create::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+
 		id=dbr.num(db,"select ifnull(max(id),0)+1 from ctipospolizas limit 1",@null)
 		new d
 		{
@@ -32,6 +34,8 @@ module "banco.dk"
 	}
 	poliza.update::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+
 		new d
 		{
 			@"Const":@@(data,"descripcion")
@@ -51,6 +55,8 @@ module "banco.dk"
 	}
 	poliza.delete::&db,&params
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+
 		if @@(params,"#_entity_id")<3{do rise_error(99,"No se puede eliminar datos del sistema")}
 		new d
 		{
@@ -69,6 +75,8 @@ module "banco.dk"
 
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+
         query="SELECT tp.id as sys_pk, tp.const, IFNULL(tp.uf_sat_tipopoliza,'') uf_sat_tipopoliza, IFNULL(stp.uf_const,'') sat_tipopoliza
 			FROM ctipospolizas tp
 				LEFT JOIN ut_sat_ctipopoliza stp ON tp.uf_sat_tipopoliza = stp.sys_pk
@@ -77,9 +85,16 @@ module "banco.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+	function read(&db, &params)
+    {
+		if not(dbr.security.isauth(db,@CAT_AUT_TIPO_POLIZA_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
 
 	point @create to poliza.create
 	point @update to poliza.update
 	point @delete to poliza.delete
 	point @list to list
+	point @read to read
 }

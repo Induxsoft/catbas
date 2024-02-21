@@ -14,6 +14,8 @@ module "almacen.dk"
 
 	almacen.read::&db,&params
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ALMACEN_READONLY)) { do rise_error(500,"No autorizado") }
+
         ref almacen=entity.read(db,params)
         almacen<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",almacen)
         almacen<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(almacen,"&domicilio"))
@@ -23,6 +25,8 @@ module "almacen.dk"
     }
     almacen.create::&db,&params,&data
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ALMACEN)) { do rise_error(500,"No autorizado") }
+
     	@use_transaction=@false
 
 		// if field.exist(data,"domicilio_direccion")
@@ -67,6 +71,7 @@ module "almacen.dk"
     }
     almacen.delete::&db,&params
     {	
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ALMACEN)) { do rise_error(500,"No autorizado") }
          // do rise_error(-99,to.json(params))
     	@keyfield="sys_pk"
     	 
@@ -77,6 +82,8 @@ module "almacen.dk"
     }
     almacen.update::&db,&params,&data
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ALMACEN)) { do rise_error(500,"No autorizado") }
+
     	if not(isnull(@@(data,"&domicilio")))
     	{
 			data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
@@ -103,6 +110,8 @@ module "almacen.dk"
 	}
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_ALMACEN)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,descripcion,codcuenta 
             FROM almacen 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))

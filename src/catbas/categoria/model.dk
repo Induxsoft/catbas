@@ -13,6 +13,8 @@ module "categoria.dk"
 	//@cod=dbr.execute(db,"select (if(count(*)>=1,CONCAT('A',LPAD(Cast(MAX(SUBSTR(codigo,4,4))+1 as char),'4','0')),'A0001')) as codigo from categoria where codigo like 'A%';",params)
 	categoria.read::&db,&params
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CATEGORIA_READONLY)) { do rise_error(500,"No autorizado") }
+
 		ref categoria=entity.read(db,params)
 		return categoria
 	}
@@ -29,6 +31,8 @@ module "categoria.dk"
 	}
 	function categoria.create(&db, &params, &data)
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CATEGORIA)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"codcuenta")==""
 		{
 			do field.remove(data,"codcuenta")
@@ -42,6 +46,8 @@ module "categoria.dk"
 	}
 	function categoria.update(&db, &params, &data)
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CATEGORIA)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"codcuenta")==""
 		{
 			do field.remove(data,"codcuenta")
@@ -55,6 +61,8 @@ module "categoria.dk"
 	}
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CATEGORIA)) { do rise_error(500,"No autorizado") }
+
         query="SELECT categoria.sys_pk, categoria.sys_recver,categoria.codcuenta, REPLACE(REPLACE(categoria.codigo,'<','&lt;'),'>','&gt;') codigo,categoria.uf_inhabilitado, categoria.descripcion, ctiposcategorias.const ctiposcategorias 
 			FROM categoria
 			INNER JOIN ctiposcategorias ON tipo=ctiposcategorias.id
@@ -73,9 +81,16 @@ module "categoria.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+	function delete(&db, &params)
+	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CATEGORIA)) { do rise_error(500,"No autorizado") }
+
+		return entity.delete(db, params)
+	}
 
 	point @read to categoria.read
 	point @list to list
 	point @create to categoria.create
 	point @update to categoria.update
+	point @delete to delete
 }

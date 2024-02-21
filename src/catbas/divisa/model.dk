@@ -9,6 +9,8 @@ module "divisa.dk"
     
     divisa.create::&db,&params,data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+
         if @@(data,"tcambio")==""
         {
             do field.remove(data,"tcambio")
@@ -22,6 +24,8 @@ module "divisa.dk"
     }
     divisa.update::&db,&params,data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+
         if @@(data,"tcambio")==""
         {
             do field.remove(data,"tcambio")
@@ -35,6 +39,8 @@ module "divisa.dk"
     }
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DIVISAS)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,descripcion,tcambio 
             FROM divisa
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -50,8 +56,22 @@ module "divisa.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+    function read(&db, &params)
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_DIVISAS_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+    function delete(&db, &params)
+	{
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DIVISAS)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
     // point @read to caja.read
     point @create to divisa.create
     point @update to divisa.update
     point @list to list
+    point @read to read
+    point @delete to delete
 }

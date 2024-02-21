@@ -28,6 +28,8 @@ module "tarjetacredito.dk"
 	// }
 	tarjeta.create::&db,&params,data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"uf_PorComision")==""
 		{
 			do field.remove(data,"uf_PorComision")
@@ -41,6 +43,8 @@ module "tarjetacredito.dk"
 	}
 	tarjeta.update::&db,&params,data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"uf_PorComision")==""
 		{
 			do field.remove(data,"uf_PorComision")
@@ -54,6 +58,8 @@ module "tarjetacredito.dk"
 	}
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, codigo,descripcion,uf_PorComision 
 			FROM tarjetacredito
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -69,9 +75,23 @@ module "tarjetacredito.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+	function read(&db, &params)
+    {
+		if not(dbr.security.isauth(db,@CAT_AUT_TARJETA_CRED_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+	function delete(&db, &params)
+	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
 
 	// point @read to caja.read
 	point @create to tarjeta.create
 	point @update to tarjeta.update
 	point @list to list
+	point @read to read
+	point @delete to delete
 }

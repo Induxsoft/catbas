@@ -29,6 +29,8 @@ module "cfgimpuesto.dk"
    
 	cfgimpuesto.create::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_IMPUESTO)) { do rise_error(500,"No autorizado") }
+
 		@use_transaction=@false
 		ref data_new=record.copy(data,"*")
 		do record.clear(data)
@@ -66,6 +68,8 @@ module "cfgimpuesto.dk"
 	}
 	cfgimpuesto.update::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_IMPUESTO)) { do rise_error(500,"No autorizado") }
+
 		@use_transaction=@false
 		ref data_new=record.copy(data,"*")
 		do record.clear(data)
@@ -104,6 +108,8 @@ module "cfgimpuesto.dk"
 
 	function list(&db, &params)
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_IMPUESTO)) { do rise_error(500,"No autorizado") }
+
 		@list_query="select #<@sys_fields>,nombre,
 		I1Compra,I2Compra,I3Compra,I4Compra,
 		I1Venta,I2Venta,I3Venta,I4Venta,
@@ -124,10 +130,24 @@ module "cfgimpuesto.dk"
 		}
 		do valide_duplicate(fields, table, last_error(), last_error_code())
 	}
+	function read(&db, &params)
+    {
+		if not(dbr.security.isauth(db,@CAT_AUT_IMPUESTO_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+	function delete(&db, &params)
+	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_IMPUESTO)) { do rise_error(500,"No autorizado") }
+		
+		return entity.delete(db, params)
+	}
     
 	point @create to cfgimpuesto.create
     point @update to cfgimpuesto.update
 	point @list to list
+	point @read to read
+	point @delete to delete
 }
 
     

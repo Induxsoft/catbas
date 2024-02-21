@@ -9,11 +9,15 @@ module "cconsumo.dk"
 	
 	cconsumo.read::&db,&params
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CCONSUMO_READONLY)) { do rise_error(500,"No autorizado") }
+
 		ref cconsumo=entity.read(db,params)
 		return cconsumo
 	}
 	cconsumo.create::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CCONSUMO)) { do rise_error(500,"No autorizado") }
+
 		// do rise_error(99,"eror")
 		@use_transaction=@false
 		if parse.bool(@@(data,"uf_inhabilitado")){
@@ -37,6 +41,8 @@ module "cconsumo.dk"
 	}
 	cconsumo.update::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CCONSUMO)) { do rise_error(500,"No autorizado") }
+
 		@use_transaction=@false
 		if parse.bool(@@(data,"uf_inhabilitado")){
 			data<"uf_inhabilitado">:1
@@ -60,6 +66,8 @@ module "cconsumo.dk"
 
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CCONSUMO)) { do rise_error(500,"No autorizado") }
+
         query="SELECT sys_pk, sys_recver, codigo, descripcion
             FROM cconsumo 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -75,9 +83,16 @@ module "cconsumo.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+	function delete(&db, &params)
+	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CCONSUMO)) { do rise_error(500,"No autorizado") }
+
+		return entity.delete(db, params)
+	}
 	
 	point @read to cconsumo.read
 	point @create to cconsumo.create 
 	point @update to cconsumo.update
 	point @list to list
+	point @delete to delete
 }

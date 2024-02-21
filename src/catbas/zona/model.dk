@@ -10,6 +10,8 @@ module "zona.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_ZONAS)) { do rise_error(500,"No autorizado") }
+
         query="SELECT #<@sys_fields>, nombre,notas 
             FROM zona
             WHERE IF(IFNULL(@s,'')='', true, (nombre LIKE CONCAT('%',@s,'%')))
@@ -19,6 +21,8 @@ module "zona.dk"
     }
     function create(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ZONAS)) { do rise_error(500,"No autorizado") }
+
         do entity.create(db, params, data)
         exception
 		{
@@ -28,6 +32,8 @@ module "zona.dk"
     }
     function update(&db, &params, &data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ZONAS)) { do rise_error(500,"No autorizado") }
+
         do entity.update(db, params, data)
         exception
 		{
@@ -42,8 +48,22 @@ module "zona.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+    function read(&db, &params)
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_ZONAS_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+    function delete(&db, &params)
+	{
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ZONAS)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
 
     point @list to list
     point @create to create
     point @update to update
+    point @read to read
+    point @delete to delete
 }

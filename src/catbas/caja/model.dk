@@ -19,6 +19,8 @@ module "caja.dk"
 	
 	caja.read::&db,&params
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CAJA_READONLY)) { do rise_error(500,"No autorizado") }
+
 		ref caja=entity.read(db,params)
 		// caja<"centroConsumo*">:dbr.rec("select sys_pk,sys_recver,codigo,descripcion,notas,precio,ialmacen,uf_domiciliocfd,uf_expedicioncxc,uf_inhabilitado,
 		// 	uf_fechainhabilitacion,uf_grupoprod,porcentaje_esperado from cconsumo where sys_pk=1",caja)
@@ -43,6 +45,8 @@ module "caja.dk"
 	}
 	caja.create::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CAJA)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"CodCuenta")==""
 		{
 			do field.remove(data,"CodCuenta")
@@ -63,6 +67,8 @@ module "caja.dk"
 	}
 	caja.update::&db,&params,&data
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CAJA)) { do rise_error(500,"No autorizado") }
+
 		if @@(data,"CodCuenta")==""
 		{
 			do field.remove(data,"CodCuenta")
@@ -83,6 +89,8 @@ module "caja.dk"
 	}
 	function list(&db, &params)
     {
+		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CAJA)) { do rise_error(500,"No autorizado") }
+
         query="SELECT c.Sys_PK, c.sys_guid, c.sys_dtcreated, c.sys_timestamp, c.sys_recver,c.sys_deleted, c.sys_lock, c.codigo, c.descripcion,c.codcuenta,mo.descripcion AS descon 
 			FROM caja c 
 				LEFT JOIN cconsumo mo ON c.centroconsumo=mo.Sys_PK
@@ -94,11 +102,14 @@ module "caja.dk"
     }
 	function caja.delete(&db, &params)
 	{
+		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CAJA)) { do rise_error(500,"No autorizado") }
+
 		// intentar borrado físico
         do entity.delete(db, params)
         
         exception
         {
+			if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CAJA)) { do rise_error(500,"No autorizado") }
             // borrado lógico
             sql = "
                 UPDATE caja SET 

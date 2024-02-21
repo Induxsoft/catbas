@@ -12,6 +12,8 @@ module "repartidor.dk"
 
     repartidor.read::&db,&params
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_REPARTIDOR_READONLY)) { do rise_error(500,"No autorizado") }
+
         ref repartidor=entity.read(db,params)
         repartidor<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",repartidor)
         repartidor<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(repartidor,"&domicilio"))
@@ -23,6 +25,8 @@ module "repartidor.dk"
 
     repartidor.create::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_REPARTIDOR)) { do rise_error(500,"No autorizado") }
+
     	@use_transaction=@false
 		data<"sys_recver">:parse.num(@@(data,"#sys_recver"))
 		data<"sys_pk">:parse.num(@@(data,"#sys_pk"))
@@ -50,6 +54,8 @@ module "repartidor.dk"
 
     repartidor.update::&db,&params,&data
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_REPARTIDOR)) { do rise_error(500,"No autorizado") }
+
     	if not(isnull(@@(data,"&domicilio")))
     	{
     		ref domicilio=dbr.save(db,"domicilio",@@(data,"&domicilio"))
@@ -65,7 +71,9 @@ module "repartidor.dk"
     }
 
 	repartidor.delete::&db,&params
-    {	
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_REPARTIDOR)) { do rise_error(500,"No autorizado") }
+
         @keyfield="sys_pk"
         ref repartidor=entity.read(db,params)
         do dbr.delete(db,@table_name,"sys_pk=@_entity_id",params)
@@ -74,6 +82,8 @@ module "repartidor.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_REPARTIDOR)) { do rise_error(500,"No autorizado") }
+
         query="SELECT * 
             FROM repartidor 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))

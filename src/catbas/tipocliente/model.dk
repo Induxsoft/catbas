@@ -11,6 +11,8 @@ module "tipo_cliente.dk"
 
     function create(&db,&params,&data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
+
         ref res = entity.create(db, params, data)
         return res
         exception
@@ -21,6 +23,8 @@ module "tipo_cliente.dk"
     }
     function update(&db,&params,&data)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
+
         ref res = entity.update(db, params, data)
         return res
         exception
@@ -32,6 +36,8 @@ module "tipo_cliente.dk"
 
     function list(&db, &params)
     {
+        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
+
         query="SELECT sys_pk, codigo, descripcion
             FROM tipocliente 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
@@ -47,8 +53,22 @@ module "tipo_cliente.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+    function read(&db, &params)
+    {
+        if not(dbr.security.isauth(db,@CAT_AUT_TIPO_CLIENTE_READONLY)) { do rise_error(500,"No autorizado") }
+
+        return entity.read(db, params)
+    }
+    function delete(&db, &params)
+	{
+        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
+
+        return entity.delete(db, params)
+	}
 
     point @create to create
     point @update to update
     point @list to list
+    point @read to read
+    point @delete to delete
 }
