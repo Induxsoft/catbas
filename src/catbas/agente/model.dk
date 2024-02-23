@@ -27,6 +27,18 @@ module "agente.dk"
         return  agente
     }
 
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA046","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
     agente.create::&db,&params,&data
     {
         if not(dbr.security.isauth(db,@CAT_AUT_CREATE_AGENTE)) { do rise_error(500,"No autorizado") }
@@ -46,6 +58,9 @@ module "agente.dk"
 	        if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
 	        if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
             data<"pcomision">: @@(data, "#pcomision")
+
+            do check_autocode(db,"agente","codigo",data)
+
 	        ref res= entity.create(db,params,data)
     	do dbr.commit(db)
     	return res

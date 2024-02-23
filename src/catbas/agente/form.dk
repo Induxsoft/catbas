@@ -58,7 +58,7 @@ module "form_agente.dk"
                     div(class="col-sm-6")
                     {
                         small(class="fw-bold"){"Código:"}
-                        input(type="text" id="codigo" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" maxlength="10" )
+                        input(type="text" id="codigo" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" maxlength="10" placeholder="<A>")
                     }
                     div(class="col-sm-6")
                     {
