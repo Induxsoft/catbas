@@ -37,7 +37,7 @@ module "form.dk"
                     div(class="col-sm-4")
                     {
                         small(class="fw-bold"){"Código:"}
-                        input(type="text" name="uf_codigo" class="induxsoft-form-control mb-2" value="#<@('./uf_codigo')>" required="true" maxlength="35")
+                        input(type="text" name="uf_codigo" class="induxsoft-form-control mb-2" value="#<@('./uf_codigo')>" maxlength="35")
                     }
                     div(class="col-sm-8")
                     {

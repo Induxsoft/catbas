@@ -60,7 +60,7 @@ module "form_view_caja.dk"
                     div(class="col-12 col-sm-2")
                     {
                         small(class="fw-bold"){"Código:"}
-                        input(type="text" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" required="true" maxlength="5")
+                        input(type="text" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" maxlength="5" placeholder="<A>")
                     }
                     div(class="col-12 col-sm-10")
                     {

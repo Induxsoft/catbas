@@ -43,6 +43,19 @@ module "caja.dk"
 		}
 		return r
 	}
+
+	function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA049","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
 	caja.create::&db,&params,&data
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CAJA)) { do rise_error(500,"No autorizado") }
@@ -58,6 +71,7 @@ module "caja.dk"
 		data<"uf_cortereq_vntadic">: @@(data, "#uf_cortereq_vntadic")
 		data<"uf_lim_vntliber">: @@(data, "#uf_lim_vntliber")
 		
+		if @@(data,"codigo")=="" { do check_autocode(db,"caja","codigo",data) }
 		do entity.create(db,params,data)
 		exception
 		{

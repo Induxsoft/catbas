@@ -9,7 +9,7 @@ module "divisa.dk"
 
     function check_autocode(&db,table,field,&data)
     {
-        varvalue = dbr.vars.getd(db,"FXCA054","|0000")
+        varvalue = dbr.vars.getd(db,"FXCA058","|0000")
         ref config = dbr.autocode.info(varvalue)
         new_code = dbr.autocode.new(db,table,field,config)
 

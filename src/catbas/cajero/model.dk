@@ -23,6 +23,18 @@ module "cajero.dk"
         ORDER BY codigo
         LIMIT #<@default_max_rows>;
     "
+
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA050","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
     
     cajero.create::&db,&params,&data
     {
@@ -30,12 +42,13 @@ module "cajero.dk"
 
 		data<"sys_recver">:parse.num(@@(data,"#sys_recver"))
 		data<"sys_pk">:parse.num(@@(data,"#sys_pk"))
-        if field.exist(data,"contrasena")
-        {
-            data<"contrasena">:toupper(md5e(@@(data,"$contrasena"), "Unicode"))
-        }
+
+        if field.exist(data,"contrasena") { data<"contrasena">:toupper(md5e(@@(data,"$contrasena"), "Unicode")) }
+
+        if @@(data,"codigo")=="" { do check_autocode(db,"cajero","codigo",data) }
     	ref res= entity.create(db,params,data)
     	return res
+
     	exception
     	{
     		do rise_error(500,last_error())

@@ -19,17 +19,33 @@ module "ut_aduana.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA067","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"uf_codigo">: new_code
+
+        exception
+        { }
+    }
+
     function create(&db, &params, &data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ADUANAS)) { do rise_error(500,"No autorizado") }
 
+        if @@(data,"uf_codigo")=="" { do check_autocode(db,"ut_aduana","uf_codigo",data) }
         do entity.create(db, params, data)
+
         exception
         {
             do cu_error("a")
             do rise_error(last_error_code(), last_error())
         }
     }
+
     function update(&db, &params, &data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ADUANAS)) { do rise_error(500,"No autorizado") }
@@ -50,6 +66,7 @@ module "ut_aduana.dk"
         }
         do valide_duplicate(fields, "aduana", last_error(), last_error_code())
     }
+
     delete::&db,&params
     {
         if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ADUANAS)) { do rise_error(500,"No autorizado") }
@@ -57,6 +74,7 @@ module "ut_aduana.dk"
        ref entity= entity.delete(db,params)
        return entity
     }
+    
     read::&db,&params
     {
         if not(dbr.security.isauth(db,@CAT_AUT_ADUANAS_READONLY)) { do rise_error(500,"No autorizado") }
@@ -66,7 +84,6 @@ module "ut_aduana.dk"
     }
     
     point @read to read
-    
     point @delete to delete
     point @list to list
     point @create to create
