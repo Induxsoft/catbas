@@ -22,6 +22,17 @@ module "repartidor.dk"
         return  repartidor
     }
 
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA058","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
 
     repartidor.create::&db,&params,&data
     {
@@ -41,9 +52,12 @@ module "repartidor.dk"
 	        if not(isnull(@@(data,"&ciudad"))){do field.remove(data,"ciudad")}
 	        if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
 	        if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
+
+            if @@(data,"codigo")=="" { do check_autocode(db,"repartidor","codigo",data) }
 	        ref res= entity.create(db,params,data)
     	do dbr.commit(db)
     	return res
+
     	exception
     	{
     		if dbr.in_transaction(db) {do dbr.rollback(db)}

@@ -9,10 +9,23 @@ module "tipo_proveedor.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,notas
     from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA061","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
     function create(&db,&params,&data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
 
+        if @@(data,"codigo")=="" { do check_autocode(db,"tipoproveedor","codigo",data) }
         ref res = entity.create(db, params, data)
         return res
         exception

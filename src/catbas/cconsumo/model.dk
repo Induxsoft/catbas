@@ -14,6 +14,19 @@ module "cconsumo.dk"
 		ref cconsumo=entity.read(db,params)
 		return cconsumo
 	}
+
+	function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA051","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+	
 	cconsumo.create::&db,&params,&data
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CCONSUMO)) { do rise_error(500,"No autorizado") }
@@ -22,18 +35,22 @@ module "cconsumo.dk"
 		@use_transaction=@false
 		if parse.bool(@@(data,"uf_inhabilitado")){
 			data<"uf_inhabilitado">:1
-		}
-		else{
+		} else {
 			data<"uf_inhabilitado">:0
 		}
-		if @@(data,"precio")==""{data<"precio">:0}
+
+		if @@(data,"precio")==""{ data<"precio">:0 }
+
 		do dbr.begin(db)
-		 ref res= entity.create(db,params,data)
+
+		if @@(data,"codigo")=="" { do check_autocode(db,"cconsumo","codigo",data) }
+		ref res = entity.create(db,params,data)
 		do dbr.commit(db)
     	return res
+
     	exception
     	{
-    		if dbr.in_transaction(db) {do dbr.rollback(db)}
+    		if dbr.in_transaction(db) { do dbr.rollback(db) }
 			do cu_error("centro de consumo")
     		do rise_error(500,last_error())
     	}

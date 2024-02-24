@@ -9,18 +9,33 @@ module "tipo_cliente.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,notas
     from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA060","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
     function create(&db,&params,&data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
 
+        if @@(data,"codigo")=="" { do check_autocode(db,"tipocliente","codigo",data) }
         ref res = entity.create(db, params, data)
         return res
+
         exception
     	{
             do cu_error("tipo de cliente")
     		do rise_error(last_error_code(),last_error())
     	}
     }
+    
     function update(&db,&params,&data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
@@ -45,6 +60,7 @@ module "tipo_cliente.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
     function cu_error(table)
     {
         new fields {
@@ -53,12 +69,14 @@ module "tipo_cliente.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+
     function read(&db, &params)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_TIPO_CLIENTE_READONLY)) { do rise_error(500,"No autorizado") }
 
         return entity.read(db, params)
     }
+    
     function delete(&db, &params)
 	{
         if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }

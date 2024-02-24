@@ -6,6 +6,18 @@ module "departamento.dk"
     #include "../config.dk"
     #include "../_lib/lib.dk"
     @read_query="select #<@sys_fields>, codigo,descripcion,comision1,comision2,comision3,comision4,comision5 from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
+
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA053","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
     
     create::&db,&params,&data
     {
@@ -16,7 +28,10 @@ module "departamento.dk"
         data<"comision3">: @@(data, "#comision3")
         data<"comision4">: @@(data, "#comision4")
         data<"comision5">: @@(data, "#comision5")
+
+        if @@(data,"codigo")=="" { do check_autocode(db,"departamento","codigo",data) }
         do entity.create(db,params,data)
+
         exception
 		{
 			do cu_error("departamento")

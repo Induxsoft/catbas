@@ -26,6 +26,19 @@ module "tarjetacredito.dk"
 	// 	}
 	// 	return cod
 	// }
+
+	function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA059","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
 	tarjeta.create::&db,&params,data
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
@@ -34,13 +47,17 @@ module "tarjetacredito.dk"
 		{
 			do field.remove(data,"uf_PorComision")
 		}
+		
+		if @@(data,"codigo")=="" { do check_autocode(db,"tarjetacredito","codigo",data) }
 		do entity.create(db,params,data)
+
 		exception
 		{
 			do cu_error("tarjeta")
 			do rise_error(last_error_code(), last_error())
 		}
 	}
+
 	tarjeta.update::&db,&params,data
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
@@ -56,6 +73,7 @@ module "tarjetacredito.dk"
 			do rise_error(last_error_code(), last_error())
 		}
 	}
+
 	function list(&db, &params)
     {
 		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TARJETA_CRED)) { do rise_error(500,"No autorizado") }
@@ -67,6 +85,7 @@ module "tarjetacredito.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
 	function cu_error(table)
     {
         new fields {
@@ -75,12 +94,14 @@ module "tarjetacredito.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+
 	function read(&db, &params)
     {
 		if not(dbr.security.isauth(db,@CAT_AUT_TARJETA_CRED_READONLY)) { do rise_error(500,"No autorizado") }
 
         return entity.read(db, params)
     }
+
 	function delete(&db, &params)
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TARJETA_CRED)) { do rise_error(500,"No autorizado") }

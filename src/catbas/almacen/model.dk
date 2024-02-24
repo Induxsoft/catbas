@@ -23,6 +23,19 @@ module "almacen.dk"
         almacen<"pais*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver from pais where sys_pk=@IPais",@@(almacen,"&estado"))
         return  almacen
     }
+
+	function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA047","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
     almacen.create::&db,&params,&data
     {
 		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ALMACEN)) { do rise_error(500,"No autorizado") }
@@ -58,7 +71,9 @@ module "almacen.dk"
 	        if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
 	        if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
                 //  do rise_error(-99,to.json(@@(data,"&domicilio")))
-	           ref res= entity.create(db,params,data)
+
+			if @@(data,"codigo")=="" { do check_autocode(db,"almacen","codigo",data) }
+	        ref res= entity.create(db,params,data)
     	do dbr.commit(db)
    
     	return res

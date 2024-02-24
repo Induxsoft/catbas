@@ -21,10 +21,11 @@ script{
 		}
 	
 		function validate() {
-			if ($("#codigo").val()===""){
+			/* if ($("#codigo").val()===""){
 				alert("Rellene el campo: Código");
 				return;
-			}else if($("#contrasena").val()===""){
+			}else */
+			if($("#contrasena").val()===""){
 				alert("Rellene el campo: Contraseña");
 				return;
 			}

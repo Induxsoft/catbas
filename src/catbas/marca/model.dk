@@ -18,11 +18,26 @@ module "marca.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
+    function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA056","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
     function create(&db, &params, &data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_CREATE_MARCA)) { do rise_error(500,"No autorizado") }
 
+        if @@(data,"codigo")=="" { do check_autocode(db,"marca","codigo",data) }
         do entity.create(db, params, data)
+
         exception
 		{
 			do cu_error("marca")

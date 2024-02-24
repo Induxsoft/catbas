@@ -18,6 +18,7 @@ module "categoria.dk"
 		ref categoria=entity.read(db,params)
 		return categoria
 	}
+
 	entity.blank::&db,&params
 	{
 		new r
@@ -29,21 +30,35 @@ module "categoria.dk"
 
 		return r
 	}
+
+	function check_autocode(&db,table,field,&data)
+    {
+        varvalue = dbr.vars.getd(db,"FXCA050","|0000")
+        ref config = dbr.autocode.info(varvalue)
+        new_code = dbr.autocode.new(db,table,field,config)
+
+        data<"codigo">: new_code
+
+        exception
+        { }
+    }
+
 	function categoria.create(&db, &params, &data)
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CATEGORIA)) { do rise_error(500,"No autorizado") }
 
-		if @@(data,"codcuenta")==""
-		{
-			do field.remove(data,"codcuenta")
-		}
+		if @@(data,"codcuenta")=="" { do field.remove(data,"codcuenta") }
+
+		if @@(data,"codigo")=="" { do check_autocode(db,"categoria","codigo",data) }
 		do entity.create(db,params,data)
+
 		exception
 		{
 			do cu_error("categoría")
 			do rise_error(last_error_code(), last_error())
 		}
 	}
+
 	function categoria.update(&db, &params, &data)
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CATEGORIA)) { do rise_error(500,"No autorizado") }
@@ -59,6 +74,7 @@ module "categoria.dk"
 			do rise_error(last_error_code(), last_error())
 		}
 	}
+
 	function list(&db, &params)
     {
 		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CATEGORIA)) { do rise_error(500,"No autorizado") }
@@ -72,6 +88,7 @@ module "categoria.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
 	function cu_error(table)
     {
         new fields {
@@ -81,6 +98,7 @@ module "categoria.dk"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
+
 	function delete(&db, &params)
 	{
 		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CATEGORIA)) { do rise_error(500,"No autorizado") }

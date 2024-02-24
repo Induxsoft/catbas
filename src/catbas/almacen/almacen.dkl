@@ -24,10 +24,11 @@ script{
 		}
 
 		function validate() {
-			if ($("#codigo").val()===""){
+			/* if ($("#codigo").val()===""){
 				alert("Rellene el campo: Código");
 				return;
-			}else if($("#descripcion").val()===""){
+			} else */
+			if($("#descripcion").val()===""){
 				alert("Rellene el campo: Descripción");
 				return;
 			}
