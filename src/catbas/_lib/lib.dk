@@ -13,7 +13,13 @@ module
                 if contains(tolower(error),key)
                 {
                     do errordet(@false)
-                    do rise_error(code, value + " de "+ table +" ya existe, intente con un valor diferente.") 
+                    v = ""
+                    codeblock
+                    {
+                        v = list.str(split(tolower(error),"'"),2)
+                        exception {}
+                    }
+                    do rise_error(code, value + ": " + v + " de "+ table +" ya existe, ingrese un valor diferente.") 
                 }
             }
         }
