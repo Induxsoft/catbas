@@ -93,7 +93,9 @@ module "caja.dk"
 		if field.exist(data,"uf_lime_aviso") && trim(@@(data,"$uf_lime_aviso")) == "" { data<"uf_lime_aviso">: 0 }
 		if field.exist(data,"uf_cortereq_vntadic") && trim(@@(data,"$uf_cortereq_vntadic")) == "" { data<"uf_cortereq_vntadic">: 0 }
 		if field.exist(data,"uf_lim_vntliber") && trim(@@(data,"$uf_lim_vntliber")) == "" { data<"uf_lim_vntliber">: 0 }
-		
+
+		do dbr.execute(db, "UPDATE caja SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE caja SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
 		do entity.update(db,params,data)
 		exception
 		{

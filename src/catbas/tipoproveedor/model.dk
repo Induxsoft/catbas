@@ -34,10 +34,13 @@ module "tipo_proveedor.dk"
     		do rise_error(last_error_code(),last_error())
     	}
     }
+
     function update(&db,&params,&data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
 
+        do dbr.execute(db, "UPDATE tipoproveedor SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE tipoproveedor SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
         ref res = entity.update(db, params, data)
         return res
         exception
@@ -58,6 +61,7 @@ module "tipo_proveedor.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
     }
+
     function cu_error(table)
     {
         new fields {

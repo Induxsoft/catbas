@@ -47,7 +47,11 @@ module "departamento.dk"
         if field.exist(data,"comision3") && trim(@@(data,"$comision3")) == "" { data<"comision3">: 0 }
         if field.exist(data,"comision4") && trim(@@(data,"$comision4")) == "" { data<"comision4">: 0 }
         if field.exist(data,"comision5") && trim(@@(data,"$comision5")) == "" { data<"comision5">: 0 }
+        
+        do dbr.execute(db, "UPDATE departamento SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE departamento SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
         do entity.update(db,params,data)
+
         exception
 		{
 			do cu_error("departamento")

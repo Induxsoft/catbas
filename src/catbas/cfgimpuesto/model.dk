@@ -95,7 +95,11 @@ module "cfgimpuesto.dk"
 		data<"tasa">:@@(data_new,"#excentoiva")
 
 		do dbr.begin(db)
+
+		do dbr.execute(db, "UPDATE cfgimpuesto SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE cfgimpuesto SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
 		ref res=entity.update(db,params,data)
+
 		do dbr.commit(db)
 		return res
 		exception

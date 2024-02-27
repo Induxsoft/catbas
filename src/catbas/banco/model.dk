@@ -40,6 +40,10 @@ module "banco.dk"
 			// data<"contacto">:@null
 			do field.remove(data,"contacto")
 		}
+
+		do dbr.execute(db, "UPDATE banco SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE banco SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
+
 		do entity.update(db,params,data)
 		exception
 		{

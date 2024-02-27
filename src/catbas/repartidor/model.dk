@@ -76,7 +76,11 @@ module "repartidor.dk"
             data<"domicilio1">:@@(domicilio,"sys_pk")
             do field.remove(data,"domicilio")
     	}
+
+        do dbr.execute(db, "UPDATE repartidor SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE repartidor SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
     	return entity.update(db,params,data)
+
         exception
     	{
             do cu_error("repartidor")

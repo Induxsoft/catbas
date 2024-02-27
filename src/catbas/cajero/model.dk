@@ -66,6 +66,9 @@ module "cajero.dk"
             data<"contrasena">:toupper(md5e(@@(data,"$contrasena"), "Unicode"))
         }
 
+        do dbr.execute(db, "UPDATE cajero SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE cajero SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
+
     	return entity.update(db,params,data)
     }
     function cajero.delete(&db, &params)

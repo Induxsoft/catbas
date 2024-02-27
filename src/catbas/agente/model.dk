@@ -77,13 +77,18 @@ module "agente.dk"
 
         if not(isnull(@@(data,"&domicilio")))
     	{
-            data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
-    		ref domicilio=dbr.save(db,"domicilio",@@(data,"&domicilio"))
-            data<"domicilio1">:@@(domicilio,"sys_pk")
+            if not(@@(data,"domicilio/sys_recver"))
+            {
+                data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
+                ref domicilio=dbr.save(db,"domicilio",@@(data,"&domicilio"))
+                data<"domicilio1">:@@(domicilio,"sys_pk")
+            }
             do field.remove(data,"domicilio")
     	}
+        
         if field.exist(data,"pcomision") && trim(@@(data,"$pcomision")) == "" { data<"pcomision">: 0 }
         do dbr.execute(db, "UPDATE agente SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE agente SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
     	return entity.update(db,params,data)
         
         exception

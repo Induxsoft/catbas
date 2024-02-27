@@ -30,10 +30,13 @@ module "zona.dk"
 			do rise_error(last_error_code(), last_error())
 		}
     }
+
     function update(&db, &params, &data)
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ZONAS)) { do rise_error(500,"No autorizado") }
 
+        do dbr.execute(db, "UPDATE zona SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE zona SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
         do entity.update(db, params, data)
         exception
 		{
@@ -41,6 +44,7 @@ module "zona.dk"
 			do rise_error(last_error_code(), last_error())
 		}
     }
+
     function cu_error(table)
     {
         new fields {

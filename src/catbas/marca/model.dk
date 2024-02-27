@@ -47,6 +47,8 @@ module "marca.dk"
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_MARCA)) { do rise_error(500,"No autorizado") }
 
+        do dbr.execute(db, "UPDATE marca SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE marca SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
         do entity.update(db, params, data)
         exception
 		{

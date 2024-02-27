@@ -40,8 +40,11 @@ module "tipo_cliente.dk"
     {
         if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_CLIENTE)) { do rise_error(500,"No autorizado") }
 
+        do dbr.execute(db, "UPDATE tipocliente SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
+        do dbr.execute(db, "UPDATE tipocliente SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
         ref res = entity.update(db, params, data)
-        return res
+        return 
+        
         exception
     	{
             do cu_error("tipo de cliente")
