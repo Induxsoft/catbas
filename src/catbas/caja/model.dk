@@ -135,6 +135,11 @@ module "caja.dk"
 					codcuenta = SUBSTRING(CONCAT('~',sys_pk,codcuenta),1,50)
                 WHERE sys_pk=@_entity_id;
             "
+			
+			if not(isnull(dbr.rec(db,"select sys_pk from corte where icaja=@_entity_id and IFNULL(cerrado,0)=0 limit 1;", params))){
+				do rise_error(0, "Esta caja tiene una sesión abierta")
+			}
+
             do dbr.execute(db, sql, params)
         }
 

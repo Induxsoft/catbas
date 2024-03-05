@@ -91,6 +91,11 @@ module "cajero.dk"
                     codnomina = SUBSTRING(CONCAT('~',sys_pk,codnomina),1,50)
                 WHERE sys_pk=@_entity_id;
             "
+
+            if not(isnull(dbr.rec(db,"select sys_pk from corte where icajero=@_entity_id and IFNULL(cerrado,0)=0 limit 1", params))){
+                do rise_error(0, "Este cajero tiene una sesión de caja abierta")
+		    }
+
             do dbr.execute(db, sql, params)
         }
 
