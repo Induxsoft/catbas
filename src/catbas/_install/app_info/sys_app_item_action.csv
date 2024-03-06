@@ -1,0 +1,85 @@
+"id","title","shorttitle","icon16x16","href","_blank","appid","itemtype","req_context_item_id","act_type"
+
+"CB11","Agregar agente","Agregar","","/!/catbas/agente/_new/","0","catbas.agente","agente","0","action"
+"CB12","Editar agente","Editar","","/!/catbas/agente/@_src_context_item_id/","0","catbas.agente","agente","1","action"
+"CB13","Eliminar agente","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.agente","agente","1","action"
+
+"CB21","Agregar almacen","Agregar","","/!/catbas/almacen/_new/","0","catbas.almacen","almacen","0","action"
+"CB22","Editar almacen","Editar","","/!/catbas/almacen/@_src_context_item_id/","0","catbas.almacen","almacen","1","action"
+"CB23","Eliminar almacen","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.almacen","almacen","1","action"
+
+"CB31","Agregar banco","Agregar","","/!/catbas/banco/_new/","0","catbas.banco","banco","0","action"
+"CB32","Editar banco","Editar","","/!/catbas/banco/@_src_context_item_id/","0","catbas.banco","banco","1","action"
+"CB33","Eliminar banco","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.banco","banco","1","action"
+
+"CB41","Agregar caja","Agregar","","/!/catbas/caja/_new/","0","catbas.caja","caja","0","action"
+"CB42","Editar caja","Editar","","/!/catbas/caja/@_src_context_item_id/","0","catbas.caja","caja","1","action"
+"CB43","Eliminar caja","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.caja","caja","1","action"
+
+"CB51","Agregar cajero","Agregar","","/!/catbas/cajero/_new/","0","catbas.cajero","cajero","0","action"
+"CB52","Editar cajero","Editar","","/!/catbas/cajero/@_src_context_item_id/","0","catbas.cajero","cajero","1","action"
+"CB53","Eliminar cajero","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.cajero","cajero","1","action"
+
+"CB61","Agregar categoria","Agregar","","/!/catbas/categoria/_new/","0","catbas.categoria","categoria","0","action"
+"CB62","Editar categoria","Editar","","/!/catbas/categoria/@_src_context_item_id/","0","catbas.categoria","categoria","1","action"
+"CB63","Eliminar categoria","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.categoria","categoria","1","action"
+
+"CB71","Agregar centro de consumo","Agregar","","/!/catbas/cconsumo/_new/","0","catbas.cconsumo","cconsumo","0","action"
+"CB72","Editar centro de consumo","Editar","","/!/catbas/cconsumo/@_src_context_item_id/","0","catbas.cconsumo","cconsumo","1","action"
+"CB73","Eliminar centro de consumo","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.cconsumo","cconsumo","1","action"
+
+"CB81","Agregar configuración de impuesto","Agregar","","/!/catbas/cfgimpuesto/_new/","0","catbas.cfgimpuesto","cfgimpuesto","0","action"
+"CB82","Editar configuración de impuesto","Editar","","/!/catbas/cfgimpuesto/@_src_context_item_id/","0","catbas.cfgimpuesto","cfgimpuesto","1","action"
+"CB83","Eliminar configuración de impuesto","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.cfgimpuesto","cfgimpuesto","1","action"
+
+"CB91","Agregar contacto","Agregar","","/!/catbas/contacto/_new/","0","catbas.contacto","contacto","0","action"
+"CB92","Editar contacto","Editar","","/!/catbas/contacto/@_src_context_item_id/","0","catbas.contacto","contacto","1","action"
+"CB93","Eliminar contacto","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.contacto","contacto","1","action"
+
+"CB101","Agregar tipo de póliza","Agregar","","/!/catbas/ctipospolizas/_new/","0","catbas.ctipospolizas","tpoliza","0","action"
+"CB102","Editar tipo de póliza","Editar","","/!/catbas/ctipospolizas/@_src_context_item_id/","0","catbas.ctipospolizas","tpoliza","1","action"
+"CB103","Eliminar tipo de póliza","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.ctipospolizas","tpoliza","1","action"
+
+"CB111","Agregar departamento","Agregar","","/!/catbas/departamento/_new/","0","catbas.departamento","pdpto","0","action"
+"CB112","Editar departamento","Editar","","/!/catbas/departamento/@_src_context_item_id/","0","catbas.departamento","pdpto","1","action"
+"CB113","Eliminar departamento","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.departamento","pdpto","1","action"
+
+"CB121","Agregar divisa","Agregar","","/!/catbas/divisa/_new/","0","catbas.divisa","divisa","0","action"
+"CB122","Editar divisa","Editar","","/!/catbas/divisa/@_src_context_item_id/","0","catbas.divisa","divisa","1","action"
+"CB123","Eliminar divisa","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.divisa","divisa","1","action"
+
+"CB131","Agregar marca","Agregar","","/!/catbas/marca/_new/","0","catbas.marca","marca","0","action"
+"CB132","Editar marca","Editar","","/!/catbas/marca/@_src_context_item_id/","0","catbas.marca","marca","1","action"
+"CB133","Eliminar marca","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.marca","marca","1","action"
+
+"CB141","Agregar país","Agregar","","/!/catbas/pais/_new/","0","catbas.pais","pais","0","action"
+"CB142","Editar país","Editar","","/!/catbas/pais/@_src_context_item_id/","0","catbas.pais","pais","1","action"
+"CB143","Eliminar país","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.pais","pais","1","action"
+
+"CB151","Agregar porteador","Agregar","","/!/catbas/porteador/_new/","0","catbas.porteador","porteador","0","action"
+"CB152","Editar porteador","Editar","","/!/catbas/porteador/@_src_context_item_id/","0","catbas.porteador","porteador","1","action"
+"CB153","Eliminar porteador","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.porteador","porteador","1","action"
+
+"CB161","Agregar repartidor","Agregar","","/!/catbas/repartidor/_new/","0","catbas.repartidor","repartidor","0","action"
+"CB162","Editar repartidor","Editar","","/!/catbas/repartidor/@_src_context_item_id/","0","catbas.repartidor","repartidor","1","action"
+"CB163","Eliminar repartidor","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.repartidor","repartidor","1","action"
+
+"CB171","Agregar targeta de crédito","Agregar","","/!/catbas/tarjetacredito/_new/","0","catbas.tarjetacredito","tcd","0","action"
+"CB172","Editar targeta de crédito","Editar","","/!/catbas/tarjetacredito/@_src_context_item_id/","0","catbas.tarjetacredito","tcd","1","action"
+"CB173","Eliminar targeta de crédito","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.tarjetacredito","tcd","1","action"
+
+"CB181","Agregar tipo de cliente","Agregar","","/!/catbas/tipocliente/_new/","0","catbas.tipocliente","tclientes","0","action"
+"CB182","Editar tipo de cliente","Editar","","/!/catbas/tipocliente/@_src_context_item_id/","0","catbas.tipocliente","tclientes","1","action"
+"CB183","Eliminar tipo de cliente","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.tipocliente","tclientes","1","action"
+
+"CB191","Agregar tipo de proveedor","Agregar","","/!/catbas/tipoproveedor/_new/","0","catbas.tipoproveedor","tproveedores","0","action"
+"CB192","Editar tipo de proveedor","Editar","","/!/catbas/tipoproveedor/@_src_context_item_id/","0","catbas.tipoproveedor","tproveedores","1","action"
+"CB193","Eliminar tipo de proveedor","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.tipoproveedor","tproveedores","1","action"
+
+"CB201","Agregar aduana","Agregar","","/!/catbas/ut_aduana/_new/","0","catbas.ut_aduana","aduana","0","action"
+"CB202","Editar aduana","Editar","","/!/catbas/ut_aduana/@_src_context_item_id/","0","catbas.ut_aduana","aduana","1","action"
+"CB203","Eliminar aduana","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.ut_aduana","aduana","1","action"
+
+"CB211","Agregar zona/área geográfica","Agregar","","/!/catbas/zona/_new/","0","catbas.zona","zona","0","action"
+"CB212","Editar zona/área geográfica","Editar","","/!/catbas/zona/@_src_context_item_id/","0","catbas.zona","zona","1","action"
+"CB213","Eliminar zona/área geográfica","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.zona","zona","1","action"
