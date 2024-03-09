@@ -2,6 +2,7 @@
 model "erp.catbas"
 {
     #include "induxsoft.abstracts.ddm"
+
     /* uod.agente */
     entity "agente" : "TableModel"
     {
@@ -16,14 +17,15 @@ model "erp.catbas"
         @"uf_capitan" bool
         @"uf_sys_baja" bool
         @"uf_iuser" int
-
     }
+
     /* uod.ut_sat_ctipopoliza */
     entity "ut_sat_ctipopoliza" : "TableModel"
     {
         @"uf_id" int 
         @"uf_const" string(100) 
     }
+
     /* uod.almacen */
     entity "almacen" : "TableModel"
     {
@@ -40,6 +42,7 @@ model "erp.catbas"
         @"uf_fechainhabilitacion" datetime
         @"uf_formaproduccion" int
     }
+
      /* uod.banco */
     entity "banco" : "TableModel"
     {
@@ -48,6 +51,7 @@ model "erp.catbas"
         @"website" string(150)
         @"contacto" int ref:"contacto" ["sys_pk"]
     }
+
     /* uod.caja */
     entity "caja" : "TableModel"
     {
@@ -70,6 +74,7 @@ model "erp.catbas"
         @"uf_cortereq_vntadic" int
         @"uf_lim_vntliber" int
     }
+
      /* uod.cajero */
     entity "cajero" : "TableModel"
     {
@@ -83,8 +88,10 @@ model "erp.catbas"
         @"domicilio1" int ref:"domicilio" ["sys_pk"]
         @"uf_sys_baja" bool
     }
+
     /* uod.ctiposcategorias */
     entity "ctiposcategorias" : "EnumModel" {}
+
     /* uod.categoria */
     entity "categoria" : "TableModel"
     {
@@ -97,6 +104,7 @@ model "erp.catbas"
         @"uf_inhabilitado" bool
         @"uf_fechainhabilitacion" datetime
     }
+
     /* uod.cconsumo */
     entity "cconsumo" : "TableModel"
     {
@@ -112,6 +120,7 @@ model "erp.catbas"
         @"uf_fechainhabilitacion" datetime
         @"uf_grupoprod" int
     }
+
      /* uod.cfgimpuesto */
     entity "cfgimpuesto" : "TableModel"
     {
@@ -131,6 +140,7 @@ model "erp.catbas"
         @"tasa" bool
         @"objetoimp" string(2)
     }
+
     /* uod.contacto */
     entity "contacto" : "TableModel"
     {
@@ -151,12 +161,14 @@ model "erp.catbas"
         @"domicilio1" int ref:"domicilio" ["sys_pk"]
         @"domicilio2" int ref:"domicilio" ["sys_pk"]
     }
+
     entity "ctipospolizas" //: "TableModel"
     {
         @"id" int key required
         @"const" string(255)
         @"uf_sat_tipopoliza" int
     }
+
     /* uod.departamento */
     entity "departamento" : "TableModel"
     {
@@ -168,6 +180,7 @@ model "erp.catbas"
         @"comision5" decimal(18,8)
         @"descripcion" string(50) unique required
     }
+
     /* uod.divisa */
     entity "divisa" : "TableModel"
     {
@@ -175,8 +188,10 @@ model "erp.catbas"
         @"descripcion" string(30) unique required
         @"tcambio" decimal(18,8)
     }
+
     /* uod.cclaseproducto */
     entity "cclaseproducto" : "EnumModel" {}
+
      /* uod.linea */
     // entity "linea" : "TableModel"
     // {
@@ -193,12 +208,14 @@ model "erp.catbas"
     //     @"visible" bool
     //     @"uf_indicaciones" string(4096)
     // }
+
     /* uod.marca */
     entity "marca" : "TableModel"
     {
         @"codigo" string(5) unique required
         @"descripcion" string(50) unique required
     }
+
      /* uod.pais */
     entity "pais" : "TableModel"
     {
@@ -206,6 +223,7 @@ model "erp.catbas"
         @"codigotel" string(5)
         @"nombre" string(100) unique required
     }
+
     /* uod.porteador */
     entity "porteador" : "TableModel"
     {
@@ -214,6 +232,7 @@ model "erp.catbas"
         @"notas" string(2048)
         @"iproveedor" int ref:"proveedor" ["sys_pk"]
     }
+
     /* uod.repartidor */
     entity "repartidor" : "TableModel"
     {
@@ -226,6 +245,7 @@ model "erp.catbas"
         @"domicilio1" int ref:"domicilio" ["sys_pk"] 
         @"uf_sys_baja" bool 
     }
+
      /* uod.tarjetacredito */
     entity "tarjetacredito" : "TableModel"
     {
@@ -233,6 +253,7 @@ model "erp.catbas"
         @"descripcion" string(25) unique required
         @"uf_porcomision" decimal(18,8) 
     }
+
     /* uod.ut_aduana */
     entity "ut_aduana" : "TableModel"
     {
@@ -241,13 +262,14 @@ model "erp.catbas"
         @"uf_ciudad" string(100) 
         @"uf_notas" string(500) 
     }
+
      /* uod.zona */
     entity "zona" : "TableModel"
     {
         @"nombre" string(30) unique required
         @"notas" string(255) 
     }
-    ////////////////////////
+
     /* uod.cpoliza */
     entity "cpoliza" : "TableModel"
     {
@@ -270,6 +292,7 @@ model "erp.catbas"
         @"descripcion" string(50) unique required
         @"notas" string(4096) 
     }
+
     /* uod.cliente */
     entity "cliente" : "TableModel"
     {
@@ -327,11 +350,13 @@ model "erp.catbas"
         @"contactotec_telefono" string(50)
         @"contactotec_telefonoaux" string(50)
     }
+
     /* uod.cstatusorg */
     entity "cstatusorg" : "EnumModel" {}
+
     /* uod.ctasasiva */
     entity "ctasasiva" : "EnumModel" {}
-    /* uod.proveedor */
+
     /* uod.tipooperacion */
     entity "tipooperacion"
     {
@@ -342,6 +367,7 @@ model "erp.catbas"
         @"sys_lock" int
         @"sys_deleted" bool
     }
+
     /* uod.tipoproveedor */
     entity "tipoproveedor" : "TableModel"
     {
@@ -349,6 +375,8 @@ model "erp.catbas"
         @"descripcion" string(50) unique required
         @"notas" string(4096) 
     }
+
+    /* uod.proveedor */
     entity "proveedor" : "TableModel"
     {
         @"codcuenta" string(50) unique 
@@ -388,6 +416,7 @@ model "erp.catbas"
         @"nombre" string(50) required
         @"ipais" int ref:"pais" ["sys_pk"] required
     }
+
     /* uod.ciudad */
     entity "ciudad" : "TableModel"
     {
@@ -396,6 +425,7 @@ model "erp.catbas"
         @"nombre" string(100) required
         @"estado" int ref:"edoprov" ["sys_pk"] required
     }
+
     /* uod.domicilio */
     entity "domicilio" : "TableModel"
     {
@@ -408,6 +438,7 @@ model "erp.catbas"
         @"numint" string(1024)
         @"numext" string(1024)
     }
+
     // Información de la aplicación
     entity "sys_app_catalog"
     {
@@ -417,12 +448,14 @@ model "erp.catbas"
         @"created" datetime required
         @"app_info" mmemo
     }
+
     // Categoria de la aplicación
     entity "sys_app_category"
     {
         @"id" string(32) key
         @"title" string(255) required
     }
+
     // Recursos de la aplicación
     entity "sys_app_shortcut" 
     {
