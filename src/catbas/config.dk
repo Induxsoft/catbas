@@ -8,11 +8,14 @@ module "config.dk"
 	@path_common="catbas/_common/list.dk"
 	@default_max_rows=250
 
+	@JS_MAS_PRECIOS = "/$/catbas/js/mas_precios.js"
+
 	@LIST_PAIS = "/!/catbas/pais/"
 	@LIST_ESTADO = "/!/catbas/edoprov/"
 	@LIST_AGENTES = "/!/catbas/agente/"
+	@CATBAS_MAS_PRECIOS = "/!/catbas/mas_precios"
 
-	@JS_MAS_PRECIOS = "/$/catbas/js/mas_precios.js"
+	@CATBAS_ADD_EDIT_MAS_PRECIOS = "/!/catbas/mas_precios/@id/"
 
 	@CAT_AUT_ACCESS_AGENTE = "FX1-10-10-000"
 	@CAT_AUT_CREATE_AGENTE = "FX1-10-10-002"

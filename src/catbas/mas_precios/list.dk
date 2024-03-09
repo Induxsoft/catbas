@@ -4,16 +4,17 @@
 module "list"
 {
 	#include "functions.dkh"
+    #include "uielements.v12.dkl"
 	#include "../config.dk"
-
-    @title="Más precios"
 
 	do @context.begin(@crud_context)
 	ref @http_context=@("&http")
+    ref get = @@(@http_context,"&request/get")
 	
-    new @table_definition
+    new table_definition
     {
     	@"datatable*": @("&.")
+        @"table_footer": "Mostrando los primeros # registros ordenados por costo."
     	member @"columns"
         {
         	member @"costoultimo" { @"caption": "Último costo" }
@@ -61,16 +62,38 @@ module "list"
             member @"desc3" { @"caption": "Descuento 3" }
             member @"desc4" { @"caption": "Descuento 4" }
             member @"desc5" { @"caption": "Descuento 5" }
-        	member @"_actions" { @"caption": "Acción" }
+        	member @"_actions" 
+            { 
+                @"caption":"Acciones" 
+                @"template":'
+                <div style="display:flex;gap:8px;justify-content: center;width:100%" class="no-print">
+                    <a href="./${DataRow.sys_pk}/" class="no-print" style="cursor:pointer; border: none; text-decoration:none; outline: none; padding: 0 8px; background-color: #F5F5F5; color: #000; font-size:0.8rem">Editar</a>
+                </div>'
+                @"no-print":@true
+            }
         }
     }
 
-	#$
-    div(class="m-0 justify-content-center")
-	{
-    	#!
-    	include @path_common
+    new nav_config
+    {
+        @"title": "Más precios"
+        member @"hidden"
+        {
+            @"print": @false
+        }
+        @"urlexit": "/"
     }
-    
-	do @context.end()
+
+	#$
+    div(class="container p-0")
+	{
+    	#! do uie.printV12FormBar(nav_config)
+
+        #$ div(id="work_area" class="container-section pt-2")
+        {
+            p{$"#<@('$error/message')>"}
+
+            #! do uie.dbeditable(table_definition, "tbl_mas_precios")
+        }
+    }
 }
