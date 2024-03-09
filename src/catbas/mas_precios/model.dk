@@ -33,6 +33,11 @@ module "model"
         if (@@(data,"desc4") == "") { data<"desc4">: 0.0 }
         if (@@(data,"desc5") == "") { data<"desc5">: 0.0 }
 
+        if (@@(data,"precio1") == "") { data<"precio1">: 0.0 }
+        if (@@(data,"precio2") == "") { data<"precio2">: 0.0 }
+        if (@@(data,"precio3") == "") { data<"precio3">: 0.0 }
+        if (@@(data,"precio4") == "") { data<"precio4">: 0.0 }
+        if (@@(data,"precio5") == "") { data<"precio5">: 0.0 }
         if (@@(data,"precio106") == "") { data<"precio106">: 0.0 }
         if (@@(data,"precio107") == "") { data<"precio107">: 0.0 }
         if (@@(data,"precio108") == "") { data<"precio108">: 0.0 }

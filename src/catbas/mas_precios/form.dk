@@ -68,64 +68,64 @@ module "form.dk"
                         h6(class="invisible"){$"Precios"}
                         
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio1"}
+                            h6(class="price-row mb-2"){"Precio 1"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio2"}
+                            h6(class="price-row mb-2"){"Precio 2"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio3"}
+                            h6(class="price-row mb-2"){"Precio 3"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio4"}
+                            h6(class="price-row mb-2"){"Precio 4"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio5"}
+                            h6(class="price-row mb-2"){"Precio 5"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio6"}
+                            h6(class="price-row mb-2"){"Precio 6"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio7"}
+                            h6(class="price-row mb-2"){"Precio 7"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio8"}
+                            h6(class="price-row mb-2"){"Precio 8"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio9"}
+                            h6(class="price-row mb-2"){"Precio 9"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio10"}
+                            h6(class="price-row mb-2"){"Precio 10"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio11"}
+                            h6(class="price-row mb-2"){"Precio 11"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio12"}
+                            h6(class="price-row mb-2"){"Precio 12"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio13"}
+                            h6(class="price-row mb-2"){"Precio 13"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio14"}
+                            h6(class="price-row mb-2"){"Precio 14"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio15"}
+                            h6(class="price-row mb-2"){"Precio 15"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio16"}
+                            h6(class="price-row mb-2"){"Precio 16"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio17"}
+                            h6(class="price-row mb-2"){"Precio 17"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio18"}
+                            h6(class="price-row mb-2"){"Precio 18"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){"Precio19"}
+                            h6(class="price-row mb-2"){"Precio 19"}
                         }
                         div(class="d-flex justify-content-end") {
-                            h6(class="price-row mb-2"){$"Precio20"}
+                            h6(class="price-row mb-2"){$"Precio 20"}
                         }
                     }
 
@@ -272,102 +272,102 @@ module "form.dk"
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio1" value="#<@('$./precio1')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio1" value="#<@('$./precio1')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio2" value="#<@('$./precio2')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio2" value="#<@('$./precio2')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio3" value="#<@('$./precio3')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio3" value="#<@('$./precio3')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio4" value="#<@('$./precio4')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio4" value="#<@('$./precio4')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio5" value="#<@('$./precio5')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio5" value="#<@('$./precio5')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio106" value="#<@('$./precio106')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio106" value="#<@('$./precio106')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio107" value="#<@('$./precio107')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio107" value="#<@('$./precio107')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio108" value="#<@('$./precio108')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio108" value="#<@('$./precio108')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio109" value="#<@('$./precio109')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio109" value="#<@('$./precio109')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio110" value="#<@('$./precio110')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio110" value="#<@('$./precio110')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio111" value="#<@('$./precio111')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio111" value="#<@('$./precio111')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio112" value="#<@('$./precio112')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio112" value="#<@('$./precio112')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio113" value="#<@('$./precio113')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio113" value="#<@('$./precio113')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio114" value="#<@('$./precio114')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio114" value="#<@('$./precio114')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio115" value="#<@('$./precio115')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio115" value="#<@('$./precio115')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio116" value="#<@('$./precio116')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio116" value="#<@('$./precio116')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio117" value="#<@('$./precio117')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio117" value="#<@('$./precio117')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio118" value="#<@('$./precio118')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio118" value="#<@('$./precio118')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio119" value="#<@('$./precio119')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio119" value="#<@('$./precio119')>" step="0.00000001" max="999999999.9999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="text" class="induxsoft-form-control mb-2 input-number-text" name="precio120" value="#<@('$./precio120')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio120" value="#<@('$./precio120')>" step="0.00000001" max="999999999.9999999")
                         }
                     }
                 }
