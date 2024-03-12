@@ -7,53 +7,6 @@ module "model"
 
     function masprecios_update(&db,&params,&data)
     {
-        if (@@(data,"util1") == "") { data<"util1">: 0.0 }
-        if (@@(data,"util2") == "") { data<"util2">: 0.0 }
-        if (@@(data,"util3") == "") { data<"util3">: 0.0 }
-        if (@@(data,"util4") == "") { data<"util4">: 0.0 }
-        if (@@(data,"util5") == "") { data<"util5">: 0.0 }
-        if (@@(data,"util106") == "") { data<"util106">: 0.0 }
-        if (@@(data,"util107") == "") { data<"util107">: 0.0 }
-        if (@@(data,"util108") == "") { data<"util108">: 0.0 }
-        if (@@(data,"util109") == "") { data<"util109">: 0.0 }
-        if (@@(data,"util110") == "") { data<"util110">: 0.0 }
-        if (@@(data,"util111") == "") { data<"util111">: 0.0 }
-        if (@@(data,"util112") == "") { data<"util112">: 0.0 }
-        if (@@(data,"util113") == "") { data<"util113">: 0.0 }
-        if (@@(data,"util114") == "") { data<"util114">: 0.0 }
-        if (@@(data,"util115") == "") { data<"util115">: 0.0 }
-        if (@@(data,"util116") == "") { data<"util116">: 0.0 }
-        if (@@(data,"util117") == "") { data<"util117">: 0.0 }
-        if (@@(data,"util118") == "") { data<"util118">: 0.0 }
-        if (@@(data,"util119") == "") { data<"util119">: 0.0 }
-        if (@@(data,"util120") == "") { data<"util120">: 0.0 }
-
-        if (@@(data,"desc2") == "") { data<"desc2">: 0.0 }
-        if (@@(data,"desc3") == "") { data<"desc3">: 0.0 }
-        if (@@(data,"desc4") == "") { data<"desc4">: 0.0 }
-        if (@@(data,"desc5") == "") { data<"desc5">: 0.0 }
-
-        if (@@(data,"precio1") == "") { data<"precio1">: 0.0 }
-        if (@@(data,"precio2") == "") { data<"precio2">: 0.0 }
-        if (@@(data,"precio3") == "") { data<"precio3">: 0.0 }
-        if (@@(data,"precio4") == "") { data<"precio4">: 0.0 }
-        if (@@(data,"precio5") == "") { data<"precio5">: 0.0 }
-        if (@@(data,"precio106") == "") { data<"precio106">: 0.0 }
-        if (@@(data,"precio107") == "") { data<"precio107">: 0.0 }
-        if (@@(data,"precio108") == "") { data<"precio108">: 0.0 }
-        if (@@(data,"precio109") == "") { data<"precio109">: 0.0 }
-        if (@@(data,"precio110") == "") { data<"precio110">: 0.0 }
-        if (@@(data,"precio111") == "") { data<"precio111">: 0.0 }
-        if (@@(data,"precio112") == "") { data<"precio112">: 0.0 }
-        if (@@(data,"precio113") == "") { data<"precio113">: 0.0 }
-        if (@@(data,"precio114") == "") { data<"precio114">: 0.0 }
-        if (@@(data,"precio115") == "") { data<"precio115">: 0.0 }
-        if (@@(data,"precio116") == "") { data<"precio116">: 0.0 }
-        if (@@(data,"precio117") == "") { data<"precio117">: 0.0 }
-        if (@@(data,"precio118") == "") { data<"precio118">: 0.0 }
-        if (@@(data,"precio119") == "") { data<"precio119">: 0.0 }
-        if (@@(data,"precio120") == "") { data<"precio120">: 0.0 }
-
         ref res = entity.create(db,params,data)
         return res
     }
