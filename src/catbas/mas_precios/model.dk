@@ -7,6 +7,15 @@ module "model"
 
     function masprecios_update(&db,&params,&data)
     {
+        exit = @@(data,"exit")
+
+        if not(exit == "")
+        {
+            @url_redir = url_dcode(exit)
+        }
+
+        do field.remove(data,"exit")
+
         ref res = entity.create(db,params,data)
         return res
     }

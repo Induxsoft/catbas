@@ -11,6 +11,16 @@ module "form.dk"
     #include "../_lib/icons.dk"
 
     do @context.begin(@crud_context)
+    ref @http_context = @('&http')
+    ref get = @@(@http_context,"&request/get")
+
+    defaultUrl = "../"
+    exit = @@(get,"exit")
+
+    if not(exit == "")
+    {
+        defaultUrl = url_dcode(exit)
+    }
 
     entity_id = @("$parameters/_entity_id")
     isNew = (entity_id == "_new")
@@ -27,7 +37,7 @@ module "form.dk"
     {
         @"title": ifstr(isNew,'Agregar','Editar') + ' más precios'
         @"buttons*": general_act
-        @"urlexit": "../"
+        @"urlexit": defaultUrl
         member @"hidden"
         {
             @"print": @true
@@ -39,6 +49,8 @@ module "form.dk"
         form(action="." method="POST")
         {
             #! do uie.printV12FormBar(nav_config)
+
+            #$ input(type="hidden" name="exit" value="#<exit>")
 
             #$ div(id="work_area" class="container-section pt-2")
             {
