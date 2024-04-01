@@ -10,6 +10,11 @@ module "config.dk"
 
 	@JS_MAS_PRECIOS = "/$/catbas/js/mas_precios.js"
 
+	@BATCH_TASKMAN="/!/batch/taskman/"
+	@CATBAS_MARCA = "/!/catbas/marca/"
+
+	@CATBAS_ADD_EDIT_MARCA = "/!/catbas/marca/@id/"
+
 	@LIST_PAIS = "/!/catbas/pais/"
 	@LIST_ESTADO = "/!/catbas/edoprov/"
 	@LIST_AGENTES = "/!/catbas/agente/"
