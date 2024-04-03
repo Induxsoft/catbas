@@ -47,11 +47,11 @@ program
                 log = "Error al insertar el registro con codigo = '" + @@(itm,"codigo") + "' y descripcion = '" + @@(itm,"descripcion") + "'"
                 do batch.saveLog(token,log)
             } else {
-                cod_duplicated =  dbr.str(db,query1,itm)
+                duplicated =  dbr.str(db,query1,itm)
                 desc_duplicated = dbr.str(db,query2,itm)
 
                 if (desc_duplicated == @@(itm,"codigo")) {
-                    if (cod_duplicated != "") {
+                    if (duplicated != "") {
                         do dbr.execute(db,query4,itm) 
                     } else {
                         itm<"sys_guid">: uuid()
