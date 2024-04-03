@@ -12,8 +12,10 @@ module "config.dk"
 
 	@BATCH_TASKMAN="/!/batch/taskman/"
 	@CATBAS_MARCA = "/!/catbas/marca/"
+	@CATBAS_DEPARTAMENTO = "/!/catbas/departamento/"
 
 	@CATBAS_ADD_EDIT_MARCA = "/!/catbas/marca/@id/"
+	@CATBAS_ADD_EDIT_DEPARTAMENTO = "/!/catbas/departamento/@id/"
 
 	@LIST_PAIS = "/!/catbas/pais/"
 	@LIST_ESTADO = "/!/catbas/edoprov/"

@@ -13,8 +13,7 @@ module "list.dk"
     do @context.begin(@crud_context)
     ref db:@("&database")
 
-    query = "SELECT sys_pk FROM jobsgroup WHERE name = 'CATBAS';"
-    jg = dbr.num(db,query,@null)
+    jg = dbr.num(db,"SELECT sys_pk FROM jobsgroup WHERE name = 'CATBAS'",@null)
 
     new table_definition
     {
