@@ -25,8 +25,8 @@ program
 
     query1 = "SELECT codigo FROM marca WHERE codigo = @codigo"
     query2 = "SELECT codigo FROM marca WHERE descripcion = @descripcion"
-    query2 = "INSERT INTO marca (codigo, descripcion, sys_guid, sys_dtcreated, sys_timestamp) VALUES (@codigo, @descripcion, @sys_guid, @sys_dtcreated, @sys_timestamp)"
-    query3 = "UPDATE marca SET descripcion = @descripcion WHERE codigo = @codigo"
+    query3 = "INSERT INTO marca (codigo, descripcion, sys_guid, sys_timestamp) VALUES (@codigo, @descripcion, @sys_guid, @sys_timestamp)"
+    query4 = "UPDATE marca SET descripcion = @descripcion WHERE codigo = @codigo"
 
     if file.exists(data_file) {
         ref data = CsvRead(data_file,"")
@@ -43,19 +43,19 @@ program
             codigo = length(@@(itm,"codigo"))
             descripcion = length(@@(itm,"descripcion"))
 
-            if ((codigo < 1 || codigo > 5) || (descripcion < 1 || descripcion > 50)) {
-                log = "Error al insertar el registro con codigo = '" + @@(itm,"codigo") + "' y descripcion = '" + @@(itm,"descripcion") + "'"
-                do batch.saveLog(token,log)
+            if (codigo < 1 || codigo > 5) {
+                do batch.saveLog(token,"No se pudo insertar/actualizar el registro. El codigo = '" + @@(itm,"codigo") + "' debe ser de máximo 5 caracteres.")
+            } else if (descripcion < 1 || descripcion > 50) {
+                do batch.saveLog(token,"No se pudo insertar/actualizar el registro. La descripcion = '" + @@(itm,"descripcion") + "' debe ser de máximo 50 caracteres.")
             } else {
                 duplicated =  dbr.str(db,query1,itm)
                 desc_duplicated = dbr.str(db,query2,itm)
 
-                if (desc_duplicated == @@(itm,"codigo")) {
+                if (desc_duplicated == @@(itm,"codigo") || desc_duplicated == "") {
                     if (duplicated != "") {
                         do dbr.execute(db,query4,itm)
                     } else {
                         itm<"sys_guid">: uuid()
-                        itm<"sys_dtcreated*">: now()
                         itm<"sys_timestamp*">: now()
                         do dbr.execute(db,query3,itm)
                     }

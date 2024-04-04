@@ -43,9 +43,10 @@ program
             codigo = length(@@(itm,"codigo"))
             descripcion = length(@@(itm,"descripcion"))
 
-            if ((codigo < 1 || codigo > 5) || (descripcion < 1 || descripcion > 50)) {
-                log = "Error al insertar el registro con codigo = '" + @@(itm,"codigo") + "' y descripcion = '" + @@(itm,"descripcion") + "'"
-                do batch.saveLog(token,log)
+            if (codigo < 1 || codigo > 5) {
+                do batch.saveLog(token,"No se pudo insertar/actualizar el registro. El codigo = '" + @@(itm,"codigo") + "' debe ser de máximo 5 caracteres.")
+            } else if (descripcion < 1 || descripcion > 50) {
+                do batch.saveLog(token,"No se pudo insertar/actualizar el registro. La descripcion = '" + @@(itm,"descripcion") + "' debe ser de máximo 50 caracteres.")
             } else {
                 duplicated =  dbr.str(db,query1,itm)
                 desc_duplicated = dbr.str(db,query2,itm)
