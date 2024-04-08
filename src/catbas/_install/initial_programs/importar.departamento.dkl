@@ -25,7 +25,7 @@ program
 
     query1 = "SELECT codigo FROM departamento WHERE codigo = @codigo"
     query2 = "SELECT codigo FROM departamento WHERE descripcion = @descripcion"
-    query3 = "INSERT INTO departamento (codigo, descripcion, sys_guid, sys_dtcreated, sys_timestamp) VALUES (@codigo, @descripcion, @sys_guid, @sys_dtcreated, @sys_timestamp)"
+    query3 = "INSERT INTO departamento (codigo, descripcion, sys_guid, sys_dtcreated, sys_timestamp, sys_recver) VALUES (@codigo, @descripcion, @sys_guid, @sys_dtcreated, @sys_timestamp, @sys_recver)"
     query4 = "UPDATE departamento SET descripcion = @descripcion WHERE codigo = @codigo"
 
     if file.exists(data_file) {
@@ -58,6 +58,8 @@ program
                         itm<"sys_guid">: uuid()
                         itm<"sys_dtcreated*">: now()
                         itm<"sys_timestamp*">: now()
+                        itm<"sys_recver">: 0
+
                         do dbr.execute(db,query3,itm)
                     }
                 } else {
