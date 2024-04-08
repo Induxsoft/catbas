@@ -51,7 +51,7 @@ program
                 duplicated =  dbr.str(db,query1,itm)
                 desc_duplicated = dbr.str(db,query2,itm)
 
-                if (desc_duplicated == @@(itm,"codigo") || desc_duplicated == "") {
+                if (desc_duplicated == "" || desc_duplicated == @@(itm,"codigo")) {
                     if (duplicated != "") {
                         do dbr.execute(db,query4,itm)
                     } else {
