@@ -21,7 +21,7 @@
                 "varname": "FXCA046",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(agentes)",
+                "varcaption": "Formato de código para agentes",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -32,7 +32,7 @@
                 "varname": "FXCA047",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(almacenes)",
+                "varcaption": "Formato de código para almacenes",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -43,7 +43,7 @@
                 "varname": "FXCA049",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(cajas)",
+                "varcaption": "Formato de código para cajas",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -54,7 +54,7 @@
                 "varname": "FXCA050",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(cajeros)",
+                "varcaption": "Formato de código para cajeros",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -65,7 +65,7 @@
                 "varname": "FXCA051",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(categorías)",
+                "varcaption": "Formato de código para categorías",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -76,7 +76,7 @@
                 "varname": "FXCA052",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(centros de consumos)",
+                "varcaption": "Formato de código para centros de consumos",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -87,7 +87,7 @@
                 "varname": "FXCA057",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(departamentos)",
+                "varcaption": "Formato de código para departamentos",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -98,7 +98,7 @@
                 "varname": "FXCA058",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(divisas)",
+                "varcaption": "Formato de código para divisas",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -109,7 +109,7 @@
                 "varname": "FXCA060",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(marcas)",
+                "varcaption": "Formato de código para marcas",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -120,7 +120,7 @@
                 "varname": "FXCA062",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(porteadores)",
+                "varcaption": "Formato de código para porteadores",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -131,7 +131,7 @@
                 "varname": "FXCA063",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(repartidores)",
+                "varcaption": "Formato de código para repartidores",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -142,7 +142,7 @@
                 "varname": "FXCA064",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(tarjeta de crédito)",
+                "varcaption": "Formato de código para tarjeta de crédito",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -153,7 +153,7 @@
                 "varname": "FXCA065",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(tipo de cliente)",
+                "varcaption": "Formato de código para tipo de cliente",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -164,7 +164,7 @@
                 "varname": "FXCA066",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(tipo de proveedor)",
+                "varcaption": "Formato de código para tipo de proveedor",
                 "vartype": "string",
                 "varinput": 
                 {
@@ -175,7 +175,7 @@
                 "varname": "FXCA067",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
-                "varcaption": "Formato para el autocódigo(aduana)",
+                "varcaption": "Formato de código para aduana",
                 "vartype": "string",
                 "varinput": 
                 {
