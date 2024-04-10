@@ -1,0 +1,175 @@
+[
+    {
+        "id": "catbas",
+        "caption": "Catálogos generales básicos",
+        "help": "Variables del paquete: catbas",
+        "vars": 
+        [
+            {
+                "varname": "FXCA046",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(agentes)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA047",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(almacenes)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA049",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(cajas)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA050",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(cajeros)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA051",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(categorías)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA052",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(centros de consumos)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA057",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(departamentos)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA058",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(divisas)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA060",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(marcas)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA062",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(porteadores)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA063",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(repartidores)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA064",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(tarjeta de crédito)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA065",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(tipo de cliente)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA066",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(tipo de proveedor)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            },
+            {
+                "varname": "FXCA067",
+                "vardefault": "|0000",
+                "varvalue": "|0000",
+                "varcaption": "Formato para el autocódigo(aduana)",
+                "vartype": "string",
+                "varinput": 
+                {
+                    "control": "text"
+                }
+            }
+        ]
+    }
+]
