@@ -4,6 +4,7 @@ module "list.dk"
 {
     #include "functions.dkh"
     #include "dbr.dkh"
+    #include "dbr.apps.dkl"
     #include "uielements.v12.dkl"
     #include "../config.dk"
     #include "../_lib/icons.dk"
@@ -11,8 +12,6 @@ module "list.dk"
 
     do @context.begin(@crud_context)
     ref db:@("&database")
-
-    jg = dbr.num(db,"SELECT sys_pk FROM jobsgroup WHERE name = 'CATBAS'",@null)
 
     new table_definition
     {
@@ -56,15 +55,12 @@ module "list.dk"
             }
 
             div(class="col-8 d-flex align-items-center justify-content-end gap-2 px-0")
-            {
-                a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar") {
-                    $"#<@ICON_ARROW_CLOCKWISE>"
-                }
-                
+            {   
                 #! if AppExist(db,"batch") {
-                    #$ a(href="#<@BATCH_TASKMAN>#<jg>/importar.departamento?exit_url_encode=#<url_encode(@CATBAS_DEPARTAMENTO)>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Importar departamentos") {
-                        $"#<@ICON_FILE_CSV>"
-                    }
+                    ref act = dbr.apps.itemaction.get(db,"CB114")
+                    url_act = path.concat(@@(act,"$href"),"?exit_url_encode="+url_encode(@CATBAS_DEPARTAMENTO))
+
+                    #$ a(href="#<url_act>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Importar departamentos"){$"Importar"}
                 }
                 
                 #$ a(href="#<replace(@CATBAS_ADD_EDIT_DEPARTAMENTO, '@id', '_new')>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print") {
@@ -73,6 +69,10 @@ module "list.dk"
 
                 button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Imprimir" onclick="window.print()") {
                     $"#<@ICON_PRINTER>"
+                }
+
+                a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar") {
+                    $"#<@ICON_ARROW_CLOCKWISE>"
                 }
 
                 a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir") {
