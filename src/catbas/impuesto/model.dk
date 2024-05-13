@@ -1,0 +1,6 @@
+#include "dkli.dkh"
+#!
+module ""
+{
+    @list_query="select * from #<@table_name> order by sys_pk desc limit 250"
+}

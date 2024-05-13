@@ -51,7 +51,8 @@ module "list.dk"
             @"class":"table table-hover"
         }
     }
-    
+    ref buttons=@@(@table_definition,"&buttons")
+
     #$
     div(class="container p-0" id="div-first")
     {
@@ -63,6 +64,9 @@ module "list.dk"
             }
             div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2")
             {
+                #!
+                if not(isnull(buttons)){that buttons(@table_definition)}
+                #$
                 a(href="./_new/" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Agregar" id="btnAgregar"){$"Agregar"}
                 button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Imprimir" onclick="window.print()"){$"#<@ICON_PRINTER>"}
                 a(href="#" onclick="window.location.reload();" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}

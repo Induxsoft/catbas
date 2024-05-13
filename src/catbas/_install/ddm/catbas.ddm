@@ -438,7 +438,11 @@ model "erp.catbas"
         @"numint" string(1024)
         @"numext" string(1024)
     }
-
+    entity "impuesto": "TableModel"
+    {
+        @"id" string(32)
+        @"descripcion" string(150)
+    }
     // Información de la aplicación
     entity "sys_app_catalog"
     {

@@ -26,6 +26,59 @@ module "cfgimpuesto.dk"
 	uf_TipoI1,uf_TipoI2,uf_TipoI3,uf_TipoI4,
 	tasa,ObjetoImp from #<@table_name> where #<@keyfield>=@_entity_id limit 1;"
 
+	containsKey::l,key
+	{
+		for i = 0; i < @count(l)
+		{
+			ref lk=@item(l,i)
+			if trim(@@(lk,"$descripcion"))==trim(key){return @true}
+		}
+		return @false
+	}
+	prepareView::&db,&params,&entity
+	{
+		ref impuestos=dbr.list(db,"select sys_pk,id descripcion from impuesto order by sys_pk desc",params)
+		if trim(@@(entity,"$uf_TipoI1"))!=""
+		{
+			new obj 
+			{
+				@"descripcion":trim(@@(entity,"$uf_TipoI1"))
+				@"key":trim(@@(entity,"$uf_TipoI1"))
+			}
+			if not(containsKey(impuestos,@@(entity,"$uf_TipoI1"))){do list.add(impuestos,obj)}
+		}
+		if trim(@@(entity,"$uf_TipoI2"))!=""
+		{
+			new obj 
+			{
+				@"descripcion":trim(@@(entity,"$uf_TipoI2"))
+				@"key":trim(@@(entity,"$uf_TipoI2"))
+			}
+			if not(containsKey(impuestos,@@(entity,"$uf_TipoI2"))){do list.add(impuestos,obj)}
+		}
+		if trim(@@(entity,"$uf_TipoI3"))!=""
+		{
+			new obj 
+			{
+				@"descripcion":trim(@@(entity,"$uf_TipoI3"))
+				@"key":trim(@@(entity,"$uf_TipoI3"))
+			}
+			if not(containsKey(impuestos,@@(entity,"$uf_TipoI3"))){do list.add(impuestos,obj)}
+		}
+		if trim(@@(entity,"$uf_TipoI4"))!=""
+		{
+			new obj 
+			{
+				@"descripcion":trim(@@(entity,"$uf_TipoI4"))
+				@"key":trim(@@(entity,"$uf_TipoI4"))
+			}
+			if not(containsKey(impuestos,@@(entity,"$uf_TipoI4"))){do list.add(impuestos,obj)}
+		}
+		using entity
+		{
+			@"impuestos*":impuestos
+		}
+	}
    
 	cfgimpuesto.create::&db,&params,&data
 	{
@@ -137,8 +190,9 @@ module "cfgimpuesto.dk"
 	function read(&db, &params)
     {
 		if not(dbr.security.isauth(db,@CAT_AUT_IMPUESTO_READONLY)) { do rise_error(500,"No autorizado") }
-
-        return entity.read(db, params)
+		ref entity=entity.read(db, params)
+		do prepareView(db,params,entity)
+        return entity
     }
 	function delete(&db, &params)
 	{
@@ -146,7 +200,14 @@ module "cfgimpuesto.dk"
 		
 		return entity.delete(db, params)
 	}
-    
+    blank::&db,&params
+	{
+	  new entity{}
+	  do prepareView(db,params,entity)
+	  return entity
+	}
+	
+	point @blank to blank
 	point @create to cfgimpuesto.create
     point @update to cfgimpuesto.update
 	point @list to list

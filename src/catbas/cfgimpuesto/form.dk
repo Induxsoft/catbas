@@ -48,6 +48,21 @@ module "form_cfgimpuesto.dk"
         @"selected":@('./ObjetoImp')
     }
 
+    new impuestos
+    {
+        @"datatable*":@("&./impuestos")
+        @"id":""
+        member "attributes"
+        {
+            @"class":"induxsoft-form-select"
+            @"name":""
+        }
+        @"value_field":"descripcion"
+        @"text_field":"descripcion"
+        @"selected":""
+        @"first_value":" "
+        @"first_text":"(No usado)"
+    }
     #$ div(class="container p-0")
     {
         #! #include "cfgimpuesto.dk"
@@ -111,32 +126,88 @@ module "form_cfgimpuesto.dk"
                                     td(style="text-align:center"){"Frontera(%):"}
                                 }
                                 tr{
+                                    #!
+                                    using impuestos
+                                    {
+                                        @"id":"uf_TipoI1"
+                                        @"attributes/name":"uf_TipoI1"
+                                        @"selected":@("./uf_TipoI1")
+                                    }
+                                    #$
                                     td{"Impuesto1"}
-                                    td{""input(type="text" name="uf_TipoI1" class="induxsoft-form-control" value="#<@('./uf_TipoI1')>")}
+                                    td
+                                    {
+                                        // input(type="text" name="uf_TipoI1" class="induxsoft-form-control" value="#<@('./uf_TipoI1')>")
+                                        #!
+                                        do uie.dbSelect(impuestos)
+                                        #$
+                                    }
                                     td{""input(type="number" name="I1Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra1')>")}
                                     td{""input(type="number" name="I1Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra1')>")}
                                     td{""input(type="number" name="I1Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta1')>")}
                                     td{""input(type="number" name="I1Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta1')>")}
                                 }
                                 tr{
+                                    #!
+                                    using impuestos
+                                    {
+                                        @"id":"uf_TipoI2"
+                                        @"attributes/name":"uf_TipoI2"
+                                        @"selected":@("./uf_TipoI2")
+                                    }
+                                    #$
                                     td{"Impuesto2"}
-                                    td{""input(type="text" name="uf_TipoI2" class="induxsoft-form-control" value="#<@('./uf_TipoI2')>")}
+                                    td
+                                    {
+                                        // input(type="text" name="uf_TipoI2" class="induxsoft-form-control" value="#<@('./uf_TipoI2')>")
+                                        #!
+                                        do uie.dbSelect(impuestos)
+                                        #$
+                                    }
                                     td{""input(type="number" name="I2Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra2')>")}
                                     td{""input(type="number" name="I2Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra2')>")}
                                     td{""input(type="number" name="I2Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta2')>")}
                                     td{""input(type="number" name="I2Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta2')>")}
                                 }
                                 tr{
+                                    #!
+                                    using impuestos
+                                    {
+                                        @"id":"uf_TipoI3"
+                                        @"attributes/name":"uf_TipoI3"
+                                        @"selected":@("./uf_TipoI3")
+                                    }
+                                    #$
                                     td{"Impuesto3"}
-                                    td{""input(type="text" name="uf_TipoI3" class="induxsoft-form-control" value="#<@('./uf_TipoI3')>")}
+                                    td
+                                    {
+                                        // input(type="text" name="uf_TipoI3" class="induxsoft-form-control" value="#<@('./uf_TipoI3')>")
+                                        #!
+                                        do uie.dbSelect(impuestos)
+                                        #$
+                                    }
                                     td{""input(type="number" name="I3Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra3')>")}
                                     td{""input(type="number" name="I3Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra3')>")}
                                     td{""input(type="number" name="I3Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta3')>")}
                                     td{""input(type="number" name="I3Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta3')>")}
                                 }
                                 tr{
+                                     #!
+                                    using impuestos
+                                    {
+                                        @"id":"uf_TipoI4"
+                                        @"attributes/name":"uf_TipoI4"
+                                        @"selected":@("./uf_TipoI4")
+                                    }
+                                    #$
                                     td{"Impuesto4"}
-                                    td{""input(type="text" name="uf_TipoI4" class="induxsoft-form-control" value="#<@('./uf_TipoI4')>")}
+                                    td
+                                    {
+                                        // input(type="text" name="uf_TipoI4" class="induxsoft-form-control" value="#<@('./uf_TipoI4')>")
+                                         #!
+                                        do uie.dbSelect(impuestos)
+                                        #$
+                                    }
                                     td{""input(type="number" name="I4Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra4')>")}
                                     td{""input(type="number" name="I4Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra4')>")}
                                     td{""input(type="number" name="I4Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta4')>")}

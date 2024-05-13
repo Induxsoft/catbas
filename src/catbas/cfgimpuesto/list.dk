@@ -10,9 +10,17 @@ module "list.dk"
     @title="Impuestos"
     order_by="nombre"
 
+    buttons::&table
+    {
+        #$
+        a(href="#<@IMPUESTOS>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print"){"Impuestos"}
+        #!
+    }
+    point buttons to buttons
     new @table_definition
     {
         @"datatable*":@@(@crud_context,"&.")
+        @"buttons*":buttons
         member @"columns"
         {
             member @"nombre"
