@@ -23,13 +23,26 @@ module "tipo_proveedor.dk"
 
     function create(&db,&params,&data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB191")
+        do dbr.begin(db)
 
         if @@(data,"codigo")=="" { do check_autocode(db,"tipoproveedor","codigo",data) }
         ref res = entity.create(db, params, data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+        
         return res
+        
         exception
     	{
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
             do cu_error("tipo de proveedor")
     		do rise_error(last_error_code(),last_error())
     	}
@@ -37,14 +50,28 @@ module "tipo_proveedor.dk"
 
     function update(&db,&params,&data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB192")
+        do dbr.begin(db)
 
         do dbr.execute(db, "UPDATE tipoproveedor SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE tipoproveedor SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
+        
         ref res = entity.update(db, params, data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
         return res
+
         exception
     	{
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
             do cu_error("tipo de proveedor")
     		do rise_error(last_error_code(),last_error())
     	}
@@ -52,7 +79,8 @@ module "tipo_proveedor.dk"
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        //f not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_PROVEEDOR)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB190")
 
         query="SELECT sys_pk, codigo, descripcion
             FROM tipoproveedor 
@@ -60,6 +88,13 @@ module "tipo_proveedor.dk"
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+
+        exception
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
     }
 
     function cu_error(table)
@@ -72,15 +107,42 @@ module "tipo_proveedor.dk"
     }
     function read(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_TIPO_PROVEEDOR_READONLY)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_TIPO_PROVEEDOR_READONLY)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB190")
 
         return entity.read(db, params)
+
+        exception
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
     }
+
     function delete(&db, &params)
 	{
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_PROVEEDORS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_PROVEEDORS)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
 
-        return entity.delete(db, params)
+        do dbr.apps.action.pre("CB193")
+        do dbr.begin(db)
+
+        ref res = entity.delete(db, params)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
+        return res
+
+        exception
+        {
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
 	}
 
     point @create to create

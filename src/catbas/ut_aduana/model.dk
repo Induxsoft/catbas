@@ -10,7 +10,8 @@ module "ut_aduana.dk"
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_ADUANAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_ADUANAS)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB200")
 
         query="SELECT #<@sys_fields>, uf_codigo,uf_nombre,uf_ciudad,uf_notas 
             FROM ut_aduana 
@@ -18,6 +19,13 @@ module "ut_aduana.dk"
             ORDER BY uf_codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+
+        exception
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
     }
 
     function check_autocode(&db,table,field,&data)
@@ -34,26 +42,53 @@ module "ut_aduana.dk"
 
     function create(&db, &params, &data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB201")
+        do dbr.begin(db)
 
         if @@(data,"uf_codigo")=="" { do check_autocode(db,"ut_aduana","uf_codigo",data) }
-        do entity.create(db, params, data)
+        ref res = entity.create(db, params, data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
+        return res
 
         exception
         {
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
             do cu_error("a")
+            do dbr.apps.action.log()
             do rise_error(last_error_code(), last_error())
         }
     }
 
     function update(&db, &params, &data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
 
-        do entity.update(db, params, data)
+        do dbr.apps.action.pre("CB202")
+        do dbr.begin(db)
+    
+        ref res = entity.update(db, params, data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
+        return res
+        
         exception
         {
+            do errordet(@false)
+            if dbr.in_transaction(db) { do dbr.rollback(db) }
             do cu_error("a")
+            do dbr.apps.action.log()
             do rise_error(last_error_code(), last_error())
         }
     }
@@ -69,18 +104,44 @@ module "ut_aduana.dk"
 
     delete::&db,&params
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_ADUANAS)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB203")
+        do dbr.begin(db)
 
        ref entity= entity.delete(db,params)
+
+       do dbr.apps.action.pos(entity)
+       do dbr.commit(db)
+       do dbr.apps.action.ext(entity)
+
        return entity
+
+       exception
+       {
+
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+       }
     }
     
     read::&db,&params
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ADUANAS_READONLY)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_ADUANAS_READONLY)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB200")
 
         ref entity= entity.read(db,params)
-       return entity
+        return entity
+
+       exception
+       {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+       }
     }
     
     point @read to read

@@ -38,8 +38,13 @@ module "cajero.dk"
     
     cajero.create::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CAJERO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CAJERO)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB51")
+		do dbr.begin(db)
+		
 		data<"sys_recver">:parse.num(@@(data,"#sys_recver"))
 		data<"sys_pk">:parse.num(@@(data,"#sys_pk"))
 
@@ -47,17 +52,30 @@ module "cajero.dk"
 
         if @@(data,"codigo")=="" { do check_autocode(db,"cajero","codigo",data) }
     	ref res= entity.create(db,params,data)
+		
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+			
     	return res
 
     	exception
-    	{
-    		do rise_error(500,last_error())
-    	}
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
     cajero.update::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CAJERO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CAJERO)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB52")
+		do dbr.begin(db)
+		
         contra = dbr.str(db, "SELECT contrasena FROM cajero WHERE sys_pk=@_entity_id", params)
         if contra == @@(data,"$contrasena") { do field.remove(data, "contrasena") }
         
@@ -69,51 +87,82 @@ module "cajero.dk"
         do dbr.execute(db, "UPDATE cajero SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE cajero SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
 
-    	return entity.update(db,params,data)
+    	ref res = entity.update(db,params,data)
+		
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
+		
+		exception
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+		
     }
     function cajero.delete(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CAJERO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CAJERO)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB53")
+		do dbr.begin(db)
+		
         // intentar borrado físico
-        do entity.delete(db, params)
+        ref res = entity.delete(db, params)
+		
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
 
         exception
-        {
-            if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CAJERO)) { do rise_error(500,"No autorizado") }
-
-            // borrado lógico
-            sql = "
-                UPDATE cajero SET 
-                    sys_deleted = 1, 
-                    codigo = SUBSTRING(CONCAT('~',sys_pk),1,10), 
-                    nombre = SUBSTRING(CONCAT('~',sys_pk,nombre),1,50),
-                    codnomina = SUBSTRING(CONCAT('~',sys_pk,codnomina),1,50)
-                WHERE sys_pk=@_entity_id;
-            "
-
-            if not(isnull(dbr.rec(db,"select sys_pk from corte where icajero=@_entity_id and IFNULL(cerrado,0)=0 limit 1", params))){
-                do rise_error(0, "Este cajero tiene una sesión de caja abierta")
-		    }
-
-            do dbr.execute(db, sql, params)
-        }
-
-        return @true
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CAJERO)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CAJERO)) { do rise_error(500,"No autorizado") }
+		
+				
+		do dbr.apps.action.grant("CB50")
+		
         return entity.list(db, params)
+		
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+
     }
 
     function read(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CAJERO_READONLY)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_CAJERO_READONLY)) { do rise_error(500,"No autorizado") }
+		
+		do dbr.apps.action.grant("CB50")
+		
         return entity.read(db, params)
+		
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
 
     point @create to cajero.create

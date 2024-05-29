@@ -21,44 +21,84 @@ module "divisa.dk"
     
     divisa.create::&db,&params,data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB121")
+		do dbr.begin(db)
+		
         if @@(data,"tcambio")=="" { do field.remove(data,"tcambio") }
 
         if @@(data,"codigo")=="" { do check_autocode(db,"divisa","codigo",data) }
-        do entity.create(db,params,data)
+        ref res = entity.create(db,params,data)
+				
+				
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
+
 
         exception
 		{
-			do cu_error("divisa")
-			do rise_error(last_error_code(), last_error())
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
 		}
     }
     divisa.update::&db,&params,data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DIVISAS)) { do rise_error(500,"No autorizado") }
+		
+		
+		@use_transaction = @false
+
+		do dbr.apps.action.pre("CB122")
+		do dbr.begin(db)
 
         if @@(data,"tcambio")==""
         {
             do field.remove(data,"tcambio")
         }
-        do entity.update(db,params,data)
-        exception
+        ref res = entity.update(db,params,data)
+		
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
+		
+		exception
 		{
-			do cu_error("divisa")
-			do rise_error(last_error_code(), last_error())
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
 		}
+
     }
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DIVISAS)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DIVISAS)) { do rise_error(500,"No autorizado") }
+		
+		do dbr.apps.action.grant("CB120")
+		
         query="SELECT #<@sys_fields>, codigo,descripcion,tcambio 
             FROM divisa
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
     function cu_error(table)
     {
@@ -70,15 +110,44 @@ module "divisa.dk"
     }
     function read(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_DIVISAS_READONLY)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_DIVISAS_READONLY)) { do rise_error(500,"No autorizado") }
+		
+		do dbr.apps.action.grant("CB120")
         return entity.read(db, params)
+
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+		
     }
     function delete(&db, &params)
 	{
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DIVISAS)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DIVISAS)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
 
-        return entity.delete(db, params)
+		do dbr.apps.action.pre("CB123")
+		do dbr.begin(db)
+		
+        ref res = entity.delete(db, params)
+		
+		
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
+
+
+		exception
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
 	}
     // point @read to caja.read
     point @create to divisa.create

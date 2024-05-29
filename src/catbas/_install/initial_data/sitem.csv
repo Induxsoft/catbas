@@ -1,108 +1,114 @@
-itemid,description,itemparent
-"FX1-00-00-000","Operaciones ERP","FX1-00-00-000"
-"FX1-10-00-000","Catálogos","FX1-00-00-000"
-"FX1-10-10-000","Agentes","FX1-10-00-000"
-"FX1-10-10-001","Solo lectura","FX1-10-10-000"
-"FX1-10-10-002","Permitir agregar Agente","FX1-10-10-000"
-"FX1-10-10-003","Permitir modificar Agente","FX1-10-10-000"
-"FX1-10-10-004","Permitir Eliminar Agente","FX1-10-10-000"
-"FX1-10-11-000","Aduanas","FX1-10-00-000"
-"FX1-10-11-001","Solo lectura","FX1-11-00-000"
-"FX1-10-11-002","Permitir Agregar Aduanas","FX1-10-11-000"
-"FX1-10-11-003","Permitir Modificar Aduanas","FX1-10-11-000"
-"FX1-10-11-004","Permitir Eliminar Aduanas","FX1-10-11-000"
-"FX1-10-30-000","Bancos","FX1-10-00-000"
-"FX1-10-30-001","Solo lectura","FX1-10-30-000"
-"FX1-10-30-002","Permitir Agregar Banco","FX1-10-30-000"
-"FX1-10-30-003","Permitir Modificar Banco","FX1-10-30-000"
-"FX1-10-30-004","Permitir Eliminar Banco","FX1-10-30-000"
-"FX1-10-20-000","Almacenes","FX1-10-00-000"
-"FX1-10-20-001","Solo lectura","FX1-10-20-000"
-"FX1-10-20-002","Permitir Agregar Almacen","FX1-10-20-000"
-"FX1-10-20-003","Permitir Modificar Almacen","FX1-10-20-000"
-"FX1-10-20-004","Permitir Eliminar almacen","FX1-10-20-000"
-"FX1-10-40-000","Cajas","FX1-10-00-000"
-"FX1-10-40-001","Solo lectura","FX1-10-40-000"
-"FX1-10-40-002","Permitir Agregar Caja","FX1-10-40-000"
-"FX1-10-40-003","Permitir Modificar Caja","FX1-10-40-000"
-"FX1-10-40-004","Permitir Eliminar Caja","FX1-10-40-000"
-"FX1-10-50-000","Cajeros","FX1-10-00-000"
-"FX1-10-50-001","Solo lectura","FX1-10-50-000"
-"FX1-10-50-002","Permitir Agregar Cajero","FX1-10-50-000"
-"FX1-10-50-003","Permitir Modificar Cajero","FX1-10-50-000"
-"FX1-10-50-004","Permitir Eliminar Cajero","FX1-10-50-000"
-"FX1-10-60-000","Categorías","FX1-10-00-000"
-"FX1-10-60-001","Solo lectura","FX1-10-60-000"
-"FX1-10-60-002","Permitir Agregar Categoria","FX1-10-60-000"
-"FX1-10-60-003","Permitir Modificar Categoria","FX1-10-60-000"
-"FX1-10-60-004","Permitir Eliminar Categoria","FX1-10-60-000"
-"FX1-10-70-000","Centros de Consumo","FX1-10-00-000"
-"FX1-10-70-001","Solo lectura","FX1-10-70-000"
-"FX1-10-70-002","Permitir Agregar Centro de Consumo","FX1-10-70-000"
-"FX1-10-70-003","Permitir Modificar Centro de Consumo","FX1-10-70-000"
-"FX1-10-70-004","Permitir Eliminar Centro de Consumo","FX1-10-70-000"
-"FX1-10-80-000","Configuración de Impuestos","FX1-10-00-000"
-"FX1-10-80-001","Solo lectura","FX1-10-80-000"
-"FX1-10-80-002","Permitir Agregar Configuracion de Impuestos","FX1-10-80-000"
-"FX1-10-80-003","Permitir Modificar configuracion de Impuestos","FX1-10-80-000"
-"FX1-10-80-004","Permitir Eliminar configuracion de Impuestos","FX1-10-80-000"
-"FX1-10-110-000","Contactos","FX1-10-00-000"
-"FX1-10-110-001","Solo lectura","FX1-10-110-000"
-"FX1-10-110-002","Permitir Agregar Contacto","FX1-10-110-000"
-"FX1-10-110-003","Permitir Modificar Contacto","FX1-10-110-000"
-"FX1-10-110-004","Permitir Eliminar Contacto","FX1-10-110-000"
-"FX1-10-130-000","Departamentos","FX1-10-00-000"
-"FX1-10-130-001","Solo lectura","FX1-10-130-000"
-"FX1-10-130-002","Permitir Agregar Departamento","FX1-10-130-000"
-"FX1-10-130-003","Permitir Modificar Departamento","FX1-10-130-000"
-"FX1-10-130-004","Permitir Eliminar Departamento","FX1-10-130-000"
-"FX1-10-140-000","Divisas","FX1-10-00-000"
-"FX1-10-140-001","Solo lectura","FX1-10-140-000"
-"FX1-10-140-002","Permitir Agregar Divisa","FX1-10-140-000"
-"FX1-10-140-003","Permitir Modificar Divisa","FX1-10-140-000"
-"FX1-10-140-004","Permitir Eliminar Divisa","FX1-10-140-000"
-"FX1-10-210-000","Marcas","FX1-10-00-000"
-"FX1-10-210-001","Solo lectura","FX1-10-210-000"
-"FX1-10-210-002","Permitir Agregar Marcas","FX1-10-210-000"
-"FX1-10-210-003","Permitir Modificar MArcas","FX1-10-210-000"
-"FX1-10-210-004","Permitir Eliminar Marcas","FX1-10-210-000"
-"FX1-10-12-000","Paises, estados","FX1-10-00-000"
-"FX1-10-12-001","Solo lectura","FX1-12-00-000"
-"FX1-10-12-002","Permitir Agregar paises","FX1-10-12-000"
-"FX1-10-12-003","Permitir Modificar paises","FX1-10-12-000"
-"FX1-10-12-004","Permitir Eliminar paises","FX1-10-12-000"
-"FX1-10-220-000","Porteadores","FX1-10-00-000"
-"FX1-10-220-001","Solo lectura","FX1-10-220-000"
-"FX1-10-220-002","Permitir Agregar Porteador","FX1-10-220-000"
-"FX1-10-220-003","Permitir Modificar Porteador","FX1-10-220-000"
-"FX1-10-220-004","Permitir Eliminar Porteador","FX1-10-220-000"
-"FX1-10-270-000","Repartidores","FX1-10-00-000"
-"FX1-10-270-001","Solo lectura","FX1-10-270-000"
-"FX1-10-270-002","Permitir Agregar Repartidor","FX1-10-270-000"
-"FX1-10-270-003","Permitir Modificar Repartidor","FX1-10-270-000"
-"FX1-10-270-004","Permitir Eliminar Repartidor","FX1-10-270-000"
-"FX1-10-290-000","Tarjetas de Crédito","FX1-10-00-000"
-"FX1-10-290-001","Solo lectura","FX1-10-290-000"
-"FX1-10-290-002","Permitir Agregar Tarjetas de Credito","FX1-10-290-000"
-"FX1-10-290-003","Permitir Modificar Tarjetas de Credito","FX1-10-290-000"
-"FX1-10-290-004","Permitir Eliminar Tarjetas de Credito","FX1-10-290-000"
-"FX1-10-320-000","Tipos de clientes","FX1-10-00-000"
-"FX1-10-320-001","Solo lectura","FX1-10-320-000"
-"FX1-10-320-002","Permitir Agregar Tipos de Clientes","FX1-10-320-000"
-"FX1-10-320-003","Permitir Modificar Tipos de Clientes","FX1-10-320-000"
-"FX1-10-320-004","Permitir  Eliminar Tipos de Clientes","FX1-10-320-000"
-"FXP-00-000-000","Tipos de pólizas","FX1-10-00-000"
-"FXP-00-000-001","Solo lectura","FXP-10-000-000"
-"FXP-00-000-002","Permitir Agregar Tipos de pólizas","FXP-00-000-000"
-"FXP-00-000-003","Permitir Modificar Tipos de pólizas","FXP-00-000-000"
-"FXP-00-000-004","Permitir  Eliminar Tipos de pólizas","FXP-00-000-000"
-"FPP-00-000-000","Tipos de proveedores","FX1-10-00-000"
-"FPP-00-000-001","Solo lectura","FXP-10-000-000"
-"FPP-00-000-002","Permitir Agregar Tipos de proveedores","FPP-00-000-000"
-"FPP-00-000-003","Permitir Modificar Tipos de proveedores","FPP-00-000-000"
-"FPP-00-000-004","Permitir  Eliminar Tipos de proveedores","FPP-00-000-000"
-"FX1-10-350-000","Zonas","FX1-10-00-000"
-"FX1-10-350-001","Solo lectura","FX1-10-350-000"
-"FX1-10-350-002","Permitir Agregar Zonas","FX1-10-350-000"
-"FX1-10-350-003","Permitir Modificar Zonas","FX1-10-350-000"
-"FX1-10-350-004","Permitir Eliminar Zonas","FX1-10-350-000"
+﻿itemid,description,itemparent
+catbas,Catálogos generales básicos,\0
+catbas.agente,Agentes,catbas
+CB10,Agentes,catbas.agente
+catbas.ctipospolizas,Tipos de polizas,catbas
+CB100,Tipos de pólizas,catbas.ctipospolizas
+CB101,Agregar tipo de póliza,catbas.ctipospolizas
+CB102,Editar tipo de póliza,catbas.ctipospolizas
+CB103,Eliminar tipo de póliza,catbas.ctipospolizas
+catbas.agente,Agentes,catbas
+CB11,Agregar agente,catbas.agente
+catbas.departamento,Departamentos,catbas
+CB110,Departamentos,catbas.departamento
+CB111,Agregar departamento,catbas.departamento
+CB112,Editar departamento,catbas.departamento
+CB113,Eliminar departamento,catbas.departamento
+CB114,Importar departamentos,catbas.departamento
+catbas.agente,Agentes,catbas
+CB12,Editar agente,catbas.agente
+catbas.divisa,Divisas,catbas
+CB120,Divisas,catbas.divisa
+CB121,Agregar divisa,catbas.divisa
+CB122,Editar divisa,catbas.divisa
+CB123,Eliminar divisa,catbas.divisa
+catbas.agente,Agentes,catbas
+CB13,Eliminar agente,catbas.agente
+catbas.marca,Marcas,catbas
+CB130,Marcas,catbas.marca
+CB131,Agregar marca,catbas.marca
+CB132,Editar marca,catbas.marca
+CB133,Eliminar marca,catbas.marca
+CB134,Importar marcas,catbas.marca
+catbas.pais,País,catbas
+CB140,País,catbas.pais
+CB141,Agregar país,catbas.pais
+CB142,Editar país,catbas.pais
+CB143,Eliminar país,catbas.pais
+catbas.porteador,Porteadores,catbas
+CB150,Porteadores,catbas.porteador
+CB151,Agregar porteador,catbas.porteador
+CB152,Editar porteador,catbas.porteador
+CB153,Eliminar porteador,catbas.porteador
+catbas.repartidor,Repartidores,catbas
+CB160,Repartidores,catbas.repartidor
+CB161,Agregar repartidor,catbas.repartidor
+CB162,Editar repartidor,catbas.repartidor
+CB163,Eliminar repartidor,catbas.repartidor
+catbas.tarjetacredito,Tarjeta de crédito,catbas
+CB170,Tarjeta de crédito,catbas.tarjetacredito
+CB171,Agregar targeta de crédito,catbas.tarjetacredito
+CB172,Editar targeta de crédito,catbas.tarjetacredito
+CB173,Eliminar targeta de crédito,catbas.tarjetacredito
+catbas.tipocliente,Tipos de clientes,catbas
+CB180,Tipos de clientes,catbas.tipocliente
+CB181,Agregar tipo de cliente,catbas.tipocliente
+CB182,Editar tipo de cliente,catbas.tipocliente
+CB183,Eliminar tipo de cliente,catbas.tipocliente
+catbas.tipoproveedor,Tipos de proveedores,catbas
+CB190,Tipos de proveedores,catbas.tipoproveedor
+CB191,Agregar tipo de proveedor,catbas.tipoproveedor
+CB192,Editar tipo de proveedor,catbas.tipoproveedor
+CB193,Eliminar tipo de proveedor,catbas.tipoproveedor
+catbas.almacen,Almacenes,catbas
+CB20,Almacen,catbas.almacen
+catbas.ut_aduana,Aduanas,catbas
+CB200,Aduanas,catbas.ut_aduana
+CB201,Agregar aduana,catbas.ut_aduana
+CB202,Editar aduana,catbas.ut_aduana
+CB203,Eliminar aduana,catbas.ut_aduana
+catbas.almacen,Almacenes,catbas
+CB21,Agregar almacen,catbas.almacen
+catbas.zona,Zonas,catbas
+CB210,Zonas,catbas.zona
+CB211,Agregar zona/área geográfica,catbas.zona
+CB212,Editar zona/área geográfica,catbas.zona
+CB213,Eliminar zona/área geográfica,catbas.zona
+catbas.almacen,Almacenes,catbas
+CB22,Editar almacen,catbas.almacen
+CB23,Eliminar almacen,catbas.almacen
+catbas.banco,Bancos,catbas
+CB30,Bancos,catbas.banco
+CB31,Agregar banco,catbas.banco
+CB32,Editar banco,catbas.banco
+CB33,Eliminar banco,catbas.banco
+catbas.caja,Cajas,catbas
+CB40,Cajas,catbas.caja
+CB41,Agregar caja,catbas.caja
+CB42,Editar caja,catbas.caja
+CB43,Eliminar caja,catbas.caja
+catbas.cajero,Cajeros,catbas
+CB50,Cajeros,catbas.cajero
+CB51,Agregar cajero,catbas.cajero
+CB52,Editar cajero,catbas.cajero
+CB53,Eliminar cajero,catbas.cajero
+catbas.categoria,Categorías,catbas
+CB60,Categorias,catbas.categoria
+CB61,Agregar categoria,catbas.categoria
+CB62,Editar categoria,catbas.categoria
+CB63,Eliminar categoria,catbas.categoria
+catbas.cconsumo,Centros de consumo,catbas
+CB70,Centro de consumo,catbas.cconsumo
+CB71,Agregar centro de consumo,catbas.cconsumo
+CB72,Editar centro de consumo,catbas.cconsumo
+CB73,Eliminar centro de consumo,catbas.cconsumo
+catbas.cfgimpuesto,Configuración de impuestos,catbas
+CB80,Configuración de impuestos,catbas.cfgimpuesto
+CB81,Agregar configuración de impuesto,catbas.cfgimpuesto
+CB82,Editar configuración de impuesto,catbas.cfgimpuesto
+CB83,Eliminar configuración de impuesto,catbas.cfgimpuesto
+catbas.contacto,Contactos,catbas
+CB90,Contactos,catbas.contacto
+CB91,Agregar contacto,catbas.contacto
+CB92,Editar contacto,catbas.contacto
+CB93,Eliminar contacto,catbas.contacto

@@ -21,7 +21,12 @@ module "departamento.dk"
     
     create::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
+        @use_transaction = @false
+
+         do dbr.apps.action.pre("CB111")
+         do dbr.begin(db)
 
         data<"comision1">: @@(data, "#comision1")
         data<"comision2">: @@(data, "#comision2")
@@ -30,17 +35,32 @@ module "departamento.dk"
         data<"comision5">: @@(data, "#comision5")
 
         if @@(data,"codigo")=="" { do check_autocode(db,"departamento","codigo",data) }
-        do entity.create(db,params,data)
+        ref res = entity.create(db,params,data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+        return res
 
         exception
 		{
+             do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
 			do cu_error("departamento")
 			do rise_error(last_error_code(), last_error())
+
 		}
     }
     update::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB112")
+        do dbr.begin(db)
+
 
         if field.exist(data,"comision1") && trim(@@(data,"$comision1")) == "" { data<"comision1">: 0 }
         if field.exist(data,"comision2") && trim(@@(data,"$comision2")) == "" { data<"comision2">: 0 }
@@ -50,12 +70,24 @@ module "departamento.dk"
         
         do dbr.execute(db, "UPDATE departamento SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE departamento SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
-        do entity.update(db,params,data)
+
+        ref res = entity.update(db,params,data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
+        return res
+
 
         exception
-		{
+		{     
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
 			do cu_error("departamento")
 			do rise_error(last_error_code(), last_error())
+
 		}
     }
 
@@ -76,14 +108,23 @@ module "departamento.dk"
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
 
+        do dbr.apps.action.grant("CB110")
         query="SELECT #<@sys_fields>, codigo,descripcion,comision1,comision2,comision3,comision4,comision5 
             FROM departamento 
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR descripcion LIKE CONCAT('%',@s,'%')))
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+
+        exception
+        {
+        do errordet(@false)
+        do dbr.apps.action.log()
+        do rise_error(last_error_code(),last_error())
+        }
+
     }
     function cu_error(table)
     {
@@ -95,15 +136,45 @@ module "departamento.dk"
     }
     function read(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_DEPARTAMENTO_READONLY)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DEPARTAMENTO_READONLY)) { do rise_error(500,"No autorizado") }
+
+        do dbr.apps.action.grant("CB110")
+
 
         return entity.read(db, params)
+        exception
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
+
     }
     function delete(&db, &params)
 	{
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_DEPARTAMENTO)) { do rise_error(500,"No autorizado") }
 
-        return entity.delete(db, params)
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB113")
+        do dbr.begin(db)
+
+        ref res = entity.delete(db, params)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+
+        return res
+        
+        exception
+    {
+        do errordet(@false)
+        if dbr.in_transaction(db){ do dbr.rollback(db) }
+        do dbr.apps.action.log()
+        do rise_error(last_error_code(),last_error())
+    }
+
 	}
 
     point @list to list

@@ -10,38 +10,65 @@ module "pais.dk"
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_PAIS_EDO)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB140")
         query="SELECT #<@sys_fields>, codigo,codigotel,nombre 
             FROM pais
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+        exception
+{
+    do errordet(@false)
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
     }
     function create(&db, &params, &data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
 
-        do entity.create(db, params, data)
+        do dbr.apps.action.pre("CB141")
+        do dbr.begin(db)
+
+        ref res = entity.create(db, params, data)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+        return res 
         exception
 		{
-			do cu_error("país")
-			do rise_error(last_error_code(), last_error())
+			do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
 		}
     }    
 
     function update(&db, &params, &data)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
+
+        do dbr.apps.action.pre("CB142")
+        do dbr.begin(db)
 
         do dbr.execute(db, "UPDATE pais SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE pais SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
-        do entity.update(db, params, data)
+        ref res = entity.update(db, params, data)
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+        return res 
         exception
 		{
-			do cu_error("país")
-			do rise_error(last_error_code(), last_error())
+			do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
 		}
     }
 
@@ -55,15 +82,38 @@ module "pais.dk"
     }
     function read(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_PAIS_EDO_READONLY)) { do rise_error(500,"No autorizado") }
-
+        //if not(dbr.security.isauth(db,@CAT_AUT_PAIS_EDO_READONLY)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB140")
         return entity.read(db, params)
+        exception
+{
+    do errordet(@false)
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
+
     }
     function delete(&db, &params)
 	{
-        if not(dbr.security.isauth(db,@CAT_AUT_DELETE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_DELETE_PAIS_EDO)) { do rise_error(500,"No autorizado") }
+        @use_transaction = @false
 
-        return entity.delete(db, params)
+        do dbr.apps.action.pre("CB143")
+        do dbr.begin(db)
+
+        ref res =  entity.delete(db, params)
+
+        do dbr.apps.action.pos(res)
+        do dbr.commit(db)
+        do dbr.apps.action.ext(res)
+        return res 
+        exception
+{
+    do errordet(@false)
+    if dbr.in_transaction(db){ do dbr.rollback(db) }
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
 	}
 
     point @list to list

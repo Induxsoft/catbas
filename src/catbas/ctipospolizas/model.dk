@@ -11,8 +11,13 @@ module "banco.dk"
 
 	poliza.create::&db,&params,&data
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_CREATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB101")
+		do dbr.begin(db)
+		
 		id=dbr.num(db,"select ifnull(max(id),0)+1 from ctipospolizas limit 1",@null)
 		new d
 		{
@@ -22,20 +27,28 @@ module "banco.dk"
 		}
 		if @@(data,"uf_sat_TipoPoliza")=="@"{do field.remove(d,"uf_sat_TipoPoliza")}
 		// do rise_error()
+		
 		do dbr.begin(db)
 		do dbr.insert(db,@table_name,d)
 		do dbr.commit(db)
 
 		exception
 		{
-			if dbr.in_transaction(db){do dbr.rollback(db)}	
-			do rise_error(500,last_error())
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
 		}
 	}
 	poliza.update::&db,&params,&data
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB102")
+		do dbr.begin(db)
+		
 		new d
 		{
 			@"Const":@@(data,"descripcion")
@@ -46,16 +59,25 @@ module "banco.dk"
 		do dbr.begin(db)
 		do dbr.update(db,@table_name,d,"id=@id",data)
 		do dbr.commit(db)
-
+		
 		exception
 		{
-			if dbr.in_transaction(db){do dbr.rollback(db)}	
-			do rise_error(500,last_error())
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
 		}
+
+		
 	}
 	poliza.delete::&db,&params
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_DELETE_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		
+		@use_transaction = @false
+
+		do dbr.apps.action.pre("CB103")
+		do dbr.begin(db)
 
 		if @@(params,"#_entity_id")<3{do rise_error(99,"No se puede eliminar datos del sistema")}
 		new d
@@ -68,15 +90,19 @@ module "banco.dk"
 
 		exception
 		{
-			if dbr.in_transaction(db){do dbr.rollback(db)}	
-			do rise_error(500,last_error())
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
 		}
 	}
 
 	function list(&db, &params)
     {
-		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
-
+		//if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_TIPO_POLIZA)) { do rise_error(500,"No autorizado") }
+		
+		do dbr.apps.action.grant("CB100")
+		
         query="SELECT tp.id as sys_pk, tp.const, IFNULL(tp.uf_sat_tipopoliza,'') uf_sat_tipopoliza, IFNULL(stp.uf_const,'') sat_tipopoliza
 			FROM ctipospolizas tp
 				LEFT JOIN ut_sat_ctipopoliza stp ON tp.uf_sat_tipopoliza = stp.sys_pk
@@ -84,12 +110,28 @@ module "banco.dk"
             ORDER BY tp.id
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+		
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
 	function read(&db, &params)
     {
-		if not(dbr.security.isauth(db,@CAT_AUT_TIPO_POLIZA_READONLY)) { do rise_error(500,"No autorizado") }
-
+		//if not(dbr.security.isauth(db,@CAT_AUT_TIPO_POLIZA_READONLY)) { do rise_error(500,"No autorizado") }
+		
+		do dbr.apps.action.grant("CB100")
+		
         return entity.read(db, params)
+		
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
 
 	point @create to poliza.create

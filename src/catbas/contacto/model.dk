@@ -10,20 +10,31 @@ module "contacto.dk"
     
     contacto.read::&db,&params
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CONTACTO_READONLY)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CONTACTO_READONLY)) { do rise_error(500,"No autorizado") }
+		do dbr.apps.action.grant("CB90")
 
         ref contacto=entity.read(db,params)
         contacto<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",contacto)
         contacto<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(contacto,"&domicilio"))
         contacto<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(contacto,"&ciudad"))
         contacto<"pais*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver from pais where sys_pk=@IPais",@@(contacto,"&estado"))
-        return contacto
+       
+	   return contacto
+		
+	exception
+	{
+		do errordet(@false)
+		do dbr.apps.action.log()
+		do rise_error(last_error_code(),last_error())
+	}
+	
     }
     contacto.create::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CONTACTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CONTACTO)) { do rise_error(500,"No autorizado") }
 
     	@use_transaction=@false
+		do dbr.apps.action.pre("CB91")
     	do dbr.begin(db) 
 
         if field.exist(data, "domicilio_direccion")
@@ -59,19 +70,29 @@ module "contacto.dk"
         do field.remove(data,"edoprov")
         
 	    ref res= entity.create(db,params,data)
-    	do dbr.commit(db)
+    	
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
 
     	return res
-    	exception
-    	{
-    		if dbr.in_transaction(db) { do dbr.rollback(db) }
-    		do rise_error(500,last_error())
-    	}
+		
+    exception
+	{
+		do errordet(@false)
+		if dbr.in_transaction(db){ do dbr.rollback(db) }
+		do dbr.apps.action.log()
+		do rise_error(last_error_code(),last_error())
+	}
     }
 
     contacto.update::&db,&params,&data
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CONTACTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_CONTACTO)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
+
+		do dbr.apps.action.pre("CB92")
+		do dbr.begin(db)
 
         if field.exist(data, "domicilio_direccion")
         {
@@ -110,7 +131,20 @@ module "contacto.dk"
         do dbr.execute(db, "UPDATE contacto SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE contacto SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
     	
-        return entity.update(db,params,data)
+        ref res = entity.update(db,params,data)
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		
+		return res
+		
+	exception
+	{
+		do errordet(@false)
+		if dbr.in_transaction(db){ do dbr.rollback(db) }
+		do dbr.apps.action.log()
+		do rise_error(last_error_code(),last_error())
+	}
     }
     contacto.blank::&db,&params
     {
@@ -119,7 +153,8 @@ module "contacto.dk"
 
     function list(&db, &params)
     {
-        if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CONTACTO)) { do rise_error(500,"No autorizado") }
+        //if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_CONTACTO)) { do rise_error(500,"No autorizado") }
+		do dbr.apps.action.grant("CB90")
 
         query="SELECT c.sys_pk, c.sys_guid, c.sys_recver, c.sys_timestamp,c.notas, c.sys_dtcreated, c.sys_deleted, 
                 c.Tratamiento,CONCAT(c.Nombre,' ',c.Apellidos) nombre,c.Empresa,c.Puesto,c.Tel1,c.eMail1,c.WebSite,concat(IFNULL(d.direccion,''),', ',IFNULL(d.colonia,''),', ',IFNULL(cd.nombre,'')) as domicilio
@@ -130,12 +165,37 @@ module "contacto.dk"
             ORDER BY c.Nombre
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+	
+	exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
     }
     function delete(&db, &params)
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CONTACTO)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_DELETE_CONTACTO)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
+
+		do dbr.apps.action.pre("CB93")
+		do dbr.begin(db)
+
+		ref res = entity.delete(db, params)
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
 		
-		return entity.delete(db, params)
+		return res
+		
+	exception
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+		
 	}
 
     point @read to contacto.read

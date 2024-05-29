@@ -10,31 +10,50 @@ module "banco.dk"
 
 	banco.read::&db,&params
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_BANCO_READONLY)) { do rise_error(500,"No autorizado") }
-
+		//if not(dbr.security.isauth(db,@CAT_AUT_BANCO_READONLY)) { do rise_error(500,"No autorizado") }
+		do dbr.apps.action.grant("CB30")
 		ref banco=entity.read(db,params)
 		return banco
+		exception
+{
+    do errordet(@false)
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
 	}
 	banco.create::&db,&params,&data
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_CREATE_BANCO)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_CREATE_BANCO)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB31")
+		do dbr.begin(db)
 		if @@(data,"contacto")=="@"
 		{
 			// data<"contacto">:@null
 			do field.remove(data,"contacto")
 		}
-		do entity.create(db,params,data)
+		ref res = entity.create(db,params,data)
+
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		return res 
 		exception
 		{
-			do cu_error("banco")
-			do rise_error(last_error_code(), last_error())
+		 do errordet(@false)
+    	if dbr.in_transaction(db){ do dbr.rollback(db) }
+    	do dbr.apps.action.log()
+    	do rise_error(last_error_code(),last_error())	
 		}
 	}
 	banco.update::&db,&params,&data
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_BANCO)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_UPDATE_BANCO)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
 
+		do dbr.apps.action.pre("CB32")
+		do dbr.begin(db)
 		if @@(data,"contacto")=="@"
 		{
 			// data<"contacto">:@null
@@ -44,18 +63,26 @@ module "banco.dk"
 		do dbr.execute(db, "UPDATE banco SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE banco SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
 
-		do entity.update(db,params,data)
+		ref res =  entity.update(db,params,data)
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		return res 
+
+
 		exception
 		{
-			do cu_error("banco")
-			do rise_error(last_error_code(), last_error())
+			do errordet(@false)
+    		if dbr.in_transaction(db){ do dbr.rollback(db) }
+    	 	do dbr.apps.action.log()
+    		do rise_error(last_error_code(),last_error())
 		}
 	}
 
 	function list(&db, &params)
     {
-		if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_BANCO)) { do rise_error(500,"No autorizado") }
-
+		//if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_BANCO)) { do rise_error(500,"No autorizado") }
+        do dbr.apps.action.grant("CB30")
         query="SELECT b.sys_pk, b.sys_recver, b.nombre, concat(c.nombre,' ',c.apellidos) as contacto
             FROM banco b
 				LEFT JOIN contacto c ON b.contacto = c.sys_pk
@@ -63,6 +90,13 @@ module "banco.dk"
             ORDER BY b.nombre
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
+		exception
+{
+    do errordet(@false)
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
+
     }
 	function cu_error(table)
     {
@@ -72,11 +106,26 @@ module "banco.dk"
         do valide_duplicate(fields, table, last_error(), last_error_code())
     }
 
-	function delete(&db,&paramas)
+	function delete(&db,&params)
 	{
-		if not(dbr.security.isauth(db,@CAT_AUT_DELETE_BANCO)) { do rise_error(500,"No autorizado") }
+		//if not(dbr.security.isauth(db,@CAT_AUT_DELETE_BANCO)) { do rise_error(500,"No autorizado") }
+		@use_transaction = @false
 
-		return entity.delete(db,params)
+		do dbr.apps.action.pre("CB33")
+		do dbr.begin(db)
+		ref res =  entity.delete(db,params)
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
+		return res
+		exception
+{
+    do errordet(@false)
+    if dbr.in_transaction(db){ do dbr.rollback(db) }
+    do dbr.apps.action.log()
+    do rise_error(last_error_code(),last_error())
+}
+
 	}
 
 	point @read to banco.read
