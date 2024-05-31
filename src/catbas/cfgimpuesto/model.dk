@@ -119,10 +119,12 @@ module "cfgimpuesto.dk"
 		return res
 		exception
 		{
+			error=last_error()
 			do errordet(@false)
 			if dbr.in_transaction(db){ do dbr.rollback(db) }
 			do dbr.apps.action.log()
-			do rise_error(last_error_code(),last_error())
+			do prepareView(db,params,data)
+			do rise_error(last_error_code(),error)
 		}
 
 	}
@@ -163,17 +165,20 @@ module "cfgimpuesto.dk"
 		do dbr.execute(db, "UPDATE cfgimpuesto SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE cfgimpuesto SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
 		ref res=entity.update(db,params,data)
-do dbr.apps.action.pos(res)
-do dbr.commit(db)
-do dbr.apps.action.ext(res)
+
+		do dbr.apps.action.pos(res)
+		do dbr.commit(db)
+		do dbr.apps.action.ext(res)
 			return res
-exception
-{
-    do errordet(@false)
-    if dbr.in_transaction(db){ do dbr.rollback(db) }
-    do dbr.apps.action.log()
-    do rise_error(last_error_code(),last_error())
-}
+		exception
+		{
+			error=last_error()
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do prepareView(db,params,data)
+			do rise_error(last_error_code(),error)
+		}
 	}
 
 
