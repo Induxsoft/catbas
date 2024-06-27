@@ -1,6 +1,7 @@
 "id","title","icon96x96","src","_blank","appid","cat"
 "CB10","Agentes","/$/catbas/img/icons/agente.png","/!/catbas/agente/","0","catbas.agente","0090"
 "CB20","Almacen","/$/catbas/img/icons/almacen.png","/!/catbas/almacen/","0","catbas.almacen","0090"
+"CB30","Bancos","/$/catbas/img/icons/banco.png","/!/catbas/banco/","0","catbas.banco","0090"
 "CB40","Cajas","/$/catbas/img/icons/caja.png","/!/catbas/caja/","0","catbas.caja","0090"
 "CB50","Cajeros","/$/catbas/img/icons/cajero.png","/!/catbas/cajero/","0","catbas.cajero","0090"
 "CB60","Categorias","/$/catbas/img/icons/categoria.png","/!/catbas/categoria/","0","catbas.categoria","0090"

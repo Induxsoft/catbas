@@ -70,6 +70,29 @@ module "form_agente.dk"
                         small(class="fw-bold"){"Comisión(%):"}
                         input(type="number" id="pcomision" name="pcomision" step="any" class="induxsoft-form-control" value="#<@('./pcomision')>")
                     }
+                    div(class="col-sm-6")
+                    {
+                        small{"Código de Nomina:"}
+                        input(type="text" id="codnomina" name="codnomina" class="induxsoft-form-control" value="#<@('./codnomina')>" maxlength="50")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Télefono:"}
+                        input(type="text" id="telefono1" name="telefono1" class="induxsoft-form-control" value="#<@('./telefono')>" maxlength="150")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Email:"}
+                        input(type="text" id="email" name="email" class="induxsoft-form-control" value="#<@('./email')>" maxlength="50")
+                    }
+                       div(class="col-sm-6")
+                    {
+                        small{"Notas:"}
+                        input(type="text" id="notas" name="notas" class="induxsoft-form-control" value="#<@('./notas')>")
+                    }
+                }
+                    
+                    
                     fieldset(class="form-control mt-2")
                     {
                         legend{"Domicilio"}
@@ -120,12 +143,12 @@ module "form_agente.dk"
                                         small{"Código postal"}
                                         input(type="text" class="induxsoft-form-control" id="codpos"  value="#<@('./domicilio/codpos')>")
                                     } 
-                                    div(class="col-sm-6")
+                                  div(class="col-sm-6")
                                     {
                                         small{"Teléfono"}
                                         input(type="text" class="induxsoft-form-control" id="telefono" value="#<@('./domicilio/telefonos')>")
                                     }
-                                }
+                                    
                         
                         
                             }                                   
@@ -133,27 +156,10 @@ module "form_agente.dk"
                         input(type="hidden" class="form-control" id="sys_recver_Dom" name="sys_recver" value="#<@('./domicilio/sys_recver')>")
                         input(type="hidden" class="form-control" id="dom_sys_pk" name="dom_sys_pk" value="#<@('./domicilio/sys_pk')>")
                     }
-                    div(class="col-sm-6")
-                    {
-                        small{"Código de Nomina:"}
-                        input(type="text" id="codnomina" name="codnomina" class="induxsoft-form-control" value="#<@('./codnomina')>" maxlength="50")
-                    }
-                    div(class="col-sm-6")
-                    {
-                        small{"Télefono:"}
-                        input(type="text" id="telefono1" name="telefono1" class="induxsoft-form-control" value="#<@('./telefono')>" maxlength="150")
-                    }
-                    div(class="col-sm-6")
-                    {
-                        small{"Email:"}
-                        input(type="text" id="email" name="email" class="induxsoft-form-control" value="#<@('./email')>" maxlength="50")
-                    }
-                    div(class="col-sm-6")
-                    {
-                        small{"Notas:"}
-                        input(type="text" id="notas" name="notas" class="induxsoft-form-control" value="#<@('./notas')>")
-                    }
-                }
+                    
+                    
+                    
+                 
                 input(type="hidden" class="form-control" id="sys_recver" name="sys_recver" value="#<@('#./sys_recver')>")
                 input(type="hidden" class="form-control" id="sys_pk" name="sys_pk" value="#<@('#./sys_pk')>")
             }
@@ -276,6 +282,9 @@ module "form_agente.dk"
     ##
     do @context.end()
 }
+}
 
+
+                            
 
                             
