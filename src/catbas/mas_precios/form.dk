@@ -68,7 +68,7 @@ module "form.dk"
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="costoultimo" value="#<@('$./costoultimo')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="costoultimo" value="#<@('$./costoultimo')>" step="0.00000001" max="9999999999.99999999")
                         }
                     }
                 }
@@ -148,102 +148,102 @@ module "form.dk"
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util1" value="#<@('$./util1')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util1" value="#<@('$./util1')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util2" value="#<@('$./util2')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util2" value="#<@('$./util2')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util3" value="#<@('$./util3')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util3" value="#<@('$./util3')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util4" value="#<@('$./util4')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util4" value="#<@('$./util4')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util5" value="#<@('$./util5')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util5" value="#<@('$./util5')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util106" value="#<@('$./util106')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util106" value="#<@('$./util106')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util107" value="#<@('$./util107')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util107" value="#<@('$./util107')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util108" value="#<@('$./util108')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util108" value="#<@('$./util108')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util109" value="#<@('$./util109')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util109" value="#<@('$./util109')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util110" value="#<@('$./util110')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util110" value="#<@('$./util110')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util111" value="#<@('$./util111')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util111" value="#<@('$./util111')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util112" value="#<@('$./util112')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util112" value="#<@('$./util112')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util113" value="#<@('$./util113')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util113" value="#<@('$./util113')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util114" value="#<@('$./util114')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util114" value="#<@('$./util114')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util115" value="#<@('$./util115')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util115" value="#<@('$./util115')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util116" value="#<@('$./util116')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util116" value="#<@('$./util116')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util117" value="#<@('$./util117')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util117" value="#<@('$./util117')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util118" value="#<@('$./util118')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util118" value="#<@('$./util118')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util119" value="#<@('$./util119')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util119" value="#<@('$./util119')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util120" value="#<@('$./util120')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="util120" value="#<@('$./util120')>" step="0.00000001" max="9999999999.99999999")
                         }
                     }
 
@@ -258,22 +258,22 @@ module "form.dk"
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc2" value="#<@('$./desc2')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc2" value="#<@('$./desc2')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc3" value="#<@('$./desc3')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc3" value="#<@('$./desc3')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc4" value="#<@('$./desc4')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc4" value="#<@('$./desc4')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"%"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc5" value="#<@('$./desc5')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-symbol-text" name="desc5" value="#<@('$./desc5')>" step="0.00000001" max="9999999999.99999999")
                         }
                     }
 
@@ -284,102 +284,102 @@ module "form.dk"
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio1" value="#<@('$./precio1')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio1" value="#<@('$./precio1')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio2" value="#<@('$./precio2')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio2" value="#<@('$./precio2')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio3" value="#<@('$./precio3')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio3" value="#<@('$./precio3')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio4" value="#<@('$./precio4')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio4" value="#<@('$./precio4')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio5" value="#<@('$./precio5')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio5" value="#<@('$./precio5')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio106" value="#<@('$./precio106')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio106" value="#<@('$./precio106')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio107" value="#<@('$./precio107')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio107" value="#<@('$./precio107')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio108" value="#<@('$./precio108')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio108" value="#<@('$./precio108')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio109" value="#<@('$./precio109')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio109" value="#<@('$./precio109')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio110" value="#<@('$./precio110')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio110" value="#<@('$./precio110')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio111" value="#<@('$./precio111')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio111" value="#<@('$./precio111')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio112" value="#<@('$./precio112')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio112" value="#<@('$./precio112')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio113" value="#<@('$./precio113')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio113" value="#<@('$./precio113')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio114" value="#<@('$./precio114')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio114" value="#<@('$./precio114')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio115" value="#<@('$./precio115')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio115" value="#<@('$./precio115')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio116" value="#<@('$./precio116')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio116" value="#<@('$./precio116')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio117" value="#<@('$./precio117')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio117" value="#<@('$./precio117')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio118" value="#<@('$./precio118')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio118" value="#<@('$./precio118')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio119" value="#<@('$./precio119')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio119" value="#<@('$./precio119')>" step="0.00000001" max="9999999999.99999999")
                         }
                         div(class="input-symbol-container")
                         {
                             small(class="input-symbol-prefix"){$"$"}
-                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio120" value="#<@('$./precio120')>" step="0.00000001" max="999999999.9999999")
+                            input(type="number" class="induxsoft-form-control mb-2 input-number-text" name="precio120" value="#<@('$./precio120')>" step="0.00000001" max="9999999999.99999999")
                         }
                     }
                 }

@@ -145,29 +145,29 @@ var mas_precios =
     {
         let utilidad = Number(util.value);
         let ultimoCosto = Number(ultCosto.value);
-        let percent = (utilidad/100) * ultimoCosto;
+        let percent = Math.mul(Math.div(utilidad,100), ultimoCosto); //(utilidad/100) * ultimoCosto;
         let precio = document.querySelector(`input[name="${field}"]`);
 
-        precio.value = ultimoCosto + percent;
+        precio.value = Math.RoundTo(Math.add(ultimoCosto,percent),8); //ultimoCosto + percent;
     },
 
     calcular_porcentaje_utilidad(precio,ultCosto,field)
     {
         let ultimoCosto = Number(ultCosto.value);
-        let percent = (100*(precio.value-ultimoCosto))/ultimoCosto
+        let percent = Math.div(Math.mul(100,Math.sub(Number(precio.value),ultimoCosto)),ultimoCosto); //(100*(precio.value-ultimoCosto))/ultimoCosto;
         let utilidad = document.querySelector(`input[name="${field}"]`);
         
-        utilidad.value = percent;
+        utilidad.value = Math.RoundTo(percent,8);
     },
 
     calcular_descuento(precio,desc)
     {
-        const descuento = desc.value;
-        const precioInicial = precio.value
+        const descuento = Number(desc.value);
+        const precioInicial = Number(precio.value);
 
         if (descuento > 0) {
-            let percent = (descuento / 100) * precioInicial;
-            precio.value = precioInicial - percent;
+            let percent = Math.mul(Math.div(descuento,100),precioInicial); //(descuento / 100) * precioInicial;
+            precio.value = Math.RoundTo(Math.sub(precioInicial,percent),8); //precioInicial - percent;
         } else {
             precio.value = precioInicial;
         }
