@@ -45,18 +45,14 @@
 "CB113","Eliminar departamento","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.departamento","DET01A","1","action"
 "CB114","Importar departamentos","Importar","","/!/batch/taskman/CB/importar.departamento/","0","catbas.departamento","DET01A","0","action"
 
-"CB121","Agregar divisa","Agregar","","/!/catbas/divisa/_new/","0","catbas.divisa","DET030","0","action"
-"CB122","Editar divisa","Editar","","/!/catbas/divisa/@_src_context_item_id/","0","catbas.divisa","DET030","1","action"
-"CB123","Eliminar divisa","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.divisa","DET030","1","action"
+
 
 "CB131","Agregar marca","Agregar","","/!/catbas/marca/_new/","0","catbas.marca","DET041","0","action"
 "CB132","Editar marca","Editar","","/!/catbas/marca/@_src_context_item_id/","0","catbas.marca","DET041","1","action"
 "CB133","Eliminar marca","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.marca","DET041","1","action"
 "CB134","Importar marcas","Importar","","/!/batch/taskman/CB/importar.marca/","0","catbas.marca","DET041","0","action"
 
-"CB141","Agregar país","Agregar","","/!/catbas/pais/_new/","0","catbas.pais","DET034","0","action"
-"CB142","Editar país","Editar","","/!/catbas/pais/@_src_context_item_id/","0","catbas.pais","DET034","1","action"
-"CB143","Eliminar país","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.pais","DET034","1","action"
+
 
 "CB151","Agregar porteador","Agregar","","/!/catbas/porteador/_new/","0","catbas.porteador","DET03B","0","action"
 "CB152","Editar porteador","Editar","","/!/catbas/porteador/@_src_context_item_id/","0","catbas.porteador","DET03B","1","action"

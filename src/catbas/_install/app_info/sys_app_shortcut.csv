@@ -10,9 +10,9 @@
 "CB90","Contactos","/$/catbas/img/icons/contacto.png","/!/catbas/contacto/","0","catbas.contacto","0090"
 "CB100","Tipos de pólizas","/$/catbas/img/icons/TipoPolizas.png","/!/catbas/ctipospolizas/","0","catbas.ctipospolizas","0090"
 "CB110","Departamentos","/$/catbas/img/icons/departamento.png","/!/catbas/departamento/","0","catbas.departamento","0090"
-"CB120","Divisas","/$/catbas/img/icons/divisa.png","/!/catbas/divisa/","0","catbas.divisa","0090"
+
 "CB130","Marcas","/$/catbas/img/icons/marca.png","/!/catbas/marca/","0","catbas.marca","0090"
-"CB140","País","/$/catbas/img/icons/pais.png","/!/catbas/pais/","0","catbas.pais","0090"
+
 "CB150","Porteadores","/$/catbas/img/icons/porteador.png","/!/catbas/porteador/","0","catbas.porteador","0090"
 "CB160","Repartidores","/$/catbas/img/icons/repartidor.png","/!/catbas/repartidor/","0","catbas.repartidor","0090"
 "CB170","Tarjeta de crédito","/$/catbas/img/icons/tarjetas.png","/!/catbas/tarjetacredito/","0","catbas.tarjetacredito","0090"

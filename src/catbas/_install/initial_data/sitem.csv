@@ -17,11 +17,7 @@ CB113,Eliminar departamento,catbas.departamento
 CB114,Importar departamentos,catbas.departamento
 catbas.agente,Agentes,catbas
 CB12,Editar agente,catbas.agente
-catbas.divisa,Divisas,catbas
-CB120,Divisas,catbas.divisa
-CB121,Agregar divisa,catbas.divisa
-CB122,Editar divisa,catbas.divisa
-CB123,Eliminar divisa,catbas.divisa
+
 catbas.agente,Agentes,catbas
 CB13,Eliminar agente,catbas.agente
 catbas.marca,Marcas,catbas
@@ -30,11 +26,7 @@ CB131,Agregar marca,catbas.marca
 CB132,Editar marca,catbas.marca
 CB133,Eliminar marca,catbas.marca
 CB134,Importar marcas,catbas.marca
-catbas.pais,País,catbas
-CB140,País,catbas.pais
-CB141,Agregar país,catbas.pais
-CB142,Editar país,catbas.pais
-CB143,Eliminar país,catbas.pais
+
 catbas.porteador,Porteadores,catbas
 CB150,Porteadores,catbas.porteador
 CB151,Agregar porteador,catbas.porteador
