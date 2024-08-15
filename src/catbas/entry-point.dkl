@@ -69,7 +69,7 @@ module "Controller configs"
 	
 	do crudl.routes.entity("/linea/",_entities_type)
 	do crudl.routes.entity("/marca/",_entities_type)
-	do crudl.routes.entity("/mas_precios/",_entities_type)
+	
 	
 	do crudl.routes.entity("/porteador/",_entities_type)
 	do crudl.routes.entity("/repartidor/",_entities_type)

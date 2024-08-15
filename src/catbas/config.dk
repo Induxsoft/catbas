@@ -1,14 +1,11 @@
 #include "dkli.dkh"
 #!
-
 module "config.dk"
 {
 	@title=""
 	@gender="o"
 	@path_common="catbas/_common/list.dk"
 	@default_max_rows=250
-
-	@JS_MAS_PRECIOS = "/$/catbas/js/mas_precios.js"
 
 	@BATCH_TASKMAN="/!/batch/taskman/"
 	@CATBAS_MARCA = "/!/catbas/marca/"
