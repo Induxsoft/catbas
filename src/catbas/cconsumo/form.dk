@@ -14,6 +14,50 @@ module "form.dk"
     entity_id = @("$parameters/_entity_id")
     isNew = (entity_id == "_new")
 
+    /**
+    * Los options refieren a los campos `precio#` de la tabla `producto`.
+    * 6 => Campo `precio` de la tabla `cconsumo`.
+    */
+    // {"id":6,"const":"El del centro de consumo"},
+    text jsonPrecios
+    {$'
+    [
+        {"id":1,"const":"Precio 1"},
+        {"id":2,"const":"Precio 2"},
+        {"id":3,"const":"Precio 3"},
+        {"id":4,"const":"Precio 4"},
+        {"id":5,"const":"Precio 5"},
+        {"id":106,"const":"Precio 6"},
+        {"id":107,"const":"Precio 7"},
+        {"id":108,"const":"Precio 8"},
+        {"id":109,"const":"Precio 9"},
+        {"id":110,"const":"Precio 10"},
+        {"id":111,"const":"Precio 11"},
+        {"id":112,"const":"Precio 12"},
+        {"id":113,"const":"Precio 13"},
+        {"id":114,"const":"Precio 14"},
+        {"id":115,"const":"Precio 15"},
+        {"id":116,"const":"Precio 16"},
+        {"id":117,"const":"Precio 17"},
+        {"id":118,"const":"Precio 18"},
+        {"id":119,"const":"Precio 19"},
+        {"id":120,"const":"Precio 20"},
+    ]
+    '}
+
+    new def_precios
+    {
+        @"datatable*": from.json(jsonPrecios)
+        new member "attributes"
+        {
+            @"class": "form-select form-select-sm rounded-0"
+            @"name": "precio"
+        }
+        @"value_field": "id"
+        @"text_field": "const"
+        @"selected": @('#./precio')
+    }
+
     new def_almacenes
     {
         @"datatable*":dbr.list(@("&database"),"select sys_pk, descripcion from almacen order by descripcion;",@null)
@@ -25,7 +69,7 @@ module "form.dk"
 
         @"text_field":"descripcion"
         @"value_field":"sys_pk"
-        @"selected":@('./ialmacen')
+        @"selected":@('#./ialmacen')
     }
 
     #$ div(class="container p-0")
@@ -71,8 +115,9 @@ module "form.dk"
                     div(class="col-sm-6")
                     {
                         small(class="form-label"){"Precio:"}
-                        input(type="number" class="induxsoft-form-control" min="1"  name="precio" value="#<@('#./precio')>" max="99999999999")
-
+                        ##
+                        do uie.dbSelect(def_precios)
+                        ##
                     }
                     div(class="col-sm-6")
                     {
