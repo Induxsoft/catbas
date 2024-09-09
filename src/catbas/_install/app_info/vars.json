@@ -40,28 +40,6 @@
                 }
             },
             {
-                "varname": "FXCA049",
-                "vardefault": "|0000",
-                "varvalue": "|0000",
-                "varcaption": "Formato de código para cajas",
-                "vartype": "string",
-                "varinput": 
-                {
-                    "control": "text"
-                }
-            },
-            {
-                "varname": "FXCA050",
-                "vardefault": "|0000",
-                "varvalue": "|0000",
-                "varcaption": "Formato de código para cajeros",
-                "vartype": "string",
-                "varinput": 
-                {
-                    "control": "text"
-                }
-            },
-            {
                 "varname": "FXCA051",
                 "vardefault": "|0000",
                 "varvalue": "|0000",
@@ -132,17 +110,6 @@
                 "vardefault": "|0000",
                 "varvalue": "|0000",
                 "varcaption": "Formato de código para repartidores",
-                "vartype": "string",
-                "varinput": 
-                {
-                    "control": "text"
-                }
-            },
-            {
-                "varname": "FXCA064",
-                "vardefault": "|0000",
-                "varvalue": "|0000",
-                "varcaption": "Formato de código para tarjeta de crédito",
                 "vartype": "string",
                 "varinput": 
                 {

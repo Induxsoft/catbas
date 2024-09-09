@@ -1,15 +1,14 @@
 "id","title"
 "DET002","Agente o vendedor"
 "DET003","Almacén"
-"DET007","Banco o institución financiera"
-"DET008","Caja de efectivo"
-"DET009","Cajero"
+
+
 "DET010","Categoría de operaciones"
 "DET011","Centro de consumo"
 "DET018","Configuración de impuestos"
 
 "DET039","Persona de contacto"
-"DET05B","Tipo de póliza contable"
+
 "DET01A","Departamento de productos"
 
 "DET041","Marca"
@@ -17,7 +16,7 @@
 
 "DET03B","Porteador"
 "DET049","Repartidor"
-"DET050","Tarjeta bancaria de crédito o débito"
+
 "DET054","Tipo de cliente"
 "DET05C","Tipo de proveedor"
 "DET001","Aduana"

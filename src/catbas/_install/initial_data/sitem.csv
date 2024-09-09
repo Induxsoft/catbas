@@ -2,31 +2,21 @@
 catbas,Catálogos generales básicos,\0
 catbas.agente,Agentes,catbas
 CB10,Agentes,catbas.agente
-catbas.ctipospolizas,Tipos de polizas,catbas
-CB100,Tipos de pólizas,catbas.ctipospolizas
-CB101,Agregar tipo de póliza,catbas.ctipospolizas
-CB102,Editar tipo de póliza,catbas.ctipospolizas
-CB103,Eliminar tipo de póliza,catbas.ctipospolizas
-catbas.agente,Agentes,catbas
 CB11,Agregar agente,catbas.agente
+CB12,Editar agente,catbas.agente
+CB13,Eliminar agente,catbas.agente
 catbas.departamento,Departamentos,catbas
 CB110,Departamentos,catbas.departamento
 CB111,Agregar departamento,catbas.departamento
 CB112,Editar departamento,catbas.departamento
 CB113,Eliminar departamento,catbas.departamento
 CB114,Importar departamentos,catbas.departamento
-catbas.agente,Agentes,catbas
-CB12,Editar agente,catbas.agente
-
-catbas.agente,Agentes,catbas
-CB13,Eliminar agente,catbas.agente
 catbas.marca,Marcas,catbas
 CB130,Marcas,catbas.marca
 CB131,Agregar marca,catbas.marca
 CB132,Editar marca,catbas.marca
 CB133,Eliminar marca,catbas.marca
 CB134,Importar marcas,catbas.marca
-
 catbas.porteador,Porteadores,catbas
 CB150,Porteadores,catbas.porteador
 CB151,Agregar porteador,catbas.porteador
@@ -37,11 +27,6 @@ CB160,Repartidores,catbas.repartidor
 CB161,Agregar repartidor,catbas.repartidor
 CB162,Editar repartidor,catbas.repartidor
 CB163,Eliminar repartidor,catbas.repartidor
-catbas.tarjetacredito,Tarjeta de crédito,catbas
-CB170,Tarjeta de crédito,catbas.tarjetacredito
-CB171,Agregar targeta de crédito,catbas.tarjetacredito
-CB172,Editar targeta de crédito,catbas.tarjetacredito
-CB173,Eliminar targeta de crédito,catbas.tarjetacredito
 catbas.tipocliente,Tipos de clientes,catbas
 CB180,Tipos de clientes,catbas.tipocliente
 CB181,Agregar tipo de cliente,catbas.tipocliente
@@ -54,36 +39,19 @@ CB192,Editar tipo de proveedor,catbas.tipoproveedor
 CB193,Eliminar tipo de proveedor,catbas.tipoproveedor
 catbas.almacen,Almacenes,catbas
 CB20,Almacen,catbas.almacen
+CB21,Agregar almacen,catbas.almacen
+CB22,Editar almacen,catbas.almacen
+CB23,Eliminar almacen,catbas.almacen
 catbas.ut_aduana,Aduanas,catbas
 CB200,Aduanas,catbas.ut_aduana
 CB201,Agregar aduana,catbas.ut_aduana
 CB202,Editar aduana,catbas.ut_aduana
 CB203,Eliminar aduana,catbas.ut_aduana
-catbas.almacen,Almacenes,catbas
-CB21,Agregar almacen,catbas.almacen
 catbas.zona,Zonas,catbas
 CB210,Zonas,catbas.zona
 CB211,Agregar zona/área geográfica,catbas.zona
 CB212,Editar zona/área geográfica,catbas.zona
 CB213,Eliminar zona/área geográfica,catbas.zona
-catbas.almacen,Almacenes,catbas
-CB22,Editar almacen,catbas.almacen
-CB23,Eliminar almacen,catbas.almacen
-catbas.banco,Bancos,catbas
-CB30,Bancos,catbas.banco
-CB31,Agregar banco,catbas.banco
-CB32,Editar banco,catbas.banco
-CB33,Eliminar banco,catbas.banco
-catbas.caja,Cajas,catbas
-CB40,Cajas,catbas.caja
-CB41,Agregar caja,catbas.caja
-CB42,Editar caja,catbas.caja
-CB43,Eliminar caja,catbas.caja
-catbas.cajero,Cajeros,catbas
-CB50,Cajeros,catbas.cajero
-CB51,Agregar cajero,catbas.cajero
-CB52,Editar cajero,catbas.cajero
-CB53,Eliminar cajero,catbas.cajero
 catbas.categoria,Categorías,catbas
 CB60,Categorias,catbas.categoria
 CB61,Agregar categoria,catbas.categoria

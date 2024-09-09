@@ -54,16 +54,15 @@ module "Controller configs"
 	do crudl.routes.entity("/agente/",_entities_type)
 	do crudl.routes.entity("/ut_aduana/",_entities_type)
 	do crudl.routes.entity("/almacen/",_entities_type)
-	do crudl.routes.entity("/banco/",_entities_type)
-	do crudl.routes.entity("/caja/",_entities_type)
-	do crudl.routes.entity("/cajero/",_entities_type)
+	
+	
 	do crudl.routes.entity("/categoria/",_entities_type)
 	do crudl.routes.entity("/cconsumo/",_entities_type)
 	do crudl.routes.entity("/cfgimpuesto/",_entities_type)
 	
 	do crudl.routes.entity("/cliente/",_entities_type)
 	do crudl.routes.entity("/contacto/",_entities_type)
-	do crudl.routes.entity("/ctipospolizas/",_entities_type)
+	
 	do crudl.routes.entity("/departamento/",_entities_type)
 	
 	
@@ -73,7 +72,7 @@ module "Controller configs"
 	
 	do crudl.routes.entity("/porteador/",_entities_type)
 	do crudl.routes.entity("/repartidor/",_entities_type)
-	do crudl.routes.entity("/tarjetacredito/",_entities_type)
+	
 	do crudl.routes.entity("/tipocliente/",_entities_type)
 	do crudl.routes.entity("/tipoproveedor/",_entities_type)
 	do crudl.routes.entity("/zona/",_entities_type)

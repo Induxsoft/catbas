@@ -8,18 +8,6 @@
 "CB22","Editar almacen","Editar","","/!/catbas/almacen/@_src_context_item_id/","0","catbas.almacen","DET003","1","action"
 "CB23","Eliminar almacen","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.almacen","DET003","1","action"
 
-"CB31","Agregar banco","Agregar","","/!/catbas/banco/_new/","0","catbas.banco","DET007","0","action"
-"CB32","Editar banco","Editar","","/!/catbas/banco/@_src_context_item_id/","0","catbas.banco","DET007","1","action"
-"CB33","Eliminar banco","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.banco","DET007","1","action"
-
-"CB41","Agregar caja","Agregar","","/!/catbas/caja/_new/","0","catbas.caja","DET008","0","action"
-"CB42","Editar caja","Editar","","/!/catbas/caja/@_src_context_item_id/","0","catbas.caja","DET008","1","action"
-"CB43","Eliminar caja","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.caja","DET008","1","action"
-
-"CB51","Agregar cajero","Agregar","","/!/catbas/cajero/_new/","0","catbas.cajero","DET009","0","action"
-"CB52","Editar cajero","Editar","","/!/catbas/cajero/@_src_context_item_id/","0","catbas.cajero","DET009","1","action"
-"CB53","Eliminar cajero","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.cajero","DET009","1","action"
-
 "CB61","Agregar categoria","Agregar","","/!/catbas/categoria/_new/","0","catbas.categoria","DET010","0","action"
 "CB62","Editar categoria","Editar","","/!/catbas/categoria/@_src_context_item_id/","0","catbas.categoria","DET010","1","action"
 "CB63","Eliminar categoria","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.categoria","DET010","1","action"
@@ -36,23 +24,15 @@
 "CB92","Editar contacto","Editar","","/!/catbas/contacto/@_src_context_item_id/","0","catbas.contacto","DET039","1","action"
 "CB93","Eliminar contacto","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.contacto","DET039","1","action"
 
-"CB101","Agregar tipo de póliza","Agregar","","/!/catbas/ctipospolizas/_new/","0","catbas.ctipospolizas","DET05B","0","action"
-"CB102","Editar tipo de póliza","Editar","","/!/catbas/ctipospolizas/@_src_context_item_id/","0","catbas.ctipospolizas","DET05B","1","action"
-"CB103","Eliminar tipo de póliza","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.ctipospolizas","DET05B","1","action"
-
 "CB111","Agregar departamento","Agregar","","/!/catbas/departamento/_new/","0","catbas.departamento","DET01A","0","action"
 "CB112","Editar departamento","Editar","","/!/catbas/departamento/@_src_context_item_id/","0","catbas.departamento","DET01A","1","action"
 "CB113","Eliminar departamento","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.departamento","DET01A","1","action"
 "CB114","Importar departamentos","Importar","","/!/batch/taskman/CB/importar.departamento/","0","catbas.departamento","DET01A","0","action"
 
-
-
 "CB131","Agregar marca","Agregar","","/!/catbas/marca/_new/","0","catbas.marca","DET041","0","action"
 "CB132","Editar marca","Editar","","/!/catbas/marca/@_src_context_item_id/","0","catbas.marca","DET041","1","action"
 "CB133","Eliminar marca","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.marca","DET041","1","action"
 "CB134","Importar marcas","Importar","","/!/batch/taskman/CB/importar.marca/","0","catbas.marca","DET041","0","action"
-
-
 
 "CB151","Agregar porteador","Agregar","","/!/catbas/porteador/_new/","0","catbas.porteador","DET03B","0","action"
 "CB152","Editar porteador","Editar","","/!/catbas/porteador/@_src_context_item_id/","0","catbas.porteador","DET03B","1","action"
@@ -61,10 +41,6 @@
 "CB161","Agregar repartidor","Agregar","","/!/catbas/repartidor/_new/","0","catbas.repartidor","DET049","0","action"
 "CB162","Editar repartidor","Editar","","/!/catbas/repartidor/@_src_context_item_id/","0","catbas.repartidor","DET049","1","action"
 "CB163","Eliminar repartidor","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.repartidor","DET049","1","action"
-
-"CB171","Agregar targeta de crédito","Agregar","","/!/catbas/tarjetacredito/_new/","0","catbas.tarjetacredito","DET050","0","action"
-"CB172","Editar targeta de crédito","Editar","","/!/catbas/tarjetacredito/@_src_context_item_id/","0","catbas.tarjetacredito","DET050","1","action"
-"CB173","Eliminar targeta de crédito","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.tarjetacredito","DET050","1","action"
 
 "CB181","Agregar tipo de cliente","Agregar","","/!/catbas/tipocliente/_new/","0","catbas.tipocliente","DET054","0","action"
 "CB182","Editar tipo de cliente","Editar","","/!/catbas/tipocliente/@_src_context_item_id/","0","catbas.tipocliente","DET054","1","action"
