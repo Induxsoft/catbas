@@ -11,8 +11,13 @@ module "Controller configs"
 	#include "dbr.security.dkl"
     #include "dbr.apps.dkl"
 	#include "dbr.events.dkl"
+
+	@base_path="catbas"
+	@path_root="" // Establezca una ruta de ser necesario
+
 	if @@(@http_context,"$session/user/ids") == "" {
-		@http_context<"response/headers/location"> : "/"
+		if file.exists("webshell/lost.dk") { include "webshell/lost.dk" }
+		else { @http_context<"response/headers/location"> : "/" }
 		return
 	}
 
@@ -25,9 +30,6 @@ module "Controller configs"
 	@http_context<"session/resource/properties/web_page/end_head">:'<script src="/$/catbas/js/jquery-3.6.0.min.js"></script>
 	<script src="/$/catbas/js/definitive.api.js"></script>'
 
-	@base_path="catbas"
-	@path_root="" // Establezca una ruta de ser necesario
-	
 	// Enmascaramiento de enrutamiento (Ejemplos)
 	// Definición de patrones de rutas con base en parámetros GET (request/get)
 	// do crudl.routes.pattern("/module/submodule/process/subprocess/")
