@@ -38,7 +38,7 @@ module "list_view_almacen.dk"
         	}
         	member @"codcuenta"
         	{
-        		@"caption":"Codigo Cuenta"
+        		@"caption":"Código de cuenta"
         	}
         	member @"_actions"
         	{

@@ -18,12 +18,11 @@ module "marca.dk"
             LIMIT #<@default_max_rows>;"
         return dbr.list(db, ftext(query), params)
         exception
-{
-    do errordet(@false)
-    do dbr.apps.action.log()
-    do rise_error(last_error_code(),last_error())
-}
-        
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
     }
 
     function check_autocode(&db,table,field,&data)
@@ -32,9 +31,9 @@ module "marca.dk"
         ref config = dbr.autocode.info(varvalue)
         new_code = dbr.autocode.new(db,table,field,config)
 
-        data<"codigo">: new_code
+        data<"codigo"> : new_code
 
-        exception { }
+        // exception{ do pop_exception() }
     }
 
     function create(&db, &params, &data)
@@ -53,13 +52,12 @@ module "marca.dk"
 
         return res 
 
-
         exception
 		{
-		 do errordet(@false)
-        if dbr.in_transaction(db){ do dbr.rollback(db) }
-        do dbr.apps.action.log()
-        do rise_error(last_error_code(),last_error())	
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
 		}
     }
     function update(&db, &params, &data)
@@ -76,12 +74,12 @@ module "marca.dk"
         do dbr.apps.action.pos(res)
         do dbr.commit(db)
         do dbr.apps.action.ext(res)
-        return res 
-
+        
+        return res
 
         exception
 		{
-			 do errordet(@false)
+            do errordet(@false)
             if dbr.in_transaction(db){ do dbr.rollback(db) }
             do dbr.apps.action.log()
             do rise_error(last_error_code(),last_error())
@@ -101,11 +99,11 @@ module "marca.dk"
         do dbr.apps.action.grant("CB130")
         return entity.read(db, params)
         exception
-{
-    do errordet(@false)
-    do dbr.apps.action.log()
-    do rise_error(last_error_code(),last_error())
-}
+        {
+            do errordet(@false)
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
     }
     function delete(&db, &params)
 	{
@@ -119,15 +117,16 @@ module "marca.dk"
         do dbr.apps.action.pos(res)
         do dbr.commit(db)
         do dbr.apps.action.ext(res)
+        
         return res 
+        
         exception
-{
-    do errordet(@false)
-    if dbr.in_transaction(db){ do dbr.rollback(db) }
-    do dbr.apps.action.log()
-    do rise_error(last_error_code(),last_error())
-}
-
+        {
+            do errordet(@false)
+            if dbr.in_transaction(db){ do dbr.rollback(db) }
+            do dbr.apps.action.log()
+            do rise_error(last_error_code(),last_error())
+        }
 	}
 
     point @list to list

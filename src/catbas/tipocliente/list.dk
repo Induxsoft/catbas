@@ -8,7 +8,7 @@ module "list_view_tipo_cliente.dk"
     #include "../config.dk"
 
 	@gender="o"
-    @title="Tipos de cliente"
+    @title="Tipos de clientes"
 
     do @context.begin(@crud_context)
 

@@ -38,7 +38,7 @@ module "form_view_alamacen.dk"
             {
                 div(class="col-4 d-flex align-items-center p-0")
                 {
-                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Almacen"}
+                    h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Almacén"}
                 }
                 div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
                 {

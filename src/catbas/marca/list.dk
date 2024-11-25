@@ -3,9 +3,9 @@
 module "list.dk"
 {
     #include "functions.dkh"
-    #include "serialize.dkh"
     #include "dbr.dkh"
     #include "dbr.apps.dkl"
+    #include "dbr.vars.dkl"
     #include "uielements.v12.dkl"
     #include "../config.dk"
     #include "../_lib/icons.dk"
@@ -14,9 +14,18 @@ module "list.dk"
     do @context.begin(@crud_context)
     ref db:@("&database")
 
+    new titles
+    {
+        @"title": dbr.vars.getd(db,"FXCA108","")
+        @"subtitle": dbr.vars.getd(db,"FXCA109","")
+        @"subtitle_2": dbr.vars.getd(db,"FXCA110","")
+        @"footer": dbr.vars.getd(db,"FXCA111","")
+    }
+
     new table_definition
     {
         @"datatable*": @@(@crud_context,"&.")
+        @"tableheight": "80vh"
         @"table_footer": "Mostrando las primeras # marcas ordenadas por código"
         member @"columns"
         {
@@ -25,66 +34,63 @@ module "list.dk"
             member @"_actions" 
             { 
                 @"caption":"Acciones" 
-                @"template":'
-                    <div style="display:flex; gap:8px; justify-content:center; width:100%;" class="no-print">
-                        <a
-                            href="./${DataRow.sys_pk}/"
-                            style="cursor:pointer; text-decoration: none; padding: 0px 8px; background-color:#F5F5F5; color:#000;"
-                        >
-                            Editar
-                        </a>
-                        <button
-                            onclick="InduxsoftCrudlModel.Delete(${DataRow.sys_pk})"
-                            style="cursor:pointer; border:none; outline:none; padding: 0px 8px; background-color:#F5F5F5; color:#000;"
-                        >
-                            Eliminar
-                        </button>
-                    </div>'
                 @"no-print":@true
+                @"template":'
+                <div style="display:flex; gap:8px; justify-content:center; width:100%;">
+                    <a
+                        href="./${DataRow.sys_pk}/"
+                        style="cursor:pointer; text-decoration: none; padding: 0px 8px; background-color:#F5F5F5; color:#000;"
+                    >
+                        Editar
+                    </a>
+                    <button
+                        onclick="InduxsoftCrudlModel.Delete(${DataRow.sys_pk})"
+                        style="cursor:pointer; border:none; outline:none; padding: 0px 8px; background-color:#F5F5F5; color:#000;"
+                    >
+                        Eliminar
+                    </button>
+                </div>
+                '
             }
         }
     }
 
     #$
-    div(class="container p-0")
+    div(class="container-lg" id="view")
 	{
-    	div(id="main_bar" class="row container-section m-0 my-2 p-2 border-bottom")
+        section(id="top_area")
         {
-            div(class="col-4 d-flex align-items-center px-0")
+            div(id="main_bar" class="row container-section m-0 my-2 p-2 border-bottom")
             {
-                h5(class="tex-no-break m-0"){$"Marcas"}
+                div(class="col-4 d-flex align-items-center px-0")
+                {
+                    h5(class="tex-no-break m-0"){$"Marcas"}
+                }
+
+                div(class="col-8 d-flex align-items-center justify-content-end gap-2 px-0")
+                {
+                    #! if AppExist(db,"batch") {
+                        ref act = dbr.apps.itemaction.get(db,"CB134")
+                        url_act = path.concat(@@(act,"$href"),"?exit_url_encode="+url_encode(@CATBAS_MARCA))
+
+                        #$ a(href="#<url_act>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Importar marcas"){$"Importar"}
+                    }
+                    
+                    #$ a(href="#<replace(@CATBAS_ADD_EDIT_MARCA, '@id', '_new')>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print") {
+                        $"Agregar"
+                    }
+
+                    button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Imprimir" onclick="window.print()") {
+                        $"#<@ICON_PRINTER>"
+                    }
+                    button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar" onclick="window.location.reload()") {
+                        $"#<@ICON_ARROW_CLOCKWISE>"
+                    }
+                    a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir") {
+                        $"#<@ICON_X_LG>"
+                    }
+                }
             }
-
-            div(class="col-8 d-flex align-items-center justify-content-end gap-2 px-0")
-            {
-                #! if AppExist(db,"batch") {
-                    ref act = dbr.apps.itemaction.get(db,"CB134")
-                    url_act = path.concat(@@(act,"$href"),"?exit_url_encode="+url_encode(@CATBAS_MARCA))
-
-                    #$ a(href="#<url_act>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Importar marcas"){$"Importar"}
-                }
-                
-                #$ a(href="#<replace(@CATBAS_ADD_EDIT_MARCA, '@id', '_new')>" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print") {
-                    $"Agregar"
-                }
-
-                button(class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Imprimir" onclick="window.print()") {
-                    $"#<@ICON_PRINTER>"
-                }
-
-                a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Refrescar") {
-                    $"#<@ICON_ARROW_CLOCKWISE>"
-                }
-
-                a(href="/" target="_top" class="btn btn-sm border-secondary induxsoft-corners btn-main-action no-print" title="Salir") {
-                    $"#<@ICON_X_LG>"
-                }
-            }
-        }
-
-        div(id="work_area" class="container-section")
-        {
-            p{$"#<@('$error/message')>"}
 
             form(action="./" method="GET" id="form_search" class="no-print my-1 d-flex py-1")
             {
@@ -98,8 +104,41 @@ module "list.dk"
                     "class"="w-100"
                 ){$""}
             }
-
-            #! do uie.dbeditable(table_definition, "tbl_marca")
         }
+
+        section(id="work_area")
+        {
+            div(class="show-on-print")
+            {
+                p(class="text-center my-0"){$"#<@@(titles,'$title')>"}
+                p(class="text-center my-0"){$"#<@@(titles,'$subtitle')>"}
+                p(class="text-center my-0"){$"#<@@(titles,'$subtitle_2')>"}
+
+                div(class="row")
+                {
+                    div(class="col-3 text-start")
+                    {
+                        small(class="d-block"){ $"#<cut(@('$http/session/user/name'),25)>" }
+                        small(class="d-block"){ $"#<date_str(now(),'dd/MMM/yyyy')>" }
+                    }
+                    div(class="col-6 text-center")
+                    {
+                        h4(class=""){$"Informe general de marcas"}
+                    }
+                    div(class="col-3 text-end")
+                    {
+                        small(class="d-block" id="lbl_filter_1"){$""}
+                        small(class="d-block" id="lbl_filter_2"){$""}
+                        small(class="d-block" id="lbl_filter_3"){$""}
+                    }
+                }
+            }
+
+            #!
+            do uie.dbeditable(table_definition, "tbl_marca")
+            #$
+        }
+
+        section(id="bottom_area"){$""}
     }
 }
