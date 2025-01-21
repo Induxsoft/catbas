@@ -18,6 +18,9 @@ module "config.dk"
 	@LIST_ESTADO = "/!/catbas/edoprov/"
 	@LIST_AGENTES = "/!/catbas/agente/"
 
+	//services edoprov
+	@url_dbext_service="/!/dbext/"
+	
 	@CONFIG_IMPUESTOS="/!/catbas/cfgimpuesto/"
 	@IMPUESTOS="/!/catbas/impuesto/"
 	@IMPUESTO_ADD_EDIT=@IMPUESTOS + "{id}/"

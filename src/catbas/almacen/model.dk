@@ -119,12 +119,12 @@ module "almacen.dk"
         	return @null
 
 		exception
-    {
-        do errordet(@false)
-        if dbr.in_transaction(db){ do dbr.rollback(db) }
-        do dbr.apps.action.log()
-        do rise_error(last_error_code(),last_error())
-    }
+		{
+			do errordet(@false)
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
 	
     }
     almacen.update::&db,&params,&data

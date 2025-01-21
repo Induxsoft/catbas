@@ -23,7 +23,7 @@ module "form_agente.dk"
         @"datatable*":dbr.list(@("&database"),"select sys_pk, codigotel, nombre from pais order by nombre;",@null)
         member "attributes"
         {
-            @"class":"induxsoft-form-control pais"
+            @"class":"induxsoft-form-select pais"
             @"style":"!important;border-color:#357aff"
         }
         @"value_field":"sys_pk"
@@ -113,7 +113,7 @@ module "form_agente.dk"
                                     div(class="col-sm-6")
                                     {
                                         small{"Estado"}
-                                        select(class="induxsoft-form-control" id="estado"){$""}
+                                        select(class="induxsoft-form-select" id="estado"){$""}
                                     }
                                     
                                 }
@@ -123,7 +123,7 @@ module "form_agente.dk"
                                     {
                                         small{"Ciudad"}
                                         // input(type="text" class="form-control" name="iciudad" value="#<@('./domicilio/iciudad')>")
-                                        select(class="induxsoft-form-control" id="ciudad"){$""}
+                                        select(class="induxsoft-form-select" id="ciudad"){$""}
                                     }
                                     div(class="col-sm-6")
                                     {
@@ -198,7 +198,7 @@ module "form_agente.dk"
             function listarEstados(a)
             {
                 var paisSeleccionado = $(selectPais).val();
-                var urlPaisSeleccionado = '#<@url_root>edoprov/?pais='+paisSeleccionado
+                var urlPaisSeleccionado = '#<@url_dbext_service>edoprov/?pais='+paisSeleccionado
                 $.ajax({
                         type: 'GET',
                         dataType: 'json',
@@ -221,7 +221,7 @@ module "form_agente.dk"
             function listarCiudades(b)
             {
                 var estadoSeleccionado = $(selectEstado).val();
-                var urlEstadoSeleccionado = '#<@url_root>ciudad/?edo='+estadoSeleccionado
+                var urlEstadoSeleccionado = '#<@url_dbext_service>ciudad/?edo='+estadoSeleccionado
 
                 $.ajax({
                 type: 'GET',

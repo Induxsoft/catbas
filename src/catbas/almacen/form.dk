@@ -202,7 +202,7 @@ module "form_view_alamacen.dk"
             function listarEstados(a)
             {
                 var paisSeleccionado = $(selectPais).val();
-                var urlPaisSeleccionado = '#<@url_root>edoprov/?pais='+paisSeleccionado
+                var urlPaisSeleccionado = '#<@url_dbext_service>edoprov/?pais='+paisSeleccionado
                 $.ajax({
                         type: 'GET',
                         dataType: 'json',
@@ -225,7 +225,7 @@ module "form_view_alamacen.dk"
             function listarCiudades(b)
             {
                 var estadoSeleccionado = $(selectEstado).val();
-                var urlEstadoSeleccionado = '#<@url_root>ciudad/?edo='+estadoSeleccionado
+                var urlEstadoSeleccionado = '#<@url_dbext_service>ciudad/?edo='+estadoSeleccionado
 
                 $.ajax({
                 type: 'GET',
