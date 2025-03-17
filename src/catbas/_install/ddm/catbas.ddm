@@ -47,7 +47,7 @@ model "erp.catbas"
     entity "banco" : "TableModel"
     {
         @"nombre" string(50) unique required
-        @"notas" string(2048)
+        @"notas" memo
         @"website" string(150)
         @"contacto" int ref:"contacto" ["sys_pk"]
     }
@@ -58,7 +58,7 @@ model "erp.catbas"
         @"codcuenta" string(50) unique
         @"codigo" string(5) unique required
         @"descripcion" string(50) unique
-        @"notas" string(2048)
+        @"notas" memo
         @"centroconsumo" int ref:"cconsumo" ["sys_pk"] required
         @"uf_limefectivo" decimal(18,8)
         @"uf_lime_vntadic" int
@@ -83,7 +83,7 @@ model "erp.catbas"
         @"contrasena" string(32) required
         @"email" string(50)
         @"nombre" string(50) unique required
-        @"notas" string(2048)
+        @"notas" memo
         @"telefono" string(25)
         @"domicilio1" int ref:"domicilio" ["sys_pk"]
         @"uf_sys_baja" bool
@@ -110,7 +110,7 @@ model "erp.catbas"
     {
         @"codigo" string(5) unique required
         @"descripcion" string(50) unique required
-        @"notas" string(2048)
+        @"notas" memo
         @"precio" int
         @"ialmacen" int ref:"almacen" ["sys_pk"]
         @"porcentaje_esperado" decimal(19,8)
@@ -229,7 +229,7 @@ model "erp.catbas"
     {
         @"codigo" string(5) unique required
         @"descripcion" string(50) unique required
-        @"notas" string(2048)
+        @"notas" memo
         @"iproveedor" int ref:"proveedor" ["sys_pk"]
     }
 
@@ -339,7 +339,7 @@ model "erp.catbas"
         @"fax" string(50) 
         @"limitecredito" decimal(18,8) 
         @"nombre" string(150) unique required
-        @"notas" string(32000) 
+        @"notas" memo
         @"rfc" string(15) 
         @"saldo" decimal(18,8) 
         @"status" int ref:"cstatusorg" ["id"] 
@@ -382,12 +382,12 @@ model "erp.catbas"
     {
         @"codpos" string(10)
         @"colonia" string(150)
-        @"direccion" string(1024)
+        @"direccion" memo
         @"notas" string(150)
         @"telefonos" string(150)
-        @"iciudad" int ref:"ciudad" ["sys_pk"]
-        @"numint" string(1024)
-        @"numext" string(1024)
+        @"iciudad" ref:"ciudad"
+        @"numint" string(128)
+        @"numext" string(128)
     }
     entity "impuesto": "TableModel"
     {
