@@ -25,6 +25,8 @@ module "config.dk"
 	@IMPUESTOS="/!/catbas/impuesto/"
 	@IMPUESTO_ADD_EDIT=@IMPUESTOS + "{id}/"
 
+	//ubicaciones
+	@UBICACIONES="/!/catbas/ubicacion/"
 	@CAT_AUT_ACCESS_AGENTE = "FX1-10-10-000"
 	@CAT_AUT_CREATE_AGENTE = "FX1-10-10-002"
 	@CAT_AUT_UPDATE_AGENTE = "FX1-10-10-003"

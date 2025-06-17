@@ -17,6 +17,7 @@ model "erp.catbas"
         @"uf_capitan" bool
         @"uf_sys_baja" bool
         @"uf_iuser" int
+        @"ubicacion" ref:"ubicacion"
     }
 
     /* uod.ut_sat_ctipopoliza */
@@ -41,6 +42,8 @@ model "erp.catbas"
         @"uf_inhabilitado" bool
         @"uf_fechainhabilitacion" datetime
         @"uf_formaproduccion" int
+        @"clase" ref:"clase_almacen"
+        @"ubicacion" ref:"ubicacion"
     }
 
      /* uod.banco */
@@ -73,6 +76,7 @@ model "erp.catbas"
         @"uf_horacorte5" time
         @"uf_cortereq_vntadic" int
         @"uf_lim_vntliber" int
+        @"ubicacion" ref:"ubicacion"
     }
 
      /* uod.cajero */
@@ -87,6 +91,7 @@ model "erp.catbas"
         @"telefono" string(25)
         @"domicilio1" int ref:"domicilio" ["sys_pk"]
         @"uf_sys_baja" bool
+        @"ubicacion" ref: "ubicacion"
     }
 
     /* uod.ctiposcategorias */
@@ -119,6 +124,7 @@ model "erp.catbas"
         @"uf_inhabilitado" bool
         @"uf_fechainhabilitacion" datetime
         @"uf_grupoprod" int
+        @"ubicacion" ref:"ubicacion"
     }
 
      /* uod.cfgimpuesto */
@@ -244,6 +250,7 @@ model "erp.catbas"
         @"telefono" string(50) 
         @"domicilio1" int ref:"domicilio" ["sys_pk"] 
         @"uf_sys_baja" bool 
+        @"ubicacion" ref:"ubicacion"
     }
 
      /* uod.tarjetacredito */
@@ -301,7 +308,18 @@ model "erp.catbas"
         @"idivisa" int ref:"divisa" ["sys_pk"] required
         @"tipo" int ref:"tipocliente" ["sys_pk"] required
     }
-
+    entity "ubicacion" : "TableModel"
+    {
+        @"codigo" string(10) unique required
+        @"descripcion" string(50) required
+        @"notas" memo
+    }
+    entity "clase_almacen" : "EnumModel"
+    {
+        // 0-"Almacén de propósito general"
+        // 1-"Almacén vinculado a otro elemento de datos"
+        // 2-"Almacén virtual o imaginario"
+    }
     /* uod.cstatusorg */
     entity "cstatusorg" : "EnumModel" {}
 

@@ -1,0 +1,97 @@
+#include "dkli.dkh"
+#!
+
+module "ubicacion.dk"
+{
+	@table_name="ubicacion"
+	@list_query="Select * from #<@table_name> where (ifnull(@s,'')='' or concat_ws('',codigo,descripcion) like concat('%',@s,'%') )"
+	
+	list::&db,&params
+	{
+		do dbr.apps.action.grant("CB220")
+
+	   ref entity= entity.list(db,params)
+	   return entity
+	}
+	read::&db,&params
+	{
+		do dbr.apps.action.grant("CB220")
+		ref entity= entity.read(db,params)
+	   return entity
+	}
+	create::&db,&params,&data
+	{
+		@use_transaction = @false
+			do dbr.apps.action.pre("CB221")
+		do dbr.begin(db)
+		
+		ref entity= entity.create(db,params,data)
+	   
+			do dbr.apps.action.pos(entity)
+		do dbr.commit(db)
+			do dbr.apps.action.ext(entity)
+		
+		return entity
+		exception
+		{
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+		
+	}
+	blank::&db,&params
+	{
+		do dbr.apps.action.grant("CB220")
+	  new entity{@"codigo":""}
+	  return entity
+	}
+	update::&db,&params,&data
+	{
+		@use_transaction = @false
+			do dbr.apps.action.pre("CB222")
+		do dbr.begin(db)
+		
+		ref entity= entity.update(db,params,data)
+		
+			do dbr.apps.action.pos(entity)
+		do dbr.commit(db)
+			do dbr.apps.action.ext(entity)
+		
+		return entity
+		exception
+		{
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+	}
+	delete::&db,&params
+	{
+		@use_transaction = @false
+			do dbr.apps.action.pre("CB223")
+		do dbr.begin(db)
+		
+		ref entity= entity.delete(db,params)
+		
+			do dbr.apps.action.pos(entity)
+		do dbr.commit(db)
+			do dbr.apps.action.ext(entity)
+		
+	   return entity
+		exception
+		{
+			if dbr.in_transaction(db){ do dbr.rollback(db) }
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
+	}
+	
+	point @delete to delete
+	point @update to update
+	point @blank to blank
+	point @create to create
+	point @read to read
+	point @list to list
+
+}

@@ -7,7 +7,7 @@ module "repartidor.dk"
 
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
-        codigo, codnomina, email, nombre, telefono,notas, domicilio1
+        codigo, codnomina, email, nombre, telefono,notas, domicilio1,ubicacion
         from repartidor where #<@keyfield>=@_entity_id limit 1;"
 
     repartidor.read::&db,&params
@@ -16,6 +16,7 @@ module "repartidor.dk"
         do dbr.apps.action.grant("CB160")
 
         ref repartidor=entity.read(db,params)
+        if @@(repartidor,"$ubicacion")!=""{repartidor<"ubicacion*">:dbr.rec(db,"select * from ubicacion where sys_pk=@ubicacion",repartidor)}
         repartidor<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",repartidor)
         repartidor<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(repartidor,"&domicilio"))
         repartidor<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(repartidor,"&ciudad"))
@@ -63,7 +64,7 @@ module "repartidor.dk"
 	    if not(isnull(@@(data,"&ciudad"))){do field.remove(data,"ciudad")}
 	    if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
 	    if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
-
+        if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
         if @@(data,"codigo")=="" { do check_autocode(db,"repartidor","codigo",data) }    
         ref res = entity.create(db,params,data)
 
@@ -97,7 +98,7 @@ module "repartidor.dk"
             data<"domicilio1">:@@(domicilio,"sys_pk")
             do field.remove(data,"domicilio")
     	}
-
+        if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
         do dbr.execute(db, "UPDATE repartidor SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE repartidor SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
     	

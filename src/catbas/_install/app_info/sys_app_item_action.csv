@@ -57,3 +57,9 @@
 "CB211","Agregar zona/área geográfica","Agregar","","/!/catbas/zona/_new/","0","catbas.zona","DET066","0","action"
 "CB212","Editar zona/área geográfica","Editar","","/!/catbas/zona/@_src_context_item_id/","0","catbas.zona","DET066","1","action"
 "CB213","Eliminar zona/área geográfica","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.zona","DET066","1","action"
+
+"CB220","Ubicaciones","Lista","","/!/catbas/ubicacion/","0","catbas.ubicacion","DET0AD","0","action"
+"CB221","Agregar ubicación","Agregar","","/!/catbas/ubicacion/_new/","0","catbas.ubicacion","DET0AD","0","action"
+"CB222","Editar ubicación","Editar","","/!/catbas/ubicacion/@_src_context_item_id/","0","catbas.ubicacion","DET0AD","1","action"
+"CB223","Eliminar ubicación","Eliminar","","javascript:InduxsoftCrudlModel.Delete(@_src_context_item_id);","0","catbas.ubicacion","DET0AD","1","action"
+

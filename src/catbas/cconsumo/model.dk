@@ -5,7 +5,7 @@ module "cconsumo.dk"
 {
 	#include "../config.dk"
 	#include "../_lib/lib.dk"
-	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado from cconsumo where #<@keyfield>=@_entity_id limit 1;"
+	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado,ubicacion from cconsumo where #<@keyfield>=@_entity_id limit 1;"
 	
 	cconsumo.read::&db,&params
 	{
@@ -13,6 +13,9 @@ module "cconsumo.dk"
 		do dbr.apps.action.grant("CB70")
 		
 		ref cconsumo=entity.read(db,params)
+
+		if @@(cconsumo,"$ubicacion")!=""{cconsumo<"ubicacion*">:dbr.rec(db,"select * from ubicacion where sys_pk=@ubicacion",cconsumo)}
+		
 		return cconsumo
 	
 	exception
@@ -54,7 +57,8 @@ module "cconsumo.dk"
 
 		if @@(data,"precio")==""{ data<"precio">:0 }
 		if @@(data,"codigo")=="" { do check_autocode(db,"cconsumo","codigo",data) }
-		
+		if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
+
 		ref res = entity.create(db,params,data)
 		
 		do dbr.apps.action.pos(res)
@@ -88,7 +92,7 @@ module "cconsumo.dk"
 			data<"uf_inhabilitado">:0
 		}
 		if @@(data,"precio")==""{data<"precio">:0}
-		
+		if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
 		ref res= entity.update(db,params,data)
 		
 		do dbr.apps.action.pos(res)

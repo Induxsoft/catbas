@@ -72,3 +72,9 @@ CB90,Contactos,catbas.contacto
 CB91,Agregar contacto,catbas.contacto
 CB92,Editar contacto,catbas.contacto
 CB93,Eliminar contacto,catbas.contacto
+
+catbas.ubicacion,Ubicaciones,catbas
+CB220,Ubicaciones,catbas.ubicacion
+CB221,Agregar contacto,catbas.ubicacion
+CB222,Editar contacto,catbas.ubicacion
+CB223,Eliminar contacto,catbas.ubicacion

@@ -85,10 +85,24 @@ module "form_agente.dk"
                         small{"Email:"}
                         input(type="text" id="email" name="email" class="induxsoft-form-control" value="#<@('./email')>" maxlength="50")
                     }
-                       div(class="col-sm-6")
+                    div(class="col-sm-6")
                     {
                         small{"Notas:"}
                         input(type="text" id="notas" name="notas" class="induxsoft-form-control" value="#<@('./notas')>")
+                    }
+                    div(class="col-sm-6")
+                    {
+                        small{"Ubicación:"}
+                        "input-key"(
+                            name="ubicacion" 
+                            id="ubicacion" 
+                            "data-key"="sys_pk" 
+                            "data-search"="codigo" 
+                            "data-text"="descripcion" 
+                            "data-source"="#<@UBICACIONES>?s=@search" 
+                            "data-value"="#<to.json(@('&./ubicacion'))>" 
+                            columns="codigo,descripcion" 
+                            colcaptions="Código,Descripción"){$""}
                     }
                 }
                     

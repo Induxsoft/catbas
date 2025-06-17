@@ -19,6 +19,7 @@ program "instalador"
         "linea.csv",
         "tipocliente.csv",
         "tipoproveedor.csv",
+        "clase_almacen.csv"
     ]')
 
     // Lista de privilegios iniciales (arreglo de id de privilegios)

@@ -116,6 +116,20 @@ module "form_view_alamacen.dk"
                                 small{"Código de cuenta:"}
                                 input(type="text" id="codcuenta" name="codcuenta" class="induxsoft-form-control" value="#<@('./codcuenta')>" maxlength="50")
                             }
+                            div(class="col-md-6")
+                            {
+                                small{"Ubicación:"}
+                                "input-key"(
+                                    name="ubicacion" 
+                                    id="ubicacion" 
+                                    "data-key"="sys_pk" 
+                                    "data-search"="codigo" 
+                                    "data-text"="descripcion" 
+                                    "data-source"="#<@UBICACIONES>?s=@search" 
+                                    "data-value"="#<to.json(@('&./ubicacion'))>" 
+                                    columns="codigo,descripcion" 
+                                    colcaptions="Código,Descripción"){$""}
+                            }
                         }
                     }
 

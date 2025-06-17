@@ -127,21 +127,33 @@ module "form.dk"
                         ##
                     }                                       
                 }
-                small{"Notas"}
+                
                 div(class="mb-3 row")       
                 {
                     div(class="col-sm-6")
                     {
+                        small{"Notas"}
                         textarea(name="notas" class="induxsoft-form-control" value="#<@('./notas')>"){$'#<@("./notas")>'}
                     }
-                }
-                div(class="mb-3 row")       
-                {
                     div(class="col-sm-6 d-flex gap-2 flex-wrap align-items-center")
                     {
                         input(type="checkbox" id="uf_inhabilitado" name="uf_inhabilitado" "#<ifstr(@('#./uf_inhabilitado')!=0,'checked','')>"="true")
                         label(class="form-label m-0" "for"="uf_inhabilitado"){small{$"Inhabilitar en el sistema"}}
-                    }        
+                    } 
+                    div(class="col-md-6")
+                    {
+                        small{"Ubicación:"}
+                        "input-key"(
+                            name="ubicacion" 
+                            id="ubicacion" 
+                            "data-key"="sys_pk" 
+                            "data-search"="codigo" 
+                            "data-text"="descripcion" 
+                            "data-source"="#<@UBICACIONES>?s=@search" 
+                            "data-value"="#<to.json(@('&./ubicacion'))>" 
+                            columns="codigo,descripcion" 
+                            colcaptions="Código,Descripción"){$""}
+                    }
                 }
             }
         }

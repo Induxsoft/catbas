@@ -8,7 +8,7 @@ module "almacen.dk"
     @read_query="select 
         sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
         codigo,codcuenta,fax,website,
-        descripcion, email,telefonos,domicilio1
+        descripcion, email,telefonos,domicilio1,ubicacion
         from almacen where #<@keyfield>=@_entity_id limit 1;"
 
 
@@ -19,6 +19,7 @@ module "almacen.dk"
 		do dbr.apps.action.grant("CB20")
 		
         ref almacen=entity.read(db,params)
+		if @@(almacen,"$ubicacion")!=""{almacen<"ubicacion*">:dbr.rec(db,"select * from ubicacion where sys_pk=@ubicacion",almacen)}
         almacen<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",almacen)
         almacen<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(almacen,"&domicilio"))
         almacen<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(almacen,"&ciudad"))
@@ -76,7 +77,7 @@ module "almacen.dk"
 	        if not(isnull(@@(data,"&estado"))){do field.remove(data,"estado")}
 	        if not(isnull(@@(data,"&pais"))){do field.remove(data,"pais")}
                 //  do rise_error(-99,to.json(@@(data,"&domicilio")))
-
+			if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
 			if @@(data,"codigo")=="" { do check_autocode(db,"almacen","codigo",data) }
 	        ref res= entity.create(db,params,data)
     	
@@ -144,7 +145,7 @@ module "almacen.dk"
             data<"domicilio1">:@@(domicilio,"sys_pk")
             do field.remove(data,"domicilio")
     	}
-    	
+    	if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
 		ref res = entity.update(db,params,data)
 		do dbr.apps.action.pos(res)
 		do dbr.commit(db)
