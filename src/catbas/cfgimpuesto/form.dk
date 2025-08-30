@@ -142,10 +142,10 @@ module "form_cfgimpuesto.dk"
                                         do uie.dbSelect(impuestos)
                                         #$
                                     }
-                                    td{""input(type="number" name="I1Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra1')>")}
-                                    td{""input(type="number" name="I1Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra1')>")}
-                                    td{""input(type="number" name="I1Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta1')>")}
-                                    td{""input(type="number" name="I1Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta1')>")}
+                                    td{""input(type="number" name="I1Compra_1" class="induxsoft-form-control" step="0.000001" value="#<@('./Interior_Compra1')>")}
+                                    td{""input(type="number" name="I1Compra_2" class="induxsoft-form-control" step="0.000001" value="#<@('./Frontera_Compra1')>")}
+                                    td{""input(type="number" name="I1Venta_1" class="induxsoft-form-control"  step="0.000001" value="#<@('./Interior_Venta1')>")}
+                                    td{""input(type="number" name="I1Venta_2" class="induxsoft-form-control"  step="0.000001" value="#<@('./Frontera_Venta1')>")}
                                 }
                                 tr{
                                     #!
@@ -164,10 +164,10 @@ module "form_cfgimpuesto.dk"
                                         do uie.dbSelect(impuestos)
                                         #$
                                     }
-                                    td{""input(type="number" name="I2Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra2')>")}
-                                    td{""input(type="number" name="I2Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra2')>")}
-                                    td{""input(type="number" name="I2Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta2')>")}
-                                    td{""input(type="number" name="I2Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta2')>")}
+                                    td{""input(type="number" name="I2Compra_1" class="induxsoft-form-control" step="0.000001" value="#<@('./Interior_Compra2')>")}
+                                    td{""input(type="number" name="I2Compra_2" class="induxsoft-form-control" step="0.000001" value="#<@('./Frontera_Compra2')>")}
+                                    td{""input(type="number" name="I2Venta_1" class="induxsoft-form-control"  step="0.000001" value="#<@('./Interior_Venta2')>")}
+                                    td{""input(type="number" name="I2Venta_2" class="induxsoft-form-control"  step="0.000001" value="#<@('./Frontera_Venta2')>")}
                                 }
                                 tr{
                                     #!
@@ -186,10 +186,10 @@ module "form_cfgimpuesto.dk"
                                         do uie.dbSelect(impuestos)
                                         #$
                                     }
-                                    td{""input(type="number" name="I3Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra3')>")}
-                                    td{""input(type="number" name="I3Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra3')>")}
-                                    td{""input(type="number" name="I3Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta3')>")}
-                                    td{""input(type="number" name="I3Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta3')>")}
+                                    td{""input(type="number" name="I3Compra_1" class="induxsoft-form-control" step="0.000001" value="#<@('./Interior_Compra3')>")}
+                                    td{""input(type="number" name="I3Compra_2" class="induxsoft-form-control" step="0.000001" value="#<@('./Frontera_Compra3')>")}
+                                    td{""input(type="number" name="I3Venta_1" class="induxsoft-form-control"  step="0.000001" value="#<@('./Interior_Venta3')>")}
+                                    td{""input(type="number" name="I3Venta_2" class="induxsoft-form-control"  step="0.000001" value="#<@('./Frontera_Venta3')>")}
                                 }
                                 tr{
                                      #!
@@ -208,10 +208,10 @@ module "form_cfgimpuesto.dk"
                                         do uie.dbSelect(impuestos)
                                         #$
                                     }
-                                    td{""input(type="number" name="I4Compra_1" class="induxsoft-form-control" value="#<@('./Interior_Compra4')>")}
-                                    td{""input(type="number" name="I4Compra_2" class="induxsoft-form-control" value="#<@('./Frontera_Compra4')>")}
-                                    td{""input(type="number" name="I4Venta_1" class="induxsoft-form-control" value="#<@('./Interior_Venta4')>")}
-                                    td{""input(type="number" name="I4Venta_2" class="induxsoft-form-control" value="#<@('./Frontera_Venta4')>")}
+                                    td{""input(type="number" name="I4Compra_1" class="induxsoft-form-control" step="0.000001" value="#<@('./Interior_Compra4')>")}
+                                    td{""input(type="number" name="I4Compra_2" class="induxsoft-form-control" step="0.000001" value="#<@('./Frontera_Compra4')>")}
+                                    td{""input(type="number" name="I4Venta_1" class="induxsoft-form-control"  step="0.000001" value="#<@('./Interior_Venta4')>")}
+                                    td{""input(type="number" name="I4Venta_2" class="induxsoft-form-control"  step="0.000001" value="#<@('./Frontera_Venta4')>")}
                                 }
                             }
                         }
