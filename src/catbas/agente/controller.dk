@@ -1,0 +1,13 @@
+#include "dkli.dkh"
+#!
+module ""
+{
+    switch @@(params,"$_entity_id")
+    {
+        case "users"
+        {
+            point @read to GetUsers
+            break
+        }
+    }
+}

@@ -104,6 +104,20 @@ module "form_agente.dk"
                             columns="codigo,descripcion" 
                             colcaptions="Código,Descripción"){$""}
                     }
+                    div(class="col-sm-6")
+                    {
+                        small{"Usuario:"}
+                        "input-key"(
+                            name="uf_iuser" 
+                            id="uf_iuser" 
+                            "data-key"="sys_pk" 
+                            "data-search"="userid" 
+                            "data-text"="username" 
+                            "data-source"="#<@url_dbext_service_user>?s=@search" 
+                            "data-value"="#<to.json(@('&./user'))>" 
+                            columns="userid,username" 
+                            colcaptions="ID,Nombre"){$""}
+                    }
                 }
                     
                     

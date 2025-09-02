@@ -78,6 +78,10 @@ script{
 				},
 				"ubicacion":$("input[name=\'ubicacion\']").val()
 			};
+
+			let uf_iuser=document.getElementById("uf_iuser");
+			if(uf_iuser)agente["uf_iuser"]=uf_iuser.getValue()?.sys_pk??0;
+
 			var mthd="";
 			if(Number($("#sys_pk").val())>0){mthd="PUT";}
 			else{mthd="POST";}

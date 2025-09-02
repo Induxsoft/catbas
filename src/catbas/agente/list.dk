@@ -30,9 +30,9 @@ module "list.dk"
             {
                 @"caption":"Comisión(%)"
             }*/
-			member @"codnomina"
+			member @"usuario"
             {
-                @"caption":"Código de Nómina"
+                @"caption":"Usuario"
             }
 			 member @"telefono"
             {

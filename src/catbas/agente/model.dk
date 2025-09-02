@@ -6,7 +6,7 @@ module "agente.dk"
     #include "../config.dk"
     #include "../_lib/lib.dk"
     @read_query = "select sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
-    codigo,codnomina,pcomision,email,nombre,telefono,notas,domicilio1,ubicacion
+    codigo,codnomina,pcomision,email,nombre,telefono,notas,domicilio1,ubicacion,uf_iuser
     from agente where #<@keyfield>=@_entity_id limit 1;"
 
    	agente.read::&db,&params
@@ -20,7 +20,7 @@ module "agente.dk"
         {
             @"domicilio1":@@(agente,"#domicilio1")
         }
-
+        agente<"user*">:dbr.rec(db,"select sys_pk, userid,username from tuser where sys_pk=@uf_iuser",agente)
         agente<"domicilio*">:dbr.rec(db,"select codpos,colonia,direccion,notas,telefonos,sys_pk,sys_recver,iciudad from domicilio where sys_pk=@domicilio1",d)
         agente<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(agente,"&domicilio"))
         agente<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(agente,"&ciudad"))
@@ -47,6 +47,21 @@ module "agente.dk"
         { }
     }
 
+    ValidateUser::&db,&params,&data
+    {
+        if @@(data,"#uf_iuser") > 0
+        {
+            sql="SELECT COUNT(*)
+            from agente a
+            WHERE a.uf_iuser=@uf_iuser"
+
+            params<"uf_iuser">:@@(data,"#uf_iuser")
+            if @@(params,"#_entity_id"){sql=sql + " AND a.sys_pk<> @_entity_id"}
+
+            users=dbr.num(db,sql,params)
+            if users>0{do rise_error(500,"El usuario ya se encuentra vinculado a un agente")}
+        }
+    }
     agente.create::&db,&params,&data
     {
         // if not(dbr.security.isauth(db,@CAT_AUT_CREATE_AGENTE)) { do rise_error(500,"No autorizado") }
@@ -58,6 +73,7 @@ module "agente.dk"
         do dbr.apps.action.pre("CB11")
         do dbr.begin(db)
 
+        do ValidateUser(db,params,data)
         if not(isnull(@@(data,"&domicilio")))
         {
             data<"domicilio/sys_recver">:parse.num(@@(data,"#domicilio/sys_recver"))
@@ -99,6 +115,7 @@ module "agente.dk"
         do dbr.apps.action.pre("CB12")
         do dbr.begin(db)
 
+        do ValidateUser(db,params,data)
         if not(isnull(@@(data,"&domicilio")))
     	{
             if not(@@(data,"domicilio/sys_recver"))
@@ -186,9 +203,14 @@ module "agente.dk"
     {
         // if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_AGENTE)) { do rise_error(500,"No autorizado") }
         do dbr.apps.action.grant("CB10")
-
-        query="SELECT #<@sys_fields>, codigo,nombre,codnomina,telefono 
-            FROM agente 
+        
+        query="SELECT a.sys_pk,a.sys_guid,a.sys_dtcreated,a.sys_timestamp,
+        a.sys_info,a.sys_user,a.sys_lastuser,
+        a.sys_exported,a.sys_dtexported,
+        a.sys_recver,a.sys_deleted,a.sys_lock,
+         codigo,nombre,codnomina,telefono ,t.username usuario
+            FROM agente a
+            LEFT JOIN tuser t on a.uf_iuser=t.sys_pk
             WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
             ORDER BY codigo
             LIMIT #<@default_max_rows>;"
@@ -210,6 +232,28 @@ module "agente.dk"
             @"codnomina": "El código de nómina"
         }
         do valide_duplicate(fields, table, last_error(), last_error_code())
+    }
+    function GetUsers(&db,&params)
+    {
+        sql = "
+        SELECT
+            u.sys_pk,
+            u.userid,
+            u.username,
+            GROUP_CONCAT(DISTINCT g.groupid SEPARATOR ';') _grupos,
+            GROUP_CONCAT(DISTINCT g.description SEPARATOR '; ') grupos
+        FROM tuser u
+            LEFT JOIN user_usergroup_ ug ON ug.users = u.sys_pk
+            LEFT JOIN usergroup g ON ug.groups=g.sys_pk
+        WHERE NOT IFNULL(u.sys_deleted,0)
+            AND NOT IFNULL(u.external,0)
+            AND IF(IFNULL(@fil_gpo,'-1')='-1', TRUE, ug.groups = @fil_gpo)
+            AND IF(IFNULL(@s,'')='', TRUE, (u.userid = @s OR u.username LIKE CONCAT('%',@s,'%')))
+        GROUP BY u.userid
+        ORDER BY u.username ASC
+        LIMIT 250;"
+
+        return dbr.list(db,ftext(sql),params)
     }
 
     point @read to agente.read
