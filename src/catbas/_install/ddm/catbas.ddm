@@ -6,6 +6,8 @@ model "erp.catbas"
     /* uod.agente */
     entity "agente" : "TableModel"
     {
+        @"sys_info" string(153)
+
         @"codigo" string(50) unique required
         @"codnomina" string(50) unique
         @"email" string(50)

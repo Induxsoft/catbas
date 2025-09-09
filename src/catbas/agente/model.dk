@@ -14,6 +14,9 @@ module "agente.dk"
         // if not(dbr.security.isauth(db,@CAT_AUT_AGENTE_READONLY)) { do rise_error(500,"No autorizado") }
         do dbr.apps.action.grant("CB10")
 
+        if not(isset("@just_read_entity")) { @just_read_entity = @false }
+        if @just_read_entity { return entity.read(db,params) }
+
         ref agente=entity.read(db,params)
         if @@(agente,"$ubicacion")!=""{agente<"ubicacion*">:dbr.rec(db,"select * from ubicacion where sys_pk=@ubicacion",agente)}
         new d
@@ -150,27 +153,60 @@ module "agente.dk"
 
     agente.delete::&db,&params
     {
-        // if not(dbr.security.isauth(db,@CAT_AUT_DELETE_AGENTE)) { do rise_error(500,"No autorizado") }
-
         @use_transaction = @false
+        @just_read_entity = @true
+        @keyfield="sys_pk"
 
         do dbr.apps.action.pre("CB13")
-        do dbr.begin(db)
 
-        @keyfield="sys_pk"
-        ref agente=entity.read(db,params)
-        new d
+        ref entity = entity.read(db,params)
+        deleted = @false
+
+        codeblock "Intentar eliminación física"
         {
-            @"domicilio1":@@(agente,"#domicilio1")
+            do dbr.begin(db)
+
+            do dbr.delete(db,@table_name,"sys_pk=@_entity_id",params)
+            do dbr.delete(db,"domicilio","sys_pk=@domicilio1",entity)
+            ref entity:@null
+
+            do dbr.apps.action.pos(entity)
+            do dbr.commit(db)
+            deleted = @true
+            do dbr.apps.action.ext(entity)
+
+            exception
+            {
+                if dbr.in_transaction(db) { do dbr.rollback(db) }
+                do dbr.apps.action.log()
+                do pop_exception()
+            }
         }
-        do dbr.delete(db,@table_name,"sys_pk=@_entity_id",params)
-        do dbr.delete(db,"domicilio","sys_pk=@domicilio1",d)
+        if not(deleted)
+        {
+            do dbr.begin(db)
 
-        do dbr.apps.action.pos(agente)
-        do dbr.commit(db)
-        do dbr.apps.action.ext(agente)
+            params<"lastuser"> : @@(@http_context,"$session/user/uid")
+            sql = ftext("
+            UPDATE #<@table_name> SET
+                sys_timestamp = NOW(),
+                sys_lastuser = @lastuser,
+                sys_deleted = 1,
+                sys_info = CONCAT_WS('|',codigo,nombre,codnomina),
+                codigo = CONCAT('~',sys_pk),
+                codnomina = CONCAT('~',sys_pk),
+                nombre = CONCAT('~',sys_pk)
+            WHERE #<@keyfield> = @_entity_id
+            ")
+            do dbr.execute(db,sql,params)
+            ref entity:entity.read(db,params)
 
-        return @null
+            do dbr.apps.action.pos(entity)
+            do dbr.commit(db)
+            do dbr.apps.action.ext(entity)
+        }
+
+        return entity
 
         exception
         {
@@ -201,19 +237,35 @@ module "agente.dk"
 
     function list(&db, &params)
     {
-        // if not(dbr.security.isauth(db,@CAT_AUT_ACCESS_AGENTE)) { do rise_error(500,"No autorizado") }
         do dbr.apps.action.grant("CB10")
         
-        query="SELECT a.sys_pk,a.sys_guid,a.sys_dtcreated,a.sys_timestamp,
-        a.sys_info,a.sys_user,a.sys_lastuser,
-        a.sys_exported,a.sys_dtexported,
-        a.sys_recver,a.sys_deleted,a.sys_lock,
-         codigo,nombre,codnomina,telefono ,t.username usuario
-            FROM agente a
+        query = "
+        SELECT
+            a.sys_pk,
+            a.sys_guid,
+            a.sys_dtcreated,
+            a.sys_timestamp,
+            a.sys_info,
+            a.sys_user,
+            a.sys_lastuser,
+            a.sys_exported,
+            a.sys_dtexported,
+            a.sys_recver,
+            a.sys_deleted,
+            a.sys_lock,
+            codigo,
+            nombre,
+            codnomina,
+            telefono,
+            t.username usuario
+        FROM agente a
             LEFT JOIN tuser t on a.uf_iuser=t.sys_pk
-            WHERE IF(IFNULL(@s,'')='', true, (codigo LIKE CONCAT('%',@s,'%') OR nombre LIKE CONCAT('%',@s,'%')))
-            ORDER BY codigo
-            LIMIT #<@default_max_rows>;"
+        WHERE
+            NOT IFNULL(a.sys_deleted,0)
+            AND IF(IFNULL(@s,'')='', true, (codigo = @s OR nombre LIKE CONCAT('%',@s,'%')))
+        ORDER BY codigo
+        LIMIT #<@default_max_rows>;
+        "
         return dbr.list(db, ftext(query), params)
 
         exception
