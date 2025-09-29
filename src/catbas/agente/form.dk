@@ -31,7 +31,7 @@ module "form_agente.dk"
     }
 
 	
-    #$ div(class="container p-0")
+    #$ div(class="container")
 	{
         #! #include "agente.dk"
 
@@ -55,27 +55,27 @@ module "form_agente.dk"
                 div(class="#<ifstr(@('error/message')!='','alert alert-danger','')>"){$"#<@('error/message')>"}
                 div(class="mb-3 row")       
                 {
-                    div(class="col-sm-6")
+                    div(class="col-sm-2")
                     {
                         small(class="fw-bold"){"Código:"}
                         input(type="text" id="codigo" name="codigo" class="induxsoft-form-control" value="#<@('./codigo')>" maxlength="10" placeholder="<A>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-sm-8")
                     {
                         small(class="fw-bold"){"Nombre:"}
                         input(type="text" id="nombre" name="nombre" class="induxsoft-form-control" value="#<@('./nombre')>" maxlength="50")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-sm-2")
                     {
                         small(class="fw-bold"){"Comisión(%):"}
                         input(type="number" id="pcomision" name="pcomision" step="any" class="induxsoft-form-control" value="#<@('./pcomision')>")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-sm-3")
                     {
                         small{"Código de Nomina:"}
                         input(type="text" id="codnomina" name="codnomina" class="induxsoft-form-control" value="#<@('./codnomina')>" maxlength="50")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-sm-3")
                     {
                         small{"Télefono:"}
                         input(type="text" id="telefono1" name="telefono1" class="induxsoft-form-control" value="#<@('./telefono')>" maxlength="150")
@@ -85,7 +85,7 @@ module "form_agente.dk"
                         small{"Email:"}
                         input(type="text" id="email" name="email" class="induxsoft-form-control" value="#<@('./email')>" maxlength="50")
                     }
-                    div(class="col-sm-6")
+                    div(class="col-sm-12")
                     {
                         small{"Notas:"}
                         input(type="text" id="notas" name="notas" class="induxsoft-form-control" value="#<@('./notas')>")
@@ -118,6 +118,67 @@ module "form_agente.dk"
                             columns="userid,username" 
                             colcaptions="ID,Nombre"){$""}
                     }
+                    #!
+                    if @("#./show_pcard_caller")
+                    {
+                        new def_card_caller
+                        {
+                            @"datatable*":dbr.list(@("&database"),"select id, id as descripcion from pos_present_card_caller;",@null)
+                            @"id":"pcardcaller"
+                            member "attributes"
+                            {
+                                @"class":"induxsoft-form-select"
+                                @"name":"pcardcaller"
+                            }
+                            @"first_value":"*"
+                            @"first_text":"Ninguno"
+                            @"text_field":"descripcion"
+                            @"value_field":"id"
+                            @"selected":@('./pcardcaller')
+                        }
+                        new def_caja
+                        {
+                            @"datatable*":dbr.list(@("&database"),"select sys_pk,concat(codigo,' - ',descripcion) as descripcion from caja where ifnull(sys_deleted,0)=0;",@null)
+                            member "attributes"
+                            {
+                                @"class":"induxsoft-form-select"
+                                @"name":"caja"
+                            }
+                            @"first_value":"0"
+                            @"first_text":"Ninguno"
+                            @"text_field":"descripcion"
+                            @"value_field":"sys_pk"
+                            @"selected":@('./caja')
+                        }
+                        #$
+                        div(class="col-md-4")
+                        {
+                            small{"Terminal de procesamiento:"}
+                            #! 
+                            do uie.dbSelect(def_card_caller)
+                            #$
+                        }
+                        div(class="col-md-4")
+                        {
+                            small{"Caja 1:"}
+                            #! 
+                            do uie.dbSelect(def_caja)
+                            #$
+                        }
+                        div(class="col-md-4")
+                        {
+                            small{"Caja 2:"}
+                            #! 
+                            using def_caja
+                            {
+                                @"selected":@('./caja2')
+                                @"attributes/name":"caja2"
+                            }
+                            do uie.dbSelect(def_caja)
+                            #$
+                        }
+                    }
+                    
                 }
                     
                     

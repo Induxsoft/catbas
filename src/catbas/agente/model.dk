@@ -5,8 +5,10 @@ module "agente.dk"
 {
     #include "../config.dk"
     #include "../_lib/lib.dk"
+    @read_fields=""
     @read_query = "select sys_pk, sys_guid, sys_recver, sys_timestamp, sys_dtcreated, sys_deleted, 
     codigo,codnomina,pcomision,email,nombre,telefono,notas,domicilio1,ubicacion,uf_iuser
+    #<@read_fields>
     from agente where #<@keyfield>=@_entity_id limit 1;"
 
    	agente.read::&db,&params
@@ -14,6 +16,10 @@ module "agente.dk"
         // if not(dbr.security.isauth(db,@CAT_AUT_AGENTE_READONLY)) { do rise_error(500,"No autorizado") }
         do dbr.apps.action.grant("CB10")
 
+        if TableExist(db,"pos_present_card_caller")
+        {
+            @read_fields=",pcardcaller,caja,caja2"
+        }
         if not(isset("@just_read_entity")) { @just_read_entity = @false }
         if @just_read_entity { return entity.read(db,params) }
 
@@ -28,6 +34,7 @@ module "agente.dk"
         agente<"ciudad*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver,Estado from ciudad where sys_pk=@iciudad",@@(agente,"&domicilio"))
         agente<"estado*">:dbr.rec(db,"select codigo,nombre,IPais,sys_pk,sys_recver from edoprov where sys_pk=@estado",@@(agente,"&ciudad"))
         agente<"pais*">:dbr.rec(db,"select codigo,codigotel,nombre,sys_pk,sys_recver from pais where sys_pk=@IPais",@@(agente,"&estado"))
+        agente<"show_pcard_caller">:TableExist(db,"pos_present_card_caller")
         return  agente
 
         exception
@@ -76,6 +83,13 @@ module "agente.dk"
         do dbr.apps.action.pre("CB11")
         do dbr.begin(db)
 
+        if TableExist(db,"pos_present_card_caller")
+        {
+            if trim(@@(data,"$pcardcaller"))=="*"{data<"pcardcaller*">:@null}
+            if @@(data,"#caja") < 1{data<"caja*">:@null}
+            if @@(data,"#caja2") < 1{data<"caja2*">:@null}
+        }
+
         do ValidateUser(db,params,data)
         if not(isnull(@@(data,"&domicilio")))
         {
@@ -117,6 +131,13 @@ module "agente.dk"
 
         do dbr.apps.action.pre("CB12")
         do dbr.begin(db)
+
+        if TableExist(db,"pos_present_card_caller")
+        {
+            if trim(@@(data,"$pcardcaller"))=="*"{data<"pcardcaller*">:@null}
+            if @@(data,"#caja") < 1{data<"caja*">:@null}
+            if @@(data,"#caja2") < 1{data<"caja2*">:@null}
+        }
 
         do ValidateUser(db,params,data)
         if not(isnull(@@(data,"&domicilio")))
@@ -224,6 +245,7 @@ module "agente.dk"
 		new r
 		{
 			@"pcomision":0
+            @"show_pcard_caller":TableExist(db,"pos_present_card_caller")
 		}
 		return r
 
@@ -307,7 +329,12 @@ module "agente.dk"
 
         return dbr.list(db,ftext(sql),params)
     }
-
+    TableExist::&db,table
+    {
+        table >> p
+        name_table=dbr.str(db,"SHOW TABLES LIKE '"+table+"';",p)
+        return trim(name_table)!=""
+    }
     point @read to agente.read
     point @create to agente.create
     point @update to agente.update
