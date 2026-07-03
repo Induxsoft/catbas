@@ -1,6 +1,6 @@
 {
 	"id":"catbas",
 	"installable":["catbas"],
-	"version":"1.0.104",
-	"schema_ver":"1.0.10"
+	"version":"1.0.105",
+	"schema_ver":"1.0.11"
 }
