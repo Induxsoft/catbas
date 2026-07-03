@@ -5,8 +5,19 @@ module "cconsumo.dk"
 {
 	#include "../config.dk"
 	#include "../_lib/lib.dk"
-	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado,ubicacion from cconsumo where #<@keyfield>=@_entity_id limit 1;"
+	@read_query="select #<@sys_fields> sys_pk,codigo, descripcion, precio, ialmacen, notas,uf_inhabilitado,ubicacion,config from cconsumo where #<@keyfield>=@_entity_id limit 1;"
 	
+	get_config::
+	{
+		new config
+		{
+			@"option":"any"
+			@"grupo":-1
+			@"clases*":from.json('["2","6"]')
+		}
+
+		return config
+	}
 	cconsumo.read::&db,&params
 	{
 		//if not(dbr.security.isauth(db,@CAT_AUT_CCONSUMO_READONLY)) { do rise_error(500,"No autorizado") }
@@ -15,15 +26,23 @@ module "cconsumo.dk"
 		ref cconsumo=entity.read(db,params)
 
 		if @@(cconsumo,"$ubicacion")!=""{cconsumo<"ubicacion*">:dbr.rec(db,"select * from ubicacion where sys_pk=@ubicacion",cconsumo)}
-		
+		if trim(@@(cconsumo,"$config")) == ""
+		{
+			ref config=get_config()
+			params<"config">:to.json(config)
+			do dbr.execute(db,"update cconsumo set config=@config where sys_pk=@_entity_id",params)
+			cconsumo<"config*">:config
+		}
+		else{cconsumo<"config*">:from.json(@@(cconsumo,"$config"))}
+
 		return cconsumo
 	
-	exception
-	{
-		do errordet(@false)
-		do dbr.apps.action.log()
-		do rise_error(last_error_code(),last_error())
-	}
+		exception
+		{
+			do errordet(@false)
+			do dbr.apps.action.log()
+			do rise_error(last_error_code(),last_error())
+		}
 
 	}
 
@@ -38,7 +57,21 @@ module "cconsumo.dk"
         exception
         { }
     }
-	
+	create_config::&data
+	{
+		ref config=record.copy(data,"option,grupo")
+		config<"clases*">:from.json(@@(data,"$_clases"))
+		config<"almacen">:@@(data,"#ialmacen_cfg")
+		do field.remove(data,"option")
+		do field.remove(data,"grupo")
+		do field.remove(data,"_clases")
+		do field.remove(data,"clase")
+		do field.remove(data,"ialmacen_cfg")
+
+		data<"config">:to.json(config)
+
+		return config
+	}
 	cconsumo.create::&db,&params,&data
 	{
 		//if not(dbr.security.isauth(db,@CAT_AUT_CREATE_CCONSUMO)) { do rise_error(500,"No autorizado") }
@@ -58,6 +91,8 @@ module "cconsumo.dk"
 		if @@(data,"precio")==""{ data<"precio">:0 }
 		if @@(data,"codigo")=="" { do check_autocode(db,"cconsumo","codigo",data) }
 		if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
+
+		do create_config(data)
 
 		ref res = entity.create(db,params,data)
 		
@@ -93,6 +128,9 @@ module "cconsumo.dk"
 		}
 		if @@(data,"precio")==""{data<"precio">:0}
 		if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
+
+		do create_config(data)
+
 		ref res= entity.update(db,params,data)
 		
 		do dbr.apps.action.pos(res)
@@ -165,6 +203,15 @@ module "cconsumo.dk"
 		}
 	}
 	
+	function blank(&db,&params)
+	{
+		new entity
+		{
+			@"config*":get_config()
+		}
+		return entity
+	}
+	point @blank to blank
 	point @read to cconsumo.read
 	point @create to cconsumo.create 
 	point @update to cconsumo.update

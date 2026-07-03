@@ -72,19 +72,53 @@ module "form.dk"
         @"selected":@('#./ialmacen')
     }
 
-    #$ div(class="container p-0")
+    new def_groups
+    {
+        @"datatable*":dbr.list(@("&database"),"SELECT g.sys_pk,g.nombre FROM grupoproductos g WHERE IFNULL(g.sys_deleted,0)=0;",@null)
+        @"id":"group"
+        member "attributes"
+        {
+            @"class":"induxsoft-form-select"
+            @"name":"grupo"
+        }
+        @"first_text":"(Cualquiera)"
+        @"first_value":-1
+        @"text_field":"nombre"
+        @"value_field":"sys_pk"
+        @"selected":@("$./config/grupo")
+    }
+
+    new def_class
+    {
+        @"datatable*":dbr.list(@("&database"),"SELECT cc.id,cc.const from cclaseproducto cc ;",@null)
+        @"id":"class"
+        member "attributes"
+        {
+            @"class":"induxsoft-form-select"
+            // @"name":"clase"
+            @"multiple":"true"
+        }
+        @"first_text":"(Ninguno)"
+        @"first_value": -1
+        @"text_field":"const"
+        @"value_field":"id"
+        @"selected":@("$./config/_clases")
+    }
+    _clases=to.json(@("&./config/clases"))
+    
+    #$ div(class="container p-2")
     {
         #! #include "consumo.dk"
 
-        #$ form(action="." method="POST")
+        #$ form(action="." method="POST" onsubmit="return _submit()")
         {
-            div(id="main_bar" class="row container-section my-2 px-0 py-2 border-bottom")
+            div(id="main_bar" class="row container-section my-2 py-2 border-bottom")
             {
-                div(class="col-4 d-flex align-items-center p-0")
+                div(class="col-4 d-flex align-items-center")
                 {
                     h5(class="tex-no-break m-0"){$"#<ifstr(isNew,'Agregar','Editar')> Centro de Consumo"}
                 }
-                div(class="col-8 d-flex align-items-center justify-content-end p-0 gap-2" id="main_bar_controls")
+                div(class="col-8 d-flex align-items-center justify-content-end gap-2" id="main_bar_controls")
                 {
                     a(href="./" class="btn btn-sm border-secondary induxsoft-corners btn-main-action" title="Refrescar"){$"#<@ICON_ARROW_CLOCKWISE>"}
                     button(type="submit" class="btn btn-sm border-secondary induxsoft-corners btn-main-action"){$"#<@ICON_SAVE>"}
@@ -155,7 +189,127 @@ module "form.dk"
                             colcaptions="Código,Descripción"){$""}
                     }
                 }
+                div(class="col-md-12")
+                {
+                    h5{"Configuración"}
+                    div(class="row")
+                    {
+                        input(class="" type="hidden" name="_clases" value="" id="_clases")
+
+                        div(class="col-md-6")
+                        {
+                            label(class="fw-bold" "for"=""){"En devoluciones, enviar a almacén de mermas/devoluciones:"}
+                            div(class="d-flex")
+                            {
+                                input(class="form-check-input" type="radio" name="option" value="all" id="all" onchange="changeAlgunos(false)" "#<ifstr(@('$./config/option')=='all','checked','')>"="")
+                                label(class="" "for"="all"){"Todo"}
+                            }
+                            
+                            div
+                            {
+                                div(class="d-flex")
+                                {
+                                    input(class="form-check-input" type="radio" name="option" value="any" id="any" onchange="changeAlgunos(this.checked);" "#<ifstr(@('$./config/option')=='any','checked','')>"="")
+                                    label(class="" "for"="any"){"Algunos"}
+                                }
+                                
+                                div
+                                {
+                                    fieldset("#<ifstr(@('$./config/option')=='any','','disabled')>"="" class="ps-4" id="fieldset")
+                                    {
+                                        div(class="d-flex gap-2 flex-wrap")
+                                        {
+                                            label(class="" "for"="" style="width: 15cm;"){"De las clases:"}
+                                            ##
+                                            do uie.dbSelect(def_class)
+                                            ##
+                                        }
+                                        div(class="d-flex gap-2 flex-wrap")
+                                        {
+                                            label(class="w-100" "for"=""){"Del grupo:"}
+                                            ##
+                                            do uie.dbSelect(def_groups)
+                                            ##
+                                            
+                                        }
+                                    }
+                                }
+                            }
+
+                            
+                            div(class="d-flex")
+                            {   
+                                input(class="form-check-input" type="radio" name="option" value="nothing" id="nothing" onchange="changeAlgunos(false)" "#<ifstr(@('$./config/option')=='nothing','checked','')>"="")
+                                label(class="" "for"="nothing"){"Nada"}
+                            }
+                        }
+
+                        div(class="col-md-6")
+                        {
+                            label(class="fw-bold" "for"=""){"Almacén de mermas y devoluciones:"}
+                            ##
+                            using def_almacenes
+                            {
+                                @"attributes/name":"ialmacen_cfg"
+                                @"selected":@("#./config/almacen")
+                                @"first_text":"(Seleccionar)"
+                                @"first_value":-1
+                            }
+                            do uie.dbSelect(def_almacenes)
+                            ##
+                        }
+                    }
+                }
             }
+        }
+        script(src="/$/catbas/js/choices.min.js"){""}
+        link(href="/$/catbas/css/choices.min.css" rel="stylesheet"){""}
+
+        script(type="text/javascript")
+        {$'
+            var choices =null;
+            document.addEventListener("DOMContentLoaded",()=>
+            {
+                choices = new Choices("#class", 
+                {
+                    removeItemButton: true,
+                    searchEnabled: true,
+                    placeholder: true,
+                    placeholderValue: "Clases...",
+                    searchPlaceholderValue: "Buscar...",
+                    shouldSort: false
+                });
+
+                choices.setChoiceByValue(#<_clases>);
+            });
+
+            function changeAlgunos(checked)
+            {
+                document.getElementById("fieldset").disabled=!checked;
+                
+                choices.disable();
+                if(checked)choices.enable();
+            }
+
+            function _submit()
+            {
+                let _clases=document.getElementById("_clases");
+                if(!_clases)return true;
+
+                
+                _clases.value=JSON.stringify(choices.getValue(true));
+
+                return true;
+            }
+        '}
+
+        style{
+            $'
+            .choices
+            {
+                width:100%;
+            }
+            '
         }
     }
     #! do @context.end()

@@ -127,6 +127,7 @@ model "erp.catbas"
         @"uf_fechainhabilitacion" datetime
         @"uf_grupoprod" int
         @"ubicacion" ref:"ubicacion"
+        @"config" memo
     }
 
      /* uod.cfgimpuesto */
