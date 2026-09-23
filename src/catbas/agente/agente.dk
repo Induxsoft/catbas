@@ -84,10 +84,12 @@ script{
 			let pcardcaller=document.getElementById("pcardcaller");
 			let caja=document.querySelector("select[name=\'caja\']");
 			let caja2=document.querySelector("select[name=\'caja2\']");
+			let equipo=document.querySelector("select[name=\'ref_equipo\']");
 
 			if(pcardcaller)agente["pcardcaller"]=pcardcaller.value;
 			if(caja)agente["caja"]=caja.value;
 			if(caja2)agente["caja2"]=caja2.value;
+			if(equipo)agente["ref_equipo"]=equipo.value;
 
 			let uf_iuser=document.getElementById("uf_iuser");
 			if(uf_iuser)agente["uf_iuser"]=uf_iuser.getValue()?.sys_pk??0;

@@ -20,6 +20,10 @@ module "agente.dk"
         {
             @read_fields=",pcardcaller,caja,caja2"
         }
+
+        sql_has_ref_equipo = "SHOW COLUMNS FROM agente LIKE 'ref_equipo'"
+        if not(isnull(dbr.rec(db,sql_has_ref_equipo,@null))) { @read_fields = @read_fields + ",ref_equipo" }
+
         if not(isset("@just_read_entity")) { @just_read_entity = @false }
         if @just_read_entity { return entity.read(db,params) }
 
@@ -105,6 +109,7 @@ module "agente.dk"
 
         if @@(data,"codigo")=="" { do check_autocode(db,"agente","codigo",data) }
         if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
+        if @@(data,"#ref_equipo") < 1 { do field.remove(data,"ref_equipo") }
         
         ref res = entity.create(db,params,data)
     	
@@ -152,6 +157,7 @@ module "agente.dk"
     	}
         if field.exist(data,"ubicacion") && trim(@@(data,"$ubicacion"))==""{data<"ubicacion*">:@null}
         if field.exist(data,"pcomision") && trim(@@(data,"$pcomision")) == "" { data<"pcomision">: 0 }
+        if @@(data,"#ref_equipo") < 1 { do field.remove(data,"ref_equipo") }
         do dbr.execute(db, "UPDATE agente SET sys_recver=0 WHERE sys_recver IS NULL AND sys_pk=@_entity_id;", params)
         do dbr.execute(db, "UPDATE agente SET sys_lock=null WHERE sys_lock=0 AND sys_pk=@_entity_id;", params)
     	

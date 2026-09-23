@@ -178,7 +178,43 @@ module "form_agente.dk"
                             #$
                         }
                     }
-                    
+                    #$
+                    #!
+                    sql_has_ref_equipo = "SHOW COLUMNS FROM agente LIKE 'ref_equipo'"
+                    if not(isnull(dbr.rec(@("&database"),sql_has_ref_equipo,@null)))
+                    {
+                        #$
+                        div(class="col-sm-6 col-md-4")
+                        {
+                            small{"Equipo de ventas"}
+                            #!
+                            ref equipos = dbr.list(@("&database"),"
+                                SELECT sys_pk, concat(id,' - ',nombre) AS descripcion
+                                FROM vendesk_equipo_venta
+                                WHERE
+                                    NOT ifnull(sys_deleted,0)
+                                    AND activo
+                            ",@null)
+
+                            new def_equipo
+                            {
+                                @"datatable*": equipos
+                                member "attributes"
+                                {
+                                    @"class":"induxsoft-form-select"
+                                    @"name":"ref_equipo"
+                                }
+                                @"first_value":"0"
+                                @"first_text":"Sin equipo"
+                                @"text_field":"descripcion"
+                                @"value_field":"sys_pk"
+                                @"selected":@('./ref_equipo')
+                            }
+                            do uie.dbSelect(def_equipo)
+                            #$
+                        }
+                    }
+                    #$
                 }
                     
                     
